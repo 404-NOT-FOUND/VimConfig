@@ -1,0 +1,39 @@
+
+" 设定默认配色
+" colo slate
+colo Tomorrow-Night
+" 设定特殊文件类型的配色
+autocmd FileType tex,mp,vim colo Tomorrow-Night
+autocmd FileType cpp,java colo Tomorrow-Night
+autocmd BufRead *notes colo slate
+
+" 不高亮当前行
+set nocursorline
+au BufReadPost * hi CursorLine term=underline cterm=underline guibg=#404040
+
+" guibg		- 背景色
+" guifg		- 前景色
+
+" 改变自动补全窗口配色
+" Pmenu		- 所有项的配色
+" PmenuSel	- 选中项的配色
+" au BufReadPost * hi Pmenu	guibg=#101010	guifg=#909090 gui=none
+au BufReadPost * hi Pmenu guibg=darkgrey  guifg=black
+au BufReadPost * hi PmenuSel guibg=lightgrey guifg=black
+
+" au BufReadPost * hi preproc	 guifg=#005cff	ctermfg=blue
+"au BufReadPost *.h,*.c,*.cpp,*.java,*.tex,*.mp 
+"			\hi comment	 guifg=lightgreen	 ctermfg=lightgreen	ctermbg=black	gui=none
+" 标识符,如lua中的function end if 
+" au BufReadPost * hi identifier	guifg=#005cff	 ctermfg=red	gui=none
+
+" 标签
+au BufReadPost * hi TabLine guifg=black gui=none
+au BufReadPost * hi TabLineSel	gui=none
+au BufReadPost * hi TabLineFill	guibg=darkgrey	gui=none
+au BufReadPost * hi MatchParen ctermbg=blue guibg=lightblue guifg=black
+
+" Groups for syntax highlighting
+" au BufReadPost * hi Special term=bold ctermfg=LightRed guifg=Orange guibg=grey5
+" au BufReadPost * hi Ignore ctermfg=DarkGrey guifg=grey20
+
