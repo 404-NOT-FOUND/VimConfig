@@ -473,6 +473,7 @@ au BufReadPost *
 " 将特殊后缀的文件设置为相应格式
 au BufReadPost *.mk setlocal filetype=markdown
 au BufReadPost *.notes setlocal filetype=notes
+au BufReadPost *.tex setlocal filetype=tex
 
 " 为 txt 文件还原 TAB 长度
 au BufReadPost *.txt setlocal tabstop=8
@@ -1120,6 +1121,16 @@ let g:UltiSnipsSnippetDirectories=["UltiSnips", "myVim/snippets"]
 " ------------------------------------------------------------
 
 let g:markdown_fenced_languages = ['html', 'python', 'bash=sh']
+
+" ------------------------------------------------------------
+" reftex
+" ------------------------------------------------------------
+" 在 LaTeX 中引用时给出 label 列表
+
+if has('autocmd')
+    au BufReadPost *.tex source $vim/vimfiles/ftplugin/reftex.vim
+    au FileType tex source $vim/vimfiles/ftplugin/reftex.vim
+endif
 
 " =============================================================================
 " NOTES
