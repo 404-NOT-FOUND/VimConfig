@@ -27,7 +27,7 @@ endsnippet
 snippet fig "Figure environment" b
 \begin{figure}[${2:htpb}]
 	\centering
-	\includegraphics[width=${3:0.8}\linewidth]{${4:name.ext}}
+	\includegraphics[width=${3:0.8}\linewidth]{${4:${VISUAL:name.ext}}}
 	\caption{$5}
 	\label{fig:${4/(\w+)\.\w+/$1/}}
 \end{figure}
@@ -38,21 +38,21 @@ endsnippet
 
 snippet enum "Enumerate" b
 \begin{compactenum}
-	\item $1
+	\item ${1:${VISUAL}}
 \end{compactenum}
 $0
 endsnippet
 
 snippet item "Itemize" b
 \begin{itemize}
-	\item $1
+	\item ${1:${VISUAL}}
 \end{itemize}
 $0
 endsnippet
 
 snippet desc "Description" b
 \begin{description}
-	\item[$1] $2
+	\item[$1] ${2:${VISUAL}}
 \end{description}
 $0
 endsnippet
@@ -64,14 +64,16 @@ endsnippet
 # math
 
 snippet def "definitions" b
-\begin{definition}[${1}]\label{${2:def:${1/((\a)* )+/_\L$2\E/ga}}}
+\begin{definition}[${1}]
+	\label{def:${2:${1/\\\w+\{(.*?)\}|\\(.)|(\w+)|([^\w\\]+)/(?4:_:\L$1$2$3\E)/ga}}}
 	${3:${VISUAL}}
 \end{definition}
 $0
 endsnippet
 
 snippet ppt "property" b
-\begin{property}[${1}]\label{${2:ppt:${1/((\a)* )+/_\L$2\E/ga}}}
+\begin{property}[${1}]
+	\label{ppt:${2:${1/\\\w+\{(.*?)\}|\\(.)|(\w+)|([^\w\\]+)/(?4:_:\L$1$2$3\E)/ga}}}
 	${3:${VISUAL}}
 \end{property}
 $0
@@ -79,6 +81,7 @@ endsnippet
 
 snippet thm "theorems" b
 \begin{theorem}[${1}]\label{${2:thm:${1/((\a)* )+/_\L$2\E/ga}}}
+	\label{thm:${2:${1/\\\w+\{(.*?)\}|\\(.)|(\w+)|([^\w\\]+)/(?4:_:\L$1$2$3\E)/ga}}}
 	${3:${VISUAL}}
 \end{theorem}
 $0
@@ -96,36 +99,37 @@ snippet "\\h(space)?" "\hspace" r
 \hspace{$1} $0
 endsnippet
 
-snippet ref "use \autoref for reference"
-\autoref{${1:${VISUAL}}}$0
-endsnippet
-
-snippet bf "boldface text" w
-\textbf{$1}$0
-endsnippet
-
-snippet it "italian text" w
-\textit{$1}$0
-endsnippet
-
-snippet sf "sans serif text" w
-\textsf{$1}$0
-endsnippet
-
-snippet sc "small caps text" w
-\textsc{$1}$0
-endsnippet
-
-snippet rm "roman text" w
-\\${1:m}${1/(m)$|(t)$|(.*)/(?1:ath)(?2:ext)/}rm{$2}$0
-endsnippet
-
 # here the last character of the selected text is stripped because VISUAL seems
 # to be selecting one additional character at the end than it should be; if this
 # is not the case, change
 # `!p snip.rv = snip.v.text[:-1]`
 # to
 # ${VISUAL}
+
+snippet ref "use \autoref for reference"
+\autoref{${1:`!p snip.rv = snip.v.text[:-1]`}}$0
+endsnippet
+
+snippet bf "boldface text" w
+\textbf{${1:`!p snip.rv = snip.v.text[:-1]`}$0
+endsnippet
+
+snippet it "italian text" w
+\textit{${1:`!p snip.rv = snip.v.text[:-1]`}}$0
+endsnippet
+
+snippet sf "sans serif text" w
+\textsf{${1:`!p snip.rv = snip.v.text[:-1]`}}$0
+endsnippet
+
+snippet sc "small caps text" w
+\textsc{${1:`!p snip.rv = snip.v.text[:-1]`}}$0
+endsnippet
+
+snippet rm "roman text" w
+\\${1:m}${1/(m)$|(t)$|(.*)/(?1:ath)(?2:ext)/}rm{${2:`!p snip.rv = snip.v.text[:-1]`}}$0
+endsnippet
+
 snippet em "emphasis" w
 \emph{${1:`!p snip.rv = snip.v.text[:-1]`}}$0
 endsnippet
@@ -135,11 +139,11 @@ endsnippet
 # -----------------------------------------------------------------------------
 
 snippet $ "inline math mode" w
-$$1$$0
+$${1:`!p snip.rv = snip.v.text[:-1]`}$$0
 endsnippet
 
 snippet ma "inline math mode" w
-$$1$$0
+$${1:`!p snip.rv = snip.v.text[:-1]`}$$0
 endsnippet
 
 # greek letters
@@ -349,7 +353,7 @@ snippet g* "times" w
 endsnippet
 
 snippet g2 "squre root" w
-\sqrt{$1}$0
+\sqrt{${1:`!p snip.rv = snip.v.text[:-1]`}}$0
 endsnippet
 
 snippet gcal "mathcal" w
