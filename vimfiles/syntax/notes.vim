@@ -35,8 +35,7 @@ syn match myIgnore contained '>$' conceal
 
 syn match Normal /'/
 
-syn match Normal "%.*"
-syn match Comment "^%.*" contains=TODO,String,Error
+syn match Comment "%.*" contains=TODO,String,Error
 
 syn match TODO "TODO" contained
 
