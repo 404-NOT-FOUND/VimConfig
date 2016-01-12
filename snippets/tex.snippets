@@ -120,8 +120,14 @@ snippet rm "roman text" w
 \\${1:m}${1/(m)$|(t)$|(.*)/(?1:ath)(?2:ext)/}rm{$2}$0
 endsnippet
 
+# here the last character of the selected text is stripped because VISUAL seems
+# to be selecting one additional character at the end than it should be; if this
+# is not the case, change
+# `!p snip.rv = snip.v.text[:-1]`
+# to
+# ${VISUAL}
 snippet em "emphasis" w
-\emph{$1}$0
+\emph{${1:`!p snip.rv = snip.v.text[:-1]`}}$0
 endsnippet
 
 
