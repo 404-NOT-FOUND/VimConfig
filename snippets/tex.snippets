@@ -1,4 +1,4 @@
-priority -50
+priority -40
 
 # environments
 # -----------------------------------------------------------------------------
@@ -57,62 +57,33 @@ snippet desc "Description" b
 $0
 endsnippet
 
-# structures
-# -----------------------------------------------------------------------------
-
-snippet part "Part" b
-\part{${1:part name}}
-\label{prt:${2:${1/(\w+)|\W+/(?1:\L$0\E:_)/ga}}}
-
-${0}
+snippet itm "individual item" b
+\item $0
 endsnippet
 
-snippet cha "Chapter" b
-\chapter{${1:chapter name}}
-\label{cha:${2:${1/\\\w+\{(.*?)\}|\\(.)|(\w+)|([^\w\\]+)/(?4:_:\L$1$2$3\E)/ga}}}
+# math
 
-${0}
+snippet def "definitions" b
+\begin{definition}[${1}]\label{${2:def:${1/((\a)* )+/_\L$2\E/ga}}}
+	${3:${VISUAL}}
+\end{definition}
+$0
 endsnippet
 
-snippet sec "Section" b
-\section{${1:section name}}
-\label{sec:${2:${1/\\\w+\{(.*?)\}|\\(.)|(\w+)|([^\w\\]+)/(?4:_:\L$1$2$3\E)/ga}}}
-
-${0}
+snippet ppt "property" b
+\begin{property}[${1}]\label{${2:ppt:${1/((\a)* )+/_\L$2\E/ga}}}
+	${3:${VISUAL}}
+\end{property}
+$0
 endsnippet
 
-snippet sub "Subsection" b
-\subsection{${1:subsection name}}
-\label{sub:${2:${1/\\\w+\{(.*?)\}|\\(.)|(\w+)|([^\w\\]+)/(?4:_:\L$1$2$3\E)/ga}}}
-
-${0}
+snippet thm "theorems" b
+\begin{theorem}[${1}]\label{${2:thm:${1/((\a)* )+/_\L$2\E/ga}}}
+	${3:${VISUAL}}
+\end{theorem}
+$0
 endsnippet
 
-snippet ssub "Subsubsection" b
-\subsubsection{${1:subsubsection name}}
-\label{ssub:${2:${1/\\\w+\{(.*?)\}|\\(.)|(\w+)|([^\w\\]+)/(?4:_:\L$1$2$3\E)/ga}}}
-
-${0}
-endsnippet
-
-snippet par "Paragraph" b
-\paragraph{${1:paragraph name}}
-\label{par:${2:${1/\\\w+\{(.*?)\}|\\(.)|(\w+)|([^\w\\]+)/(?4:_:\L$1$2$3\E)/ga}}}
-
-${0}
-endsnippet
-
-snippet subp "Subparagraph" b
-\subparagraph{${1:subparagraph name}}
-\label{par:${2:${1/\\\w+\{(.*?)\}|\\(.)|(\w+)|([^\w\\]+)/(?4:_:\L$1$2$3\E)/ga}}}
-
-${0}
-endsnippet
-
-snippet ni "Non-indented paragraph" b
-\noindent
-${0}
-endsnippet
 
 # usefull commands
 # -----------------------------------------------------------------------------
@@ -123,6 +94,10 @@ endsnippet
 
 snippet "\\h(space)?" "\hspace" r
 \hspace{$1} $0
+endsnippet
+
+snippet ref "use \autoref for reference"
+\autoref{${1:${VISUAL}}}$0
 endsnippet
 
 snippet bf "boldface text" w
@@ -145,15 +120,25 @@ snippet rm "roman text" w
 \\${1:m}${1/(m)$|(t)$|(.*)/(?1:ath)(?2:ext)/}rm{$2}$0
 endsnippet
 
+# here the last character of the selected text is stripped because VISUAL seems
+# to be selecting one additional character at the end than it should be; if this
+# is not the case, change
+# `!p snip.rv = snip.v.text[:-1]`
+# to
+# ${VISUAL}
 snippet em "emphasis" w
-\emph{$1}$0
+\emph{${1:`!p snip.rv = snip.v.text[:-1]`}}$0
 endsnippet
 
 
 # math
 # -----------------------------------------------------------------------------
 
-snippet $ "inline math mode" 
+snippet $ "inline math mode" w
+$$1$$0
+endsnippet
+
+snippet ma "inline math mode" w
 $$1$$0
 endsnippet
 
@@ -376,7 +361,7 @@ snippet gbb "mathbb" w
 endsnippet
 
 snippet wow
-${1:Text}`!p res = (75-2*len(t[1]))*' '+t[1].upper()` 
+${1:Text}`!p res = (75-2*len(t[1]))*' '+t[1].upper()`
 endsnippet
 
 # environments
