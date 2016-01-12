@@ -1,11 +1,19 @@
 
 " 设定默认配色
-" colo slate
 colo Tomorrow-Night
+
 " 设定特殊文件类型的配色
-autocmd FileType tex,mp,vim colo Tomorrow-Night
-autocmd FileType cpp,java colo Tomorrow-Night
-autocmd BufRead *notes colo slate
+au BufEnter *.mp,*.vim colo Tomorrow-Night
+au BufEnter *.cpp,*.java colo Tomorrow-Night
+au BufEnter *.py call UseSolarizedDarkColor()
+au BufEnter *.notes,*.tex,*.{md,mdown,mkd,mkdn,markdown,mdwn,mk}
+            \ call UseSolarizedDarkColor()
+
+func! UseSolarizedDarkColor()
+    let g:solarized_italic=0          " 不使用斜体
+    set background=dark               " 用暗版 solarized
+    colo solarized
+endfunc
 
 " 当 Vim 在后台时改变配色。重新回到 Vim 时还原
 au FocusLost * let b:current_color=g:colors_name | colo slate
