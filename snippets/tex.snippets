@@ -61,6 +61,29 @@ snippet itm "individual item" b
 \item $0
 endsnippet
 
+# math
+
+snippet def "definitions" b
+\begin{definition}[${1}]\label{${2:def:${1/((\a)* )+/_\L$2\E/ga}}}
+	${3:${VISUAL}}
+\end{definition}
+$0
+endsnippet
+
+snippet ppt "property" b
+\begin{property}[${1}]\label{${2:ppt:${1/((\a)* )+/_\L$2\E/ga}}}
+	${3:${VISUAL}}
+\end{property}
+$0
+endsnippet
+
+snippet thm "theorems" b
+\begin{theorem}[${1}]\label{${2:thm:${1/((\a)* )+/_\L$2\E/ga}}}
+	${3:${VISUAL}}
+\end{theorem}
+$0
+endsnippet
+
 
 # usefull commands
 # -----------------------------------------------------------------------------
