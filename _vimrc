@@ -511,36 +511,36 @@ au BufAdd   *tex call OpenTeXworks()
 " au Filetype vim,vimrc call SetComments('vim')
 
 " 使用 z<space> 在选中文本周围加上空格
-au BufReadPost * vnoremap z<space> :call WrapTextWith(' ', ' ')<CR>
+au BufReadPost * vnoremap z<space> <Esc>:call WrapTextWith(' ', ' ')<CR>
 au BufReadPost * nmap z<space> viwz<space>
 " au BufReadPost * vnoremap z<space> <Esc>`<i <Esc>`>a <Esc>
 
 " 使用 z(, z[, z{ 在选中文本周围加上括号
-au BufReadPost * vnoremap z( :call WrapTextWith('(', ')')<CR>
+au BufReadPost * vnoremap z( <Esc>:call WrapTextWith('(', ')')<CR>
 au BufReadPost * nmap z( viwz(
-au BufReadPost * vnoremap z[ :call WrapTextWith('[', ']')<CR>
+au BufReadPost * vnoremap z[ <Esc>:call WrapTextWith('[', ']')<CR>
 au BufReadPost * nmap z[ viwz[
-au BufReadPost * vnoremap z{ :call WrapTextWith('{', '}')<CR>
+au BufReadPost * vnoremap z{ <Esc>:call WrapTextWith('{', '}')<CR>
 au BufReadPost * nmap z{ viwz{
 " au BufReadPost * vnoremap z( <Esc>`<i <Esc>r(`>a <Esc>r)<Esc>
 
 " 使用 z", z', z` 在选中文本周围加上引号
-au BufReadPost * vnoremap z" :call WrapTextWith('"', '"')<CR>
+au BufReadPost * vnoremap z" <Esc>:call WrapTextWith('"', '"')<CR>
 au BufReadPost * nmap z" viwz"
-au BufReadPost * vnoremap z' :call WrapTextWith("'", "'")<CR>
+au BufReadPost * vnoremap z' <Esc>:call WrapTextWith("'", "'")<CR>
 au BufReadPost * nmap z' viwz'
-au BufReadPost * vnoremap z` :call WrapTextWith('`', '`')<CR>
+au BufReadPost * vnoremap z` <Esc>:call WrapTextWith('`', '`')<CR>
 au BufReadPost * nmap z` viwz`
 
 " 使用 zm 将选中文本包围在一对 $ 中 (LaTeX math mode)
-au BufReadPost *.tex vnoremap z( :call WrapTextWith('$', '$')<CR>
+au BufReadPost *.tex vnoremap zm <Esc>:call WrapTextWith('$', '$')<CR>
 au BufReadPost *.tex nmap zm viwzm
 " au BufReadPost *.tex,*.notes vnoremap zm <Esc>`<i$<Esc>`>a$<Esc>
 
 " 使用 ze 强调文本
-au BufReadPost *.notes vnoremap ze :call WrapTextWith('\|', '\|')<CR>
+au BufReadPost *.notes vnoremap ze <Esc>:call WrapTextWith('\|', '\|')<CR>
 au BufReadPost *.{md,mdown,mkd,mkdn,markdown,mdwn,mk}
-            \ vnoremap ze :call WrapTextWith('*', '*')<CR>
+            \ vnoremap ze <Esc>:call WrapTextWith('*', '*')<CR>
 " au BufReadPost *.notes vnoremap ze <Esc>`<i\|<Esc>`>a\|<Esc>
 " au BufReadPost *.markdown vnoremap ze <Esc>`<i*<Esc>`>a*<Esc>
 au BufReadPost *.notes,*.{md,mdown,mkd,mkdn,markdown,mdwn,mk}
