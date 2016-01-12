@@ -25,6 +25,7 @@ case `(uname -s)` in
         exit 1
         ;;
 esac
+pritnf "Done\n"
 
 # if a target file is already there and is DIFFERENT than source file, ask for
 # permission to overwrite
@@ -41,24 +42,28 @@ for f in ${DIR}/vimfiles/**/*; do
         cp ${f} -T ${to_f}
     fi
 done
+pritnf "Done\n"
 
 if [ ! -d $1/bundle/Vundle.vim ]
 then
     echo 'Installing Vundle...'
     git clone https://github.com/VundleVim/Vundle.vim.git $1/bundle/Vundle.vim
+    pritnf "Done\n"
 fi
 
 echo 'Installing plugins...'
 gvim -c "PluginInstall" || echo 'Plugin installation failed because "gvim" command was
 not found. You may run ":PluginInstall" in gvim to manually install your
 plugins'
+pritnf "Done\n"
 
 if [ -d $1/bundle/VimIM/plugin ]; then
     if [ ! -e $1/bundle/VimIM/plugin/vimim.wubi.txt ]; then
         echo 'VimIM detected, copying word dictionary...'
         cp ${DIR}/vimim.wubi.txt $1/bundle/VimIM/plugin/
+        pritnf "Done\n"
     fi
 fi
 
-printf 'Done\n'
+printf 'Installation completed\n'
 
