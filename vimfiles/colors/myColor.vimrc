@@ -7,6 +7,10 @@ autocmd FileType tex,mp,vim colo Tomorrow-Night
 autocmd FileType cpp,java colo Tomorrow-Night
 autocmd BufRead *notes colo slate
 
+" 当 Vim 在后台时改变配色。重新回到 Vim 时还原
+au FocusLost * let b:current_color=g:colors_name | colo slate
+au FocusGained * if exists('b:current_color') | exe 'colo '.b:current_color | endif
+
 " 不高亮当前行
 set nocursorline
 au BufReadPost * hi CursorLine term=underline cterm=underline guibg=#404040
