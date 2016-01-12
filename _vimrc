@@ -98,7 +98,7 @@ Plugin 'VundleVim/Vundle.vim'
 
 " 以下为要安装或更新的插件
 Plugin 'a.vim'
-Plugin 'grep.vim'
+Plugin 'gprep.vim'
 Plugin 'Align'
 " Plugin 'jiangmiao/auto-pairs'
 " Plugin 'bufexplorer.zip'
@@ -523,6 +523,14 @@ au BufReadPost * nmap z[ viwz[
 au BufReadPost * vnoremap z{ :call WrapTextWith('{', '}')<CR>
 au BufReadPost * nmap z{ viwz{
 " au BufReadPost * vnoremap z( <Esc>`<i <Esc>r(`>a <Esc>r)<Esc>
+
+" 使用 z", z', z` 在选中文本周围加上引号
+au BufReadPost * vnoremap z" :call WrapTextWith('"', '"')<CR>
+au BufReadPost * nmap z" viwz"
+au BufReadPost * vnoremap z' :call WrapTextWith("'", "'")<CR>
+au BufReadPost * nmap z' viwz'
+au BufReadPost * vnoremap z` :call WrapTextWith('`', '`')<CR>
+au BufReadPost * nmap z` viwz`
 
 " 使用 zm 将选中文本包围在一对 $ 中 (LaTeX math mode)
 au BufReadPost *.tex vnoremap z( :call WrapTextWith('$', '$')<CR>
