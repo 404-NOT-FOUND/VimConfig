@@ -962,6 +962,10 @@ let g:neocomplete#enable_at_startup = 1             " 随 Vim 启动
 let g:neocomplete#enable_smart_case = 1             " 只在输入大写字母时对大小写敏感
 let g:neocomplete#auto_completion_start_length=4    " 只在输入超过四个字符时自动打开补全菜单
 let g:neocomplete#sources#syntax#min_keyword_length = 4
+" 默认情况下，在 NeoComplete 补全时按下退格键会撤销补全。这里改为应用补全并删去
+" 一个字符
+inoremap <expr><C-h> neocomplete#close_popup()."\<C-h>"
+inoremap <expr><BS>  neocomplete#close_popup()."\<C-h>"
 
 " Define dictionary.
 let g:neocomplete#sources#dictionary#dictionaries = {
