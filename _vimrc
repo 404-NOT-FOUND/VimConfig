@@ -510,15 +510,33 @@ au BufAdd   *tex call OpenTeXworks()
 " au Filetype tex,mp call SetComments('tex')
 " au Filetype vim,vimrc call SetComments('vim')
 
-" 使用 z] 将选中文本包围在一对 $ 中 (LaTeX math mode)
-au BufReadPost *.tex,*.notes vnoremap z] <Esc>`<i$<Esc>`>a$<Esc>
-au BufReadPost *.notes,*.tex nmap z] viwz]
+" 使用 z<space> 在选中文本周围加上空格
+au BufReadPost * vnoremap z<space> :call WrapTextWith(' ', ' ')<CR>
+au BufReadPost * nmap z<space> viwz<space>
+" au BufReadPost * vnoremap z<space> <Esc>`<i <Esc>`>a <Esc>
 
-" 使用 <space>] 强调文本
-au BufReadPost *.notes vnoremap <space>] <Esc>`<i\|<Esc>`>a\|<Esc>
-au BufReadPost *.markdown vnoremap <space>] <Esc>`<i*<Esc>`>a*<Esc>
+" 使用 z(, z[, z{ 在选中文本周围加上括号
+au BufReadPost * vnoremap z( :call WrapTextWith('(', ')')<CR>
+au BufReadPost * nmap z( viwz(
+au BufReadPost * vnoremap z[ :call WrapTextWith('[', ']')<CR>
+au BufReadPost * nmap z[ viwz[
+au BufReadPost * vnoremap z{ :call WrapTextWith('{', '}')<CR>
+au BufReadPost * nmap z{ viwz{
+" au BufReadPost * vnoremap z( <Esc>`<i <Esc>r(`>a <Esc>r)<Esc>
+
+" 使用 zm 将选中文本包围在一对 $ 中 (LaTeX math mode)
+au BufReadPost *.tex vnoremap z( :call WrapTextWith('$', '$')<CR>
+au BufReadPost *.tex nmap zm viwzm
+" au BufReadPost *.tex,*.notes vnoremap zm <Esc>`<i$<Esc>`>a$<Esc>
+
+" 使用 ze 强调文本
+au BufReadPost *.notes vnoremap ze :call WrapTextWith('\|', '\|')<CR>
+au BufReadPost *.{md,mdown,mkd,mkdn,markdown,mdwn,mk}
+            \ vnoremap ze :call WrapTextWith('*', '*')<CR>
+" au BufReadPost *.notes vnoremap ze <Esc>`<i\|<Esc>`>a\|<Esc>
+" au BufReadPost *.markdown vnoremap ze <Esc>`<i*<Esc>`>a*<Esc>
 au BufReadPost *.notes,*.{md,mdown,mkd,mkdn,markdown,mdwn,mk}
-            \ nmap <space>] viw<space>]
+            \ nmap ze viwze
 
 " 显示行号
 au FileType xml,html,c,S,cs,java,perl,shell,bash,cpp,python,vim,php,ruby,tex,mp
@@ -691,6 +709,13 @@ endfunc
 " 		map c[ :s+^\(\s*\)"[ ]*+\1+ge<CR>:nohls<CR>:echo "comments removed"<CR>
 " 	endif
 " endfunc
+
+" ------------------------------------------------------------
+" 包围选中的文本
+
+func! WrapTextWith(left, right)
+    exe "norm `<i \<Esc>r".a:left."`>a \<Esc>r".a:right
+endfunc
 
 " ------------------------------------------------------------
 
