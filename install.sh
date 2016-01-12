@@ -8,6 +8,8 @@ then
     exit 1
 fi
 
+escaped_target="$(echo "${1}" | sed 's/\\\|\[\|\]\$\|\^/\\&/g')"
+
 case `(uname -s)` in
     Darwin|Linux)
         echo 'Mac OS or Linux system detected, copying ".vimrc"...'
@@ -24,9 +26,21 @@ case `(uname -s)` in
         ;;
 esac
 
+# if a target file is already there and is DIFFERENT than source file, ask for
+# permission to overwrite
+# if a target file is missing, copy the file
 echo 'Copying files to vimfiles...'
-cp -r ${DIR}/vimfiles/* $1/
-# rm -rf ${DIR}/vimfiles
+for f in ${DIR}/vimfiles/**/*; do
+    to_f="$(echo "${f}" | sed 's/^\/.*vimfiles/'${escaped_target}'/')"
+    if [ -e ${to_f} ]; then
+        diffresult=$(diff ${f} ${to_f})
+        if [ "${diffresult}" != "" ]; then
+            cp -i ${f} -T ${to_f}
+        fi
+    else
+        cp ${f} -T ${to_f}
+    fi
+done
 
 if [ ! -d $1/bundle/Vundle.vim ]
 then
@@ -39,10 +53,11 @@ gvim -c "PluginInstall" || echo 'Plugin installation failed because "gvim" comma
 not found. You may run ":PluginInstall" in gvim to manually install your
 plugins'
 
-if [ -d $1/bundle/VimIM/plugin ]
-then
-    echo 'VimIM detected, copying word dictionary...'
-    cp ${DIR}/vimim.wubi.txt $1/bundle/VimIM/plugin/
+if [ -d $1/bundle/VimIM/plugin ]; then
+    if [ ! -e $1/bundle/VimIM/plugin/vimim.wubi.txt ]; then
+        echo 'VimIM detected, copying word dictionary...'
+        cp ${DIR}/vimim.wubi.txt $1/bundle/VimIM/plugin/
+    fi
 fi
 
 printf 'Done\n'
