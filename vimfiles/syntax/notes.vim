@@ -44,7 +44,6 @@ syn match TODO "TODO" contained
 
 syn region String	matchgroup=myIgnore start=" >$" start="^>$" end="^[^ \t]"me=e-1 end="<<<" concealends
 syn region String	matchgroup=myIgnore start="|" end="|" concealends
-syn region String	matchgroup=myIgnore start="`" end="`" concealends
 
 " math zones
 syn region Special	start="\$" end="\$" concealends
