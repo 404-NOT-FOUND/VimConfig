@@ -98,7 +98,7 @@ Plugin 'VundleVim/Vundle.vim'
 
 " 以下为要安装或更新的插件
 Plugin 'a.vim'
-Plugin 'gprep.vim'
+Plugin 'grep.vim'
 Plugin 'Align'
 " Plugin 'jiangmiao/auto-pairs'
 " Plugin 'bufexplorer.zip'
