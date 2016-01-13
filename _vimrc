@@ -98,7 +98,7 @@ Plugin 'VundleVim/Vundle.vim'
 
 " 以下为要安装或更新的插件
 Plugin 'a.vim'
-Plugin 'gprep.vim'
+Plugin 'grep.vim'
 Plugin 'Align'
 " Plugin 'jiangmiao/auto-pairs'
 " Plugin 'bufexplorer.zip'
@@ -151,10 +151,12 @@ set encoding=utf-8
 " 设置支持打开的文件的编码
 set fileencodings=utf-8,cp936,utf-16le,usc-bom,gbk,euc-jp,chinese,gb18030,ucs,gb2312,big5
 
-" 设置新文件的 <EOL> 格式
-set fileformat=unix
-" 设置支持的 <EOL> 格式
-set fileformats=unix
+if has("autocmd")
+    " 设置支持的 <EOL> 格式
+    au BufRead,BufNewFile * set fileformats=unix | e
+    " 设置新文件的 <EOL> 格式
+    au BufRead,BufNewFile * set fileformat=unix
+endif
 
 " 将程序语言设为英文
 " 设置信息语言
@@ -215,6 +217,7 @@ set statusline=
 set statusline+=%f               " file name
 set statusline+=%m%r%h%w         " flag. [+] for changed/unsaved
 set statusline+=[%{&encoding}]   " encoding
+set statusline+=[%{&fileformat}] " encoding
 set statusline+=[POS=%l,%v]      " position
 set statusline+=[%p%%]           " percentage of file
 set statusline+=%=               " right align
@@ -511,36 +514,36 @@ au BufAdd   *tex call OpenTeXworks()
 " au Filetype vim,vimrc call SetComments('vim')
 
 " 使用 z<space> 在选中文本周围加上空格
-au BufReadPost * vnoremap z<space> :call WrapTextWith(' ', ' ')<CR>
+au BufReadPost * vnoremap z<space> <Esc>:call WrapTextWith(' ', ' ')<CR>
 au BufReadPost * nmap z<space> viwz<space>
 " au BufReadPost * vnoremap z<space> <Esc>`<i <Esc>`>a <Esc>
 
 " 使用 z(, z[, z{ 在选中文本周围加上括号
-au BufReadPost * vnoremap z( :call WrapTextWith('(', ')')<CR>
+au BufReadPost * vnoremap z( <Esc>:call WrapTextWith('(', ')')<CR>
 au BufReadPost * nmap z( viwz(
-au BufReadPost * vnoremap z[ :call WrapTextWith('[', ']')<CR>
+au BufReadPost * vnoremap z[ <Esc>:call WrapTextWith('[', ']')<CR>
 au BufReadPost * nmap z[ viwz[
-au BufReadPost * vnoremap z{ :call WrapTextWith('{', '}')<CR>
+au BufReadPost * vnoremap z{ <Esc>:call WrapTextWith('{', '}')<CR>
 au BufReadPost * nmap z{ viwz{
 " au BufReadPost * vnoremap z( <Esc>`<i <Esc>r(`>a <Esc>r)<Esc>
 
 " 使用 z", z', z` 在选中文本周围加上引号
-au BufReadPost * vnoremap z" :call WrapTextWith('"', '"')<CR>
+au BufReadPost * vnoremap z" <Esc>:call WrapTextWith('"', '"')<CR>
 au BufReadPost * nmap z" viwz"
-au BufReadPost * vnoremap z' :call WrapTextWith("'", "'")<CR>
+au BufReadPost * vnoremap z' <Esc>:call WrapTextWith("'", "'")<CR>
 au BufReadPost * nmap z' viwz'
-au BufReadPost * vnoremap z` :call WrapTextWith('`', '`')<CR>
+au BufReadPost * vnoremap z` <Esc>:call WrapTextWith('`', '`')<CR>
 au BufReadPost * nmap z` viwz`
 
 " 使用 zm 将选中文本包围在一对 $ 中 (LaTeX math mode)
-au BufReadPost *.tex vnoremap z( :call WrapTextWith('$', '$')<CR>
+au BufReadPost *.tex vnoremap zm <Esc>:call WrapTextWith('$', '$')<CR>
 au BufReadPost *.tex nmap zm viwzm
 " au BufReadPost *.tex,*.notes vnoremap zm <Esc>`<i$<Esc>`>a$<Esc>
 
 " 使用 ze 强调文本
-au BufReadPost *.notes vnoremap ze :call WrapTextWith('\|', '\|')<CR>
+au BufReadPost *.notes vnoremap ze <Esc>:call WrapTextWith('\|', '\|')<CR>
 au BufReadPost *.{md,mdown,mkd,mkdn,markdown,mdwn,mk}
-            \ vnoremap ze :call WrapTextWith('*', '*')<CR>
+            \ vnoremap ze <Esc>:call WrapTextWith('*', '*')<CR>
 " au BufReadPost *.notes vnoremap ze <Esc>`<i\|<Esc>`>a\|<Esc>
 " au BufReadPost *.markdown vnoremap ze <Esc>`<i*<Esc>`>a*<Esc>
 au BufReadPost *.notes,*.{md,mdown,mkd,mkdn,markdown,mdwn,mk}
@@ -723,6 +726,14 @@ endfunc
 
 func! WrapTextWith(left, right)
     exe "norm `<i \<Esc>r".a:left."`>a \<Esc>r".a:right
+endfunc
+
+" ------------------------------------------------------------
+" 将文件 <EOL> 改为 UNIX 格式
+
+func! UnixEOL()
+    e ++ff=dos | setlocal ff=unix | update
+    exe "%s+\r++ge"
 endfunc
 
 " ------------------------------------------------------------
@@ -968,7 +979,7 @@ let g:jedi#smart_auto_mappings = 0
 " let g:acp_enableAtStartup = 0                       " 禁止内置自动补全
 let g:neocomplete#enable_at_startup = 1             " 随 Vim 启动
 let g:neocomplete#enable_smart_case = 1             " 只在输入大写字母时对大小写敏感
-let g:neocomplete#auto_completion_start_length=4    " 只在输入超过四个字符时自动打开补全菜单
+let g:neocomplete#auto_completion_start_length=3    " 只在输入超过三个字符时自动打开补全菜单
 let g:neocomplete#sources#syntax#min_keyword_length = 4
 " 默认情况下，在 NeoComplete 补全时按下退格键会撤销补全。这里改为应用补全并删去
 " 一个字符
