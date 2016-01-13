@@ -151,10 +151,12 @@ set encoding=utf-8
 " 设置支持打开的文件的编码
 set fileencodings=utf-8,cp936,utf-16le,usc-bom,gbk,euc-jp,chinese,gb18030,ucs,gb2312,big5
 
-" 设置新文件的 <EOL> 格式
-set fileformat=unix
-" 设置支持的 <EOL> 格式
-set fileformats=unix
+if has("autocmd")
+    " 设置支持的 <EOL> 格式
+    au BufRead,BufNewFile * set fileformats=unix | e
+    " 设置新文件的 <EOL> 格式
+    au BufRead,BufNewFile * set fileformat=unix
+endif
 
 " 将程序语言设为英文
 " 设置信息语言
@@ -215,6 +217,7 @@ set statusline=
 set statusline+=%f               " file name
 set statusline+=%m%r%h%w         " flag. [+] for changed/unsaved
 set statusline+=[%{&encoding}]   " encoding
+set statusline+=[%{&fileformat}] " encoding
 set statusline+=[POS=%l,%v]      " position
 set statusline+=[%p%%]           " percentage of file
 set statusline+=%=               " right align
@@ -723,6 +726,14 @@ endfunc
 
 func! WrapTextWith(left, right)
     exe "norm `<i \<Esc>r".a:left."`>a \<Esc>r".a:right
+endfunc
+
+" ------------------------------------------------------------
+" 将文件 <EOL> 改为 UNIX 格式
+
+func! UnixEOL()
+    e ++ff=dos | setlocal ff=unix | update
+    exe "%s+\r++ge"
 endfunc
 
 " ------------------------------------------------------------
