@@ -417,16 +417,11 @@ set expandtab
 set complete=.,w,b,u
 
 " 文本格式化设置
-" t     根据 textwidth 自动折行
-" c     为 comments 格式化 (see :h comments)
-" r     手动回车时插入合适的注释符
-" q     允许 gq 命令
-" n     识别编号列表 1) 2) . . . (与 2 冲突，需要 autoindent)
-" 2     使用一段的第二行缩进来格式化文本
-" l     不根据 textwidth 自动折行
-" m     在多节字符处可以折行
-" M     在拼接两行时，遇到多节字符则不插入空格
-set formatoptions+=mM   " 方便中文文本操作
+set formatoptions=
+set formatoptions+=t
+set formatoptions+=coqj     " 支持注释
+set formatoptions+=n        " 支持列表，不要和 '2' 一起用
+set formatoptions+=mB       " 方便中文文本操作
 " 自动文本格式化的行宽
 set textwidth=80
 
@@ -1178,7 +1173,6 @@ set spelllang=en_us
 " 使拼写检查忽略东亚字符
 set spelllang+=cjk
 
-" =============================================================================
 " NOTES
 " =============================================================================
 " %		带路径的当前文件名
