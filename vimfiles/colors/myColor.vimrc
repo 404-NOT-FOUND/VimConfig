@@ -3,10 +3,14 @@
 colo Tomorrow-Night
 
 " 设定特殊文件类型的配色
-au BufEnter *.mp,*.vim colo Tomorrow-Night
-au BufEnter *.cpp,*.java colo Tomorrow-Night
-au BufEnter *.py call UseSolarizedDarkColor()
-au BufEnter *.notes,*.tex,*.{md,mdown,mkd,mkdn,markdown,mdwn,mk}
+au BufEnter,BufReadPost,BufNewFile 
+            \ *.mp,*.vim colo Tomorrow-Night
+au BufEnter,BufReadPost,BufNewFile
+            \ *.cpp,*.java colo Tomorrow-Night
+au BufEnter,BufReadPost,BufNewFile
+            \ *.py call UseSolarizedDarkColor()
+au BufEnter,BufReadPost,BufNewFile
+            \ *.notes,*.tex,*.{md,mdown,mkd,mkdn,markdown,mdwn,mk}
             \ call UseSolarizedDarkColor()
 
 func! UseSolarizedDarkColor()
