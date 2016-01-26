@@ -142,34 +142,6 @@ Plugin 'taglist.vim'
 call vundle#end()
 
 " =============================================================================
-" 编码配置
-" =============================================================================
-
-" 注：使用 utf-8 格式后，软件与程序源码、文件路径不能有中文，否则报错
-" 设定新文件使用的解码
-set encoding=utf-8
-" 设置支持打开的文件的编码
-set fileencodings=utf-8,cp936,utf-16le,usc-bom,gbk,euc-jp,chinese,gb18030,ucs,gb2312,big5
-
-if has("autocmd")
-    " 设置支持的 <EOL> 格式
-    au BufRead,BufNewFile * set fileformats=unix | e
-    " 设置新文件的 <EOL> 格式
-    au BufRead,BufNewFile * set fileformat=unix
-endif
-
-" 将程序语言设为英文
-" 设置信息语言
-let $LANG = 'en'
-" 设置菜单语言
-set langmenu=en
-
-" 设置拼写检查语言为美式英语
-set spelllang=en_us
-" 使拼写检查忽略东亚字符
-set spelllang+=cjk
-
-" =============================================================================
 " 界面配置
 " =============================================================================
 
