@@ -1128,7 +1128,7 @@ let g:UltiSnipsEditSplit="vertical"
 
 " 添加自己的 snippets
 " 当前路径是 $vimfiles
-let g:UltiSnipsSnippetDirectories=["UltiSnips", "myVim/snippets"]
+let g:UltiSnipsSnippetDirectories=["UltiSnips", "mysnippets"]
 
 " ------------------------------------------------------------
 " vim-markdown
