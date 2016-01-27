@@ -390,7 +390,7 @@ set smartindent
 " set cindent
 
 " 在 (La)TeX 用 lists 的时候。item 缩进有问题。直接关掉
-let g:tex_indent_items=0 
+let g:tex_indent_items=0
 
 " 制表符显式为 4 个空格长
 set tabstop=4
@@ -1049,10 +1049,9 @@ function! VIMIM_before()
     endif
 endfunction
 
-" 使用 ctrl-space 切换
-imap <c-space> <c-o>:call VIMIM_before()<cr><c-\>
-nmap <c-space> :call VIMIM_before()<cr><c-\>
-let g:Vimim_map = 'c-bslash'
+" 使用 ctrl-space 打开 / 关闭 VimIM
+inoremap <c-space> <space><ESC>:call VIMIM_before()<cr>s<C-R>=g:Vimim_chinese()<cr>
+nnoremap <c-space> :call VIMIM_before()<cr>a<C-R>=g:Vimim_chinese()<cr><ESC>
 
 " 使用文中标点
 let g:Vimim_punctuation = 2
