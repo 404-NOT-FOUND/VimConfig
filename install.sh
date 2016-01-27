@@ -33,6 +33,7 @@ printf "Done\n"
 echo 'Copying files to vimfiles...'
 for f in ${DIR}/vimfiles/**/*; do
     to_f="$(echo "${f}" | sed 's/^\/.*vimfiles/'${escaped_target}'/')"
+    mkdir -p "$( dirname "${to_f}" )"
     if [ -e ${to_f} ]; then
         diffresult=$(diff ${f} ${to_f})
         if [ "${diffresult}" != "" ]; then
