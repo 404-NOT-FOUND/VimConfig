@@ -8,7 +8,7 @@ then
     exit 1
 fi
 
-escaped_target="$(echo "${1}" | sed 's/\\\|\[\|\]\$\|\^\|\//\\&/g')"
+escaped_target="$(echo "${1}" | sed 's/\\\|\[\|\]\$\|\&\|\^\|\//\\&/g')"
 
 case `(uname -s)` in
     Darwin|Linux)
