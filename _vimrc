@@ -544,6 +544,10 @@ au FileType markdown setlocal tw=0
 " au BufWinEnter *html,*php,*c,*cpp,*java
 "             \ let w:m2=matchadd('Underlined', '\%>' . 79 . 'v.\+', -1)
 
+" 识别 LaTeX 嵌入文本
+au FileType tex let &l:include = '^[^%]*\(\\input\>\|\\include\>\|\\includegraphics\(\[.\{-}\]\)\?\)'
+au FileType tex setlocal suffixesadd=.tex
+
 " closetag 插件
 " if:iswindows
 "     au Filetype html,xml,xsl source $vim/vimfiles/scripts/closetag.vim
