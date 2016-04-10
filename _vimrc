@@ -107,6 +107,7 @@ Plugin 'Align'
 " Plugin 'Mark--Karkat'
 Plugin 'Shougo/neocomplete'
 Plugin 'scrooloose/nerdcommenter'
+Plugin 'michaeljsmith/vim-indent-object'
 " Plugin 'scrooloose/nerdtree'
 Plugin 'SirVer/ultisnips'
 Plugin 'honza/vim-snippets'
@@ -295,6 +296,35 @@ imap ,time <c-r>=strftime("20%y-%m-%d")<cr>
 
 " 将大写 Y 改成从光标位置复制到行尾以与大写 D 对应
 nnoremap Y y$
+
+" 使用 ]i 或 gni 移动到下一个相同缩进行
+" 使用 [i 或 gpi 移动到前一个相同缩进行
+" 使用 ]I 或 gnI 和 [I 或 gpI 移动到下/前一个比当前缩进浅一级的行
+nnoremap <silent> [i :call NextIndent(0, 0, 0, 1)<CR>
+nnoremap <silent> ]i :call NextIndent(0, 1, 0, 1)<CR>
+nnoremap <silent> [I :call NextIndent(0, 0, 1, 1)<CR>
+nnoremap <silent> ]I :call NextIndent(0, 1, 1, 1)<CR>
+vnoremap <silent> [i <Esc>:call NextIndent(0, 0, 0, 1)<CR>m'gv''
+vnoremap <silent> ]i <Esc>:call NextIndent(0, 1, 0, 1)<CR>m'gv''
+vnoremap <silent> [I <Esc>:call NextIndent(0, 0, 1, 1)<CR>m'gv''
+vnoremap <silent> ]I <Esc>:call NextIndent(0, 1, 1, 1)<CR>m'gv''
+onoremap <silent> [i :call NextIndent(0, 0, 0, 1)<CR>
+onoremap <silent> ]i :call NextIndent(0, 1, 0, 1)<CR>
+onoremap <silent> [I :call NextIndent(1, 0, 1, 1)<CR>
+onoremap <silent> ]I :call NextIndent(1, 1, 1, 1)<CR>
+
+nnoremap <silent> gpi :call NextIndent(0, 0, 0, 1)<CR>
+nnoremap <silent> gni :call NextIndent(0, 1, 0, 1)<CR>
+nnoremap <silent> gpI :call NextIndent(0, 0, 1, 1)<CR>
+nnoremap <silent> gnI :call NextIndent(0, 1, 1, 1)<CR>
+vnoremap <silent> gpi <Esc>:call NextIndent(0, 0, 0, 1)<CR>m'gv''
+vnoremap <silent> gni <Esc>:call NextIndent(0, 1, 0, 1)<CR>m'gv''
+vnoremap <silent> gpI <Esc>:call NextIndent(0, 0, 1, 1)<CR>m'gv''
+vnoremap <silent> gnI <Esc>:call NextIndent(0, 1, 1, 1)<CR>m'gv''
+onoremap <silent> gpi :call NextIndent(0, 0, 0, 1)<CR>
+onoremap <silent> gni :call NextIndent(0, 1, 0, 1)<CR>
+onoremap <silent> gpI :call NextIndent(1, 0, 1, 1)<CR>
+onoremap <silent> gnI :call NextIndent(1, 1, 1, 1)<CR>
 
 " 使用方向键以在被折叠的行间移动
 nnoremap <up> gk
@@ -791,6 +821,38 @@ function MyQuickGrep()
         " j option inhibits jumping to search results
         " open quickfix for result browsing
     endtry
+endfunction
+
+" ------------------------------------------------------------
+
+" 根据缩进来移动
+" Jump to the next or previous line that has the same level or a lower
+" level of indentation than the current line.
+"
+" exclusive (bool)  : Motion is exclusive?
+" fwd (bool)        : Go to next / previous line
+" lowerlevel (bool) : Go to line with lower / same indentation level
+" skipblanks (bool) : Skip blank lines?
+func! NextIndent(exclusive, fwd, lowerlevel, skipblanks)
+    let line = line('.')
+    let column = col('.')
+    let lastline = line('$')
+    let indent = indent(line)
+    let stepvalue = a:fwd ? 1 : -1
+    while (line > 0 && line <= lastline)
+        let line = line + stepvalue
+        if ( ! a:lowerlevel && indent(line) == indent ||
+                    \ a:lowerlevel && indent(line) < indent)
+            if (! a:skipblanks || strlen(getline(line)) > 0)
+                if (a:exclusive)
+                    let line = line - stepvalue
+                endif
+                exe line
+                exe "normal " column . "|"
+                return
+            endif
+        endif
+    endwhile
 endfunction
 
 " ------------------------------------------------------------
