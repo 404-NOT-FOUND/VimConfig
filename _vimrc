@@ -127,7 +127,7 @@ Plugin 'tpope/vim-markdown'
 " Plugin 'cSyntaxAfter'
 " Plugin 'javacomplete'
 " Plugin 'vim-javacompleteex'
-Plugin 'artur-shaik/vim-javacomplete2'
+" Plugin 'artur-shaik/vim-javacomplete2'
 Plugin 'davidhalter/jedi-vim'               " 'pip install jedi' installed
 " Plugin 'mattn/emmet-vim'
 " Plugin 'fholgado/minibufexpl.vim'         "好像与 Vundle 插件有一些冲突
