@@ -448,10 +448,10 @@ set complete=.,w,b,u
 
 " 文本格式化设置
 set formatoptions=
-set formatoptions+=t
-set formatoptions+=coqj     " 支持注释
+set formatoptions+=coqjr    " 支持注释
 set formatoptions+=n        " 支持列表，不要和 '2' 一起用
 set formatoptions+=mB       " 方便中文文本操作
+set formatoptions+=t
 " 自动文本格式化的行宽
 set textwidth=80
 
