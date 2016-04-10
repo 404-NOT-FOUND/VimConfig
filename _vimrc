@@ -585,6 +585,8 @@ au FileType tex setlocal suffixesadd=.tex
 "     au Filetype html,xml,xsl source ~/.vim/scripts/closetag.vim
 " endif
 
+au FileType markdown setlocal conceallevel=0
+
 " markdown preview (需要 CHROME 并装有 markdown preview plus 插件)
 au BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn}
             \ map <Leader>p :silent ! start chrome --new-window "%:p"<CR>
