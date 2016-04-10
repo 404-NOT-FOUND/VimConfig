@@ -1122,7 +1122,7 @@ inoremap <c-space> <space><ESC>:call VIMIM_before()<cr>s<C-R>=g:Vimim_chinese()<
 nnoremap <c-space> :call VIMIM_before()<cr>a<C-R>=g:Vimim_chinese()<cr><ESC>
 
 " 使用文中标点
-let g:Vimim_punctuation = 2
+let g:Vimim_punctuation = 3
 
 " -----------------------------------------------------------------------------
 " auto-pairs
