@@ -595,11 +595,16 @@ if s:tex_fast =~ 'v'
    if version < 600
     syn region texZone		start="\\verb\*\=`"			end="`\|%stopzone\>"			contains=@Spell
     syn region texZone		start="\\verb\*\=#"			end="#\|%stopzone\>"			contains=@Spell
+    syn region texZone		start="\\code\*\=`"			end="`\|%stopzone\>"			contains=@Spell
+    syn region texZone		start="\\code\*\=#"			end="#\|%stopzone\>"			contains=@Spell
+    syn region texZone		start="\\code\*\={"			end="}\|%stopzone\>"			contains=@Spell
    else
      if b:tex_stylish
       syn region texZone		start="\\verb\*\=\z([^\ta-zA-Z@]\)"	end="\z1\|%stopzone\>"			contains=@Spell
+      syn region texZone		start="\\code\*\=\z([^\ta-zA-Z@]\)"	end="\z1\|%stopzone\>"			contains=@Spell
      else
       syn region texZone		start="\\verb\*\=\z([^\ta-zA-Z]\)"	end="\z1\|%stopzone\>"			contains=@Spell
+      syn region texZone		start="\\code\*\=\z([^\ta-zA-Z]\)"	end="\z1\|%stopzone\>"			contains=@Spell
      endif
    endif
   else
@@ -607,11 +612,16 @@ if s:tex_fast =~ 'v'
    if version < 600
     syn region texZone		start="\\verb\*\=`"			end="`\|%stopzone\>"
     syn region texZone		start="\\verb\*\=#"			end="#\|%stopzone\>"
+    syn region texZone		start="\\code\*\=`"			end="`\|%stopzone\>"
+    syn region texZone		start="\\code\*\=#"			end="#\|%stopzone\>"
+    syn region texZone		start="\\code\*\={"			end="}\|%stopzone\>"
    else
      if b:tex_stylish
        syn region texZone		start="\\verb\*\=\z([^\ta-zA-Z@]\)"	end="\z1\|%stopzone\>"
+       syn region texZone		start="\\code\*\=\z([^\ta-zA-Z@]\)"	end="\z1\|%stopzone\>"
      else
        syn region texZone		start="\\verb\*\=\z([^\ta-zA-Z]\)"	end="\z1\|%stopzone\>"
+       syn region texZone		start="\\code\*\=\z([^\ta-zA-Z]\)"	end="\z1\|%stopzone\>"
      endif
    endif
   endif
