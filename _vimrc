@@ -441,9 +441,9 @@ au BufReadPost *
             \ endif
 
 " 将特殊后缀的文件设置为相应格式
-au BufReadPost *.mk setlocal filetype=markdown
-au BufReadPost *.notes setlocal filetype=notes
-au BufReadPost *.tex setlocal filetype=tex
+au BufReadPost,BufNewFile *.mk setlocal filetype=markdown
+au BufReadPost,BufNewFile *.notes setlocal filetype=notes
+au BufReadPost,BufNewFile *.tex setlocal filetype=tex
 
 " 为 txt 文件还原 TAB 长度
 au BufReadPost *.txt setlocal tabstop=8
