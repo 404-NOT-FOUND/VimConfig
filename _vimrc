@@ -86,7 +86,7 @@ filetype off                                        " 禁用文件类型侦测
                                                     " 注意之后打开
 
 if g:islinux
-    set runtimepath+=~/.vim/bundle/vundle.vim
+    set runtimepath+=~/.vim/bundle/Vundle.vim
     call vundle#begin()
 else
     set runtimepath+=$vim/vimfiles/bundle/Vundle.vim
@@ -170,8 +170,13 @@ if g:isGUI
     let g:guifontsize=12
     " 提供改变字号的函数
     fun SetGuiFontSize(s)
-        exec 'set guifont=' . g:guifont . ':h' . string(a:s)
-        exec 'set guifontwide=' . g:guifontwide . ':h' . string(a:s)
+        if g:iswindows
+            exec 'set guifont=' . g:guifont . ':h' . string(a:s)
+            exec 'set guifontwide=' . g:guifontwide . ':h' . string(a:s)
+        else
+            exec 'set guifont=' . g:guifont . '\ ' . string(a:s)
+            exec 'set guifontwide=' . g:guifontwide . '\ ' . string(a:s-0.5)
+        endif
         let g:guifontsize=a:s
     endfunc
     " 默认 10.5 号字
@@ -238,7 +243,7 @@ set history=100
 set confirm
 
 " 与 windows 共享剪贴板
-set clipboard+=unnamed
+set clipboard=unnamed
 
 " 保存全局变量
 set viminfo+=!
@@ -929,16 +934,13 @@ let Tlist_Sort_Type = "name"
 " 如果 taglist 窗口是最后一个窗口，则退出 vim
 let Tlist_Exist_OnlyWindow = 1
 
-" 不要关闭其他文件的tags
-let Tlist_File_Fold_Auto_Close = 0
-
 " 不要显示折叠树
 let Tlist_Enable_Fold_Column = 1
 
 " 让当前不被编辑的文件的方法列表自动折叠起来
-let Tlist_File_Fold_Auto_Close = 1
+let Tlist_File_Fold_Auto_Close = 0
 
-let Tlist_Show_One_File = 1
+let Tlist_Show_One_File = 0
 
 nmap <Leader>tl :TlistToggle<CR>
 
