@@ -118,10 +118,12 @@ Plugin 'VundleVim/Vundle.vim'
 " Plugin 'mattn/emmet-vim'
 " Plugin 'msanders/snipmate.vim'
 " Plugin 'repeat.vim'
+" Plugin 'scrooloose/nerdcommenter'
 " Plugin 'scrooloose/nerdtree'
 " Plugin 'scrooloose/syntastic'
 " Plugin 'shawncplus/phpcomplete.vim'
 " Plugin 'std_c.zip'
+" Plugin 'tomtom/tcomment_vim'
 " Plugin 'tpope/vim-surround'
 " Plugin 'vim-javacompleteex'
 " Plugin 'wesleyche/SrcExpl'
@@ -130,15 +132,16 @@ Plugin 'OmniCppComplete'
 Plugin 'Shougo/neocomplete'
 Plugin 'SirVer/ultisnips'
 Plugin 'a.vim'
+Plugin 'christoomey/vim-sort-motion'
 Plugin 'closetag.vim'
 Plugin 'davidhalter/jedi-vim'               " 'pip install jedi' installed
 Plugin 'grep.vim'
 Plugin 'honza/vim-snippets'
 Plugin 'jiangmiao/auto-pairs'
 Plugin 'michaeljsmith/vim-indent-object'
-Plugin 'scrooloose/nerdcommenter'
 Plugin 'taglist.vim'
 Plugin 'terryma/vim-multiple-cursors'
+Plugin 'tpope/vim-commentary'
 Plugin 'tpope/vim-markdown'
 Plugin 'vim-scripts/VimIM'
 
@@ -1172,11 +1175,11 @@ imap <Leader>sr <M-e>
 " <leader>cu 取消选中区域(行)的注释，选中区域(行)内至少有一个 /* */
 " <leader>ca 在/*...*/与//这两种注释方式中切换（其它语言可能不一样了）
 " <leader>cA 行尾注释
-let NERDSpaceDelims = 1                     "在左注释符之后，右注释符之前留有空格
-nmap c] <Leader>cc
-vmap c] <Leader>cc
-nmap c[ <Leader>cu
-vmap c[ <Leader>cu
+" let NERDSpaceDelims = 1                     "在左注释符之后，右注释符之前留有空格
+" nmap c] <Leader>cc
+" vmap c] <Leader>cc
+" nmap c[ <Leader>cu
+" vmap c[ <Leader>cu
 
 " -----------------------------------------------------------------------------
 "  < nerdtree 插件配置 >
