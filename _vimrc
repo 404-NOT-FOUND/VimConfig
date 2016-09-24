@@ -99,6 +99,7 @@ Plugin 'VundleVim/Vundle.vim'
 " 以下为要安装或更新的插件
 
 " Plugin 'Align'
+" Plugin 'LaTeX-Box-Team/LaTeX-Box'
 " Plugin 'Lokaltog/vim-powerline'
 " Plugin 'Mark--Karkat'
 " Plugin 'Shougo/neocomplcache.vim'
@@ -138,6 +139,7 @@ Plugin 'grep.vim'
 Plugin 'honza/vim-snippets'
 Plugin 'jiangmiao/auto-pairs'
 Plugin 'junegunn/vim-easy-align'
+Plugin 'lervag/vimtex'
 Plugin 'michaeljsmith/vim-indent-object'
 Plugin 'taglist.vim'
 Plugin 'terryma/vim-multiple-cursors'
@@ -518,12 +520,12 @@ au BufReadPost *.notes setlocal spellcapcheck=              " 禁止大小写检
 " F5 编译和运行程序
 au Filetype java call SetMakeRunJavac()
 au Filetype cpp call SetMakeRunGpp()
-au FileType tex call SetMakeRunXeLaTeX()
+" au FileType tex call SetMakeRunXeLaTeX()
 au Filetype mp call SetMakeRunMpost()
 
-" 打开 tex 文件时自动打开相应的 pdf
-au VimEnter *tex call OpenTeXworks()
-au BufAdd   *tex call OpenTeXworks()
+" " 打开 tex 文件时自动打开相应的 pdf
+" au VimEnter *tex call OpenTeXworks()
+" au BufAdd   *tex call OpenTeXworks()
 
 " " C-] 与 C-[ 注释
 " au Filetype java,cpp,h,c call SetComments('c')
@@ -598,8 +600,8 @@ au FileType markdown setlocal tw=0
 "             \ let w:m2=matchadd('Underlined', '\%>' . 79 . 'v.\+', -1)
 
 " 识别 LaTeX 嵌入文本
-au FileType tex let &l:include = '^[^%]*\(\\input\>\|\\include\>\|\\includegraphics\(\[.\{-}\]\)\?\)'
-au FileType tex setlocal suffixesadd=.tex
+" au FileType tex let &l:include = '^[^%]*\(\\input\>\|\\include\>\|\\includegraphics\(\[.\{-}\]\)\?\)'
+" au FileType tex setlocal suffixesadd=.tex
 
 au FileType markdown setlocal conceallevel=0
 
@@ -651,34 +653,34 @@ endfunc
 
 " ------------------------------------------------------------
 
-" XeLaTeX 的编译与运行
-func! SetMakeRunXeLaTeX()
+" " XeLaTeX 的编译与运行
+" func! SetMakeRunXeLaTeX()
+" "     if g:iswindows
+" "         exec 'silent !if exist %<.pdf (start texworks %<.pdf)'
+" "     else
+" "         exec 'silent !if [ -e %<.pdf ]; then start texworks %<.pdf; fi'
+" "     endif
+" 	nmap <buffer> <F5> :call CompileXeLaTeX()<CR>
+" 	nmap <buffer> <c-F5> :call CompileRunXeLaTeX()<CR>
+" 	nmap <buffer> <c-CR> :call TeXclean()<CR>:silent !%<.pdf ^&<CR>
+" endfunc
+" func! OpenTeXworks()
 "     if g:iswindows
-"         exec 'silent !if exist %<.pdf (start texworks %<.pdf)'
+"         exec 'silent !if exist <afile><.pdf (start <afile><.pdf)'
 "     else
-"         exec 'silent !if [ -e %<.pdf ]; then start texworks %<.pdf; fi'
+"         exec 'silent !if [ -e <afile><.pdf ]; then start <afile><.pdf; fi'
 "     endif
-	nmap <buffer> <F5> :call CompileXeLaTeX()<CR>
-	nmap <buffer> <c-F5> :call CompileRunXeLaTeX()<CR>
-	nmap <buffer> <c-CR> :call TeXclean()<CR>:silent !%<.pdf ^&<CR>
-endfunc
-func! OpenTeXworks()
-    if g:iswindows
-        exec 'silent !if exist <afile><.pdf (start <afile><.pdf)'
-    else
-        exec 'silent !if [ -e <afile><.pdf ]; then start <afile><.pdf; fi'
-    endif
-endfunc
-func! CompileXeLaTeX()
-	exec "!xelatex %"
-endfunc
-func! CompileRunXeLaTeX()
-	exec "w"
-	exec "silent !xelatex -quiet %"
-	exec "silent !xelatex -quiet %"
-	call TeXclean()
-	exec "silent !%:r.pdf ^&"
-endfunc
+" endfunc
+" func! CompileXeLaTeX()
+" 	exec "!xelatex %"
+" endfunc
+" func! CompileRunXeLaTeX()
+" 	exec "w"
+" 	exec "silent !xelatex -quiet %"
+" 	exec "silent !xelatex -quiet %"
+" 	call TeXclean()
+" 	exec "silent !%:r.pdf ^&"
+" endfunc
 
 " ------------------------------------------------------------
 
@@ -1226,10 +1228,65 @@ let g:markdown_fenced_languages = ['html', 'python', 'bash=sh']
 " ------------------------------------------------------------
 " 在 LaTeX 中引用时给出 label 列表
 
-if has('autocmd')
-    au BufReadPost *.tex source $vim/vimfiles/ftplugin/reftex.vim
-    au FileType tex source $vim/vimfiles/ftplugin/reftex.vim
+" if has('autocmd')
+"     au BufReadPost *.tex source $vim/vimfiles/ftplugin/reftex.vim
+"     au FileType tex source $vim/vimfiles/ftplugin/reftex.vim
+" endif
+
+" ------------------------------------------------------------
+" vimtex
+" ------------------------------------------------------------
+
+" use latexmk to compile LaTeX docs, require perl installed on machine
+
+let g:tex_flavor                          = 'latex'
+let g:tex_indent_items                    = 0
+let g:Tex_DefaultTargetFormat             = 'pdf'
+let g:Tex_CompileRule_pdf                 = 'xelatex -src-specials -synctex                   = 1 -interaction = nonstopmode $*'
+let g:Tex_FormatDependency_pdf            = 'pdf'
+let g:vimtex_view_method                  = 'general'
+let g:vimtex_enabled                      = 1
+let g:vimtex_complete_img_use_tail        = 1
+if g:iswindows
+    " use SumatraPDF to view PDF, SumatraPDF required
+    let g:vimtex_view_general_viewer          = 'SumatraPDF'
+    let g:vimtex_view_general_options         = '-reuse-instance -forward-search @tex @line @pdf'
+    let g:vimtex_view_general_options_latexmk = '-reuse-instance'
+else
+    let g:vimtex_view_general_viewer          = 'xdg-open'
 endif
+
+" list of modifiers of pairs / delimiters to toggle
+let g:vimtex_delim_toggle_mod_list = [
+            \ ['\bigl', '\bigr'],
+            \ ['\Bigl', '\Bigr'],
+            \ ['\biggl', '\biggr'],
+            \ ['\Biggl', '\Biggr'],
+            \]
+            " \ ['\left', '\right'],
+
+" make neocomplete support citation / label ref / ... completions
+if !exists('g:neocomplete#sources#omni#input_patterns')
+    let g:neocomplete#sources#omni#input_patterns = {}
+endif
+let g:neocomplete#sources#omni#input_patterns.tex =
+            \ '\v\\%('
+            \ . '\a*%(ref|cite)\a*%(\s*\[[^]]*\])?\s*\{[^{}]*'
+            \ . '|includegraphics%(\s*\[[^]]*\])?\s*\{[^{}]*'
+            \ . '|%(include|input)\s*\{[^{}]*'
+            \ . ')'
+
+" ------------------------------------------------------------
+" LaTeX-Box
+" ------------------------------------------------------------
+
+" use latexmk to compile LaTeX docs, require perl installed on machine
+
+let g:LatexBox_latexmk_options = "-pdflatex='xelatex -synctex=1'"
+let g:LatexBox_latexmk_async   = 0
+let g:LatexBox_latexmk_options = "-pdflatex=xelatex"
+let g:LatexBox_latexmk_async   = 0
+let g:LatexBox_latexmk_async   = 1
 
 " ------------------------------------------------------------
 " vim-easy-align
