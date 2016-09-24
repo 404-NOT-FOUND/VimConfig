@@ -230,10 +230,15 @@ set nobackup
 " 不要生成 swap 文件
 set noswapfile
 
+" 临时文件的位置。在 windows 下默认位置需要管理员权限。绕开
+if g:iswindows
+    let $TMP=$VIM . '\tmp'
+endif
+
 " 文本修改记录
 set undofile
 if g:iswindows
-    set undodir=C:\\Windows\\Temp
+    set undodir=$TMP
 endif
 
 " cmd line 中的命令数记录
