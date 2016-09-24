@@ -562,6 +562,8 @@ au BufReadPost *.notes,*.{md,mdown,mkd,mkdn,markdown,mdwn,mk}
 " 显示行号
 au FileType xml,html,c,S,cs,java,perl,shell,bash,cpp,python,vim,php,ruby,tex,mp
 			\ setlocal number
+au FileType xml,html,c,S,cs,java,perl,shell,bash,cpp,python,vim,php,ruby,tex,mp
+			\ setlocal relativenumber
 
 " 制作标签
 if g:iswindows
