@@ -44,21 +44,21 @@ $0
 endsnippet
 
 snippet item "Itemize" b
-\begin{itemize}
+\begin{compactitem}
 	\item ${1:${VISUAL}}
-\end{itemize}
+\end{compactitem}
 $0
 endsnippet
 
 snippet desc "Description" b
-\begin{description}
+\begin{compactdesc}
 	\item[$1] ${2:${VISUAL}}
-\end{description}
+\end{compactdesc}
 $0
 endsnippet
 
 snippet itm "individual item" b
-\item $0
+\item$0
 endsnippet
 
 # math
@@ -130,6 +130,10 @@ snippet rm "roman text" w
 \\${1:m}${1/(m)$|(t)$|(.*)/(?1:ath)(?2:ext)/}rm{${2:`!p snip.rv = snip.v.text[:-1]`}}$0
 endsnippet
 
+snippet txt "text in math modes" w
+\text{${1:`!p snip.rv = snip.v.text[:-1]`}}$0
+endsnippet
+
 snippet em "emphasis" w
 \emph{${1:`!p snip.rv = snip.v.text[:-1]`}}$0
 endsnippet
@@ -146,7 +150,7 @@ snippet ma "inline math mode" w
 $${1:`!p snip.rv = snip.v.text[:-1]`}$$0
 endsnippet
 
-snippet [ "inline math mode" w
+snippet \ "display math mode" w
 \[
 	${1:`!p snip.rv = snip.v.text[:-1]`}
 \]$0
@@ -347,7 +351,7 @@ snippet lim "limit" w
 endsnippet
 
 snippet lp "Long parenthesis"
-\left(${1:${VISUAL:contents}}\right)$0
+\\${1:big}( ${2:${VISUAL}} \\${3:$1})$0
 endsnippet
 
 snippet g. "centered dot" w
