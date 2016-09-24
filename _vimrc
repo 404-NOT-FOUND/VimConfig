@@ -264,6 +264,9 @@ set selectmode=mouse,key
 " 通过使用 :commands 命令，告诉我们文件的哪一行被改变过
 set report=0
 
+" 修正 mswin 下 visual 操作问题
+set selection=inclusive
+
 " =============================================================================
 " 操作
 " =============================================================================
@@ -738,7 +741,7 @@ endfunc
 " 包围选中的文本
 
 func! WrapTextWith(left, right)
-    exe "norm `<i \<Esc>r".a:left."`>a \<Esc>r".a:right
+    exe "norm `<i \<ESC>r".a:left."`>la \<ESC>r".a:right
 endfunc
 
 " ------------------------------------------------------------
