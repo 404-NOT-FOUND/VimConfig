@@ -6,9 +6,9 @@ colo Tomorrow-Night
 au BufEnter,BufReadPost,BufNewFile 
             \ *.mp,*.vim colo Tomorrow-Night
 au BufEnter,BufReadPost,BufNewFile
-            \ *.cpp,*.java colo Tomorrow-Night
+            \ *.cpp colo Tomorrow-Night
 au BufEnter,BufReadPost,BufNewFile
-            \ *.py call UseSolarizedDarkColor()
+            \ *.py,*.java call UseSolarizedDarkColor()
 au BufEnter,BufReadPost,BufNewFile
             \ *.notes,*.tex,*.{md,mdown,mkd,mkdn,markdown,mdwn,mk}
             \ call UseSolarizedDarkColor()

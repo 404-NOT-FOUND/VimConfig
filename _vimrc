@@ -1242,7 +1242,7 @@ let g:markdown_fenced_languages = ['html', 'python', 'bash=sh']
 let g:tex_flavor                          = 'latex'
 let g:tex_indent_items                    = 0
 let g:Tex_DefaultTargetFormat             = 'pdf'
-let g:Tex_CompileRule_pdf                 = 'xelatex -src-specials -synctex                   = 1 -interaction = nonstopmode $*'
+let g:Tex_CompileRule_pdf                 = 'xelatex -src-specials -synctex=1 -interaction=nonstopmode $*'
 let g:Tex_FormatDependency_pdf            = 'pdf'
 let g:vimtex_view_method                  = 'general'
 let g:vimtex_enabled                      = 1
@@ -1305,6 +1305,7 @@ nmap ga <Plug>(EasyAlign)
 " 注：使用 utf-8 格式后，软件与程序源码、文件路径不能有中文，否则报错
 " 设定新文件使用的解码
 set encoding=utf-8
+set fileencoding=utf-8
 " 设置支持打开的文件的编码
 set fileencodings=utf-8,cp936,utf-16le,usc-bom,gbk,euc-jp,chinese,gb18030,ucs,gb2312,big5
 
@@ -1315,7 +1316,7 @@ set fileformat=unix
 
 " 将程序语言设为英文
 " 设置信息语言
-let $LANG = 'en'
+let $LANG='en_US.utf-8'
 " 设置菜单语言
 set langmenu=en
 
