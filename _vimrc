@@ -129,6 +129,7 @@ Plugin 'tpope/vim-markdown'
 " Plugin 'javacomplete'
 " Plugin 'vim-javacompleteex'
 " Plugin 'artur-shaik/vim-javacomplete2'
+Plugin 'closetag.vim'
 Plugin 'davidhalter/jedi-vim'               " 'pip install jedi' installed
 " Plugin 'mattn/emmet-vim'
 " Plugin 'fholgado/minibufexpl.vim'         "好像与 Vundle 插件有一些冲突
@@ -592,13 +593,6 @@ au FileType markdown setlocal tw=0
 " 识别 LaTeX 嵌入文本
 au FileType tex let &l:include = '^[^%]*\(\\input\>\|\\include\>\|\\includegraphics\(\[.\{-}\]\)\?\)'
 au FileType tex setlocal suffixesadd=.tex
-
-" closetag 插件
-" if:iswindows
-"     au Filetype html,xml,xsl source $vim/vimfiles/scripts/closetag.vim
-" else
-"     au Filetype html,xml,xsl source ~/.vim/scripts/closetag.vim
-" endif
 
 au FileType markdown setlocal conceallevel=0
 
@@ -1129,12 +1123,22 @@ function! VIMIM_before()
     endif
 endfunction
 
+" 禁止 ctrl + 下划线切换 VimIM
+noremap <c-_> <c-_>
 " 使用 ctrl-space 打开 / 关闭 VimIM
 inoremap <c-space> <space><ESC>:call VIMIM_before()<cr>s<C-R>=g:Vimim_chinese()<cr>
 nnoremap <c-space> :call VIMIM_before()<cr>a<C-R>=g:Vimim_chinese()<cr><ESC>
 
 " 使用文中标点
 let g:Vimim_punctuation = 3
+
+" -----------------------------------------------------------------------------
+" closetag - 一键关闭 HTML 标签
+" -----------------------------------------------------------------------------
+
+" set up mappings for tag closing
+inoremap <c-_> <C-R>=GetCloseTag()<CR>
+nnoremap <c-_> a<C-R>=GetCloseTag()<CR><ESC>
 
 " -----------------------------------------------------------------------------
 " auto-pairs
