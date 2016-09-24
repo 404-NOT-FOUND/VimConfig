@@ -125,7 +125,6 @@ Plugin 'VundleVim/Vundle.vim'
 " Plugin 'shawncplus/phpcomplete.vim'
 " Plugin 'std_c.zip'
 " Plugin 'tomtom/tcomment_vim'
-" Plugin 'tpope/vim-surround'
 " Plugin 'vim-javacompleteex'
 " Plugin 'wesleyche/SrcExpl'
 Plugin 'OmniCppComplete'
@@ -144,6 +143,8 @@ Plugin 'taglist.vim'
 Plugin 'terryma/vim-multiple-cursors'
 Plugin 'tpope/vim-commentary'
 Plugin 'tpope/vim-markdown'
+Plugin 'tpope/vim-repeat'
+Plugin 'tpope/vim-surround'
 Plugin 'vim-scripts/VimIM'
 
 call vundle#end()
@@ -529,41 +530,42 @@ au BufAdd   *tex call OpenTeXworks()
 " au Filetype tex,mp call SetComments('tex')
 " au Filetype vim,vimrc call SetComments('vim')
 
-" 使用 z<space> 在选中文本周围加上空格
-au BufReadPost * vnoremap z<space> <Esc>:call WrapTextWith(' ', ' ')<CR>
-au BufReadPost * nmap z<space> viwz<space>
-" au BufReadPost * vnoremap z<space> <Esc>`<i <Esc>`>a <Esc>
+" 下列命令皆由 vim-surround 替代
+" " 使用 z<space> 在选中文本周围加上空格
+" au BufReadPost * vnoremap z<space> <Esc>:call WrapTextWith(' ', ' ')<CR>
+" au BufReadPost * nmap z<space> viwz<space>
+" " au BufReadPost * vnoremap z<space> <Esc>`<i <Esc>`>a <Esc>
 
-" 使用 z(, z[, z{ 在选中文本周围加上括号
-au BufReadPost * vnoremap z( <Esc>:call WrapTextWith('(', ')')<CR>
-au BufReadPost * nmap z( viwz(
-au BufReadPost * vnoremap z[ <Esc>:call WrapTextWith('[', ']')<CR>
-au BufReadPost * nmap z[ viwz[
-au BufReadPost * vnoremap z{ <Esc>:call WrapTextWith('{', '}')<CR>
-au BufReadPost * nmap z{ viwz{
-" au BufReadPost * vnoremap z( <Esc>`<i <Esc>r(`>a <Esc>r)<Esc>
+" " 使用 z(, z[, z{ 在选中文本周围加上括号
+" au BufReadPost * vnoremap z( <Esc>:call WrapTextWith('(', ')')<CR>
+" au BufReadPost * nmap z( viwz(
+" au BufReadPost * vnoremap z[ <Esc>:call WrapTextWith('[', ']')<CR>
+" au BufReadPost * nmap z[ viwz[
+" au BufReadPost * vnoremap z{ <Esc>:call WrapTextWith('{', '}')<CR>
+" au BufReadPost * nmap z{ viwz{
+" " au BufReadPost * vnoremap z( <Esc>`<i <Esc>r(`>a <Esc>r)<Esc>
 
-" 使用 z", z', z` 在选中文本周围加上引号
-au BufReadPost * vnoremap z" <Esc>:call WrapTextWith('"', '"')<CR>
-au BufReadPost * nmap z" viwz"
-au BufReadPost * vnoremap z' <Esc>:call WrapTextWith("'", "'")<CR>
-au BufReadPost * nmap z' viwz'
-au BufReadPost * vnoremap z` <Esc>:call WrapTextWith('`', '`')<CR>
-au BufReadPost * nmap z` viwz`
+" " 使用 z", z', z` 在选中文本周围加上引号
+" au BufReadPost * vnoremap z" <Esc>:call WrapTextWith('"', '"')<CR>
+" au BufReadPost * nmap z" viwz"
+" au BufReadPost * vnoremap z' <Esc>:call WrapTextWith("'", "'")<CR>
+" au BufReadPost * nmap z' viwz'
+" au BufReadPost * vnoremap z` <Esc>:call WrapTextWith('`', '`')<CR>
+" au BufReadPost * nmap z` viwz`
 
-" 使用 zm 将选中文本包围在一对 $ 中 (LaTeX math mode)
-au BufReadPost *.tex vnoremap zm <Esc>:call WrapTextWith('$', '$')<CR>
-au BufReadPost *.tex nmap zm viwzm
-" au BufReadPost *.tex,*.notes vnoremap zm <Esc>`<i$<Esc>`>a$<Esc>
+" " 使用 zm 将选中文本包围在一对 $ 中 (LaTeX math mode)
+" au BufReadPost *.tex vnoremap zm <Esc>:call WrapTextWith('$', '$')<CR>
+" au BufReadPost *.tex nmap zm viwzm
+" " au BufReadPost *.tex,*.notes vnoremap zm <Esc>`<i$<Esc>`>a$<Esc>
 
-" 使用 ze 强调文本
-au BufReadPost *.notes vnoremap ze <Esc>:call WrapTextWith('\|', '\|')<CR>
-au BufReadPost *.{md,mdown,mkd,mkdn,markdown,mdwn,mk}
-            \ vnoremap ze <Esc>:call WrapTextWith('*', '*')<CR>
+" " 使用 ze 强调文本
+" au BufReadPost *.notes vnoremap ze <Esc>:call WrapTextWith('\|', '\|')<CR>
+" au BufReadPost *.{md,mdown,mkd,mkdn,markdown,mdwn,mk}
+"             \ vnoremap ze <Esc>:call WrapTextWith('*', '*')<CR>
 " au BufReadPost *.notes vnoremap ze <Esc>`<i\|<Esc>`>a\|<Esc>
 " au BufReadPost *.markdown vnoremap ze <Esc>`<i*<Esc>`>a*<Esc>
-au BufReadPost *.notes,*.{md,mdown,mkd,mkdn,markdown,mdwn,mk}
-            \ nmap ze viwze
+" au BufReadPost *.notes,*.{md,mdown,mkd,mkdn,markdown,mdwn,mk}
+"             \ nmap ze viwze
 
 " 显示行号
 au FileType xml,html,c,S,cs,java,perl,shell,bash,cpp,python,vim,php,ruby,tex,mp
@@ -741,9 +743,9 @@ endfunc
 " ------------------------------------------------------------
 " 包围选中的文本
 
-func! WrapTextWith(left, right)
-    exe "norm `<i \<ESC>r".a:left."`>la \<ESC>r".a:right
-endfunc
+" func! WrapTextWith(left, right)
+"     exe "norm `<i \<ESC>r".a:left."`>la \<ESC>r".a:right
+" endfunc
 
 " ------------------------------------------------------------
 " 将文件 <EOL> 改为 UNIX 格式
@@ -1189,12 +1191,6 @@ imap <Leader>sr <M-e>
 
 " 常规模式下输入 F2 调用插件
 " nmap <F2> :NERDTreeToggle<CR>
-
-" -----------------------------------------------------------------------------
-"  < surround 插件配置 >
-" -----------------------------------------------------------------------------
-" 快速给单词/句子两边增加符号（包括html标签），缺点是不能用"."来重复命令
-" 不过 repeat 插件可以解决这个问题，详细帮助见 :h surround.txt
 
 " -----------------------------------------------------------------------------
 " ultisnips
