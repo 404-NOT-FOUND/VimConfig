@@ -86,7 +86,7 @@ filetype off                                        " 禁用文件类型侦测
                                                     " 注意之后打开
 
 if g:islinux
-    set runtimepath+=~/.vim/bundle/vundle.vim
+    set runtimepath+=~/.vim/bundle/Vundle.vim
     call vundle#begin()
 else
     set runtimepath+=$vim/vimfiles/bundle/Vundle.vim
@@ -97,48 +97,57 @@ endif
 Plugin 'VundleVim/Vundle.vim'
 
 " 以下为要安装或更新的插件
-Plugin 'a.vim'
-Plugin 'grep.vim'
-Plugin 'Align'
-Plugin 'jiangmiao/auto-pairs'
-" Plugin 'bufexplorer.zip'
-" Plugin 'ccvext.vim'
-" Plugin 'Yggdroot/indentLine'
-" Plugin 'Mark--Karkat'
-Plugin 'Shougo/neocomplete'
-Plugin 'scrooloose/nerdcommenter'
-Plugin 'michaeljsmith/vim-indent-object'
-" Plugin 'scrooloose/nerdtree'
-Plugin 'SirVer/ultisnips'
-Plugin 'honza/vim-snippets'
-Plugin 'vim-scripts/VimIM'
-Plugin 'terryma/vim-multiple-cursors'
-Plugin 'OmniCppComplete'
+
+" Plugin 'Align'
+" Plugin 'LaTeX-Box-Team/LaTeX-Box'
 " Plugin 'Lokaltog/vim-powerline'
-" Plugin 'msanders/snipmate.vim'
-" Plugin 'wesleyche/SrcExpl'
-" Plugin 'std_c.zip'
-" Plugin 'tpope/vim-surround'
-" Plugin 'scrooloose/syntastic'
-" Plugin 'majutsushi/tagbar'
-" Plugin 'ZoomWin'
-Plugin 'tpope/vim-markdown'
-" Plugin 'shawncplus/phpcomplete.vim'
-" Plugin 'ctrlpvim/ctrlp.vim'
-" Plugin 'cSyntaxAfter'
-" Plugin 'javacomplete'
-" Plugin 'vim-javacompleteex'
-" Plugin 'artur-shaik/vim-javacomplete2'
-Plugin 'davidhalter/jedi-vim'               " 'pip install jedi' installed
-" Plugin 'mattn/emmet-vim'
-" Plugin 'fholgado/minibufexpl.vim'         "好像与 Vundle 插件有一些冲突
+" Plugin 'Mark--Karkat'
 " Plugin 'Shougo/neocomplcache.vim'
-" Plugin 'repeat.vim'
-" Plugin 'ervandew/supertab'                "有时与 snipmate 插件冲突
-Plugin 'taglist.vim'
 " Plugin 'TxtBrowser'
 " Plugin 'Valloric/YouCompleteMe'
+" Plugin 'Yggdroot/indentLine'
+" Plugin 'ZoomWin'
+" Plugin 'artur-shaik/vim-javacomplete2'
+" Plugin 'bufexplorer.zip'
+" Plugin 'cSyntaxAfter'
+" Plugin 'ccvext.vim'
+" Plugin 'ctrlpvim/ctrlp.vim'
+" Plugin 'ervandew/supertab'                "有时与 snipmate 插件冲突
 " Plugin 'exvim/ex-minibufexpl'                "exvim插件之一。修复BUG
+" Plugin 'fholgado/minibufexpl.vim'         "好像与 Vundle 插件有一些冲突
+" Plugin 'javacomplete'
+" Plugin 'majutsushi/tagbar'
+" Plugin 'mattn/emmet-vim'
+" Plugin 'msanders/snipmate.vim'
+" Plugin 'repeat.vim'
+" Plugin 'scrooloose/nerdcommenter'
+" Plugin 'scrooloose/nerdtree'
+" Plugin 'scrooloose/syntastic'
+" Plugin 'shawncplus/phpcomplete.vim'
+" Plugin 'std_c.zip'
+" Plugin 'tomtom/tcomment_vim'
+" Plugin 'vim-javacompleteex'
+" Plugin 'wesleyche/SrcExpl'
+Plugin 'OmniCppComplete'
+Plugin 'Shougo/neocomplete'
+Plugin 'SirVer/ultisnips'
+Plugin 'a.vim'
+Plugin 'christoomey/vim-sort-motion'
+Plugin 'closetag.vim'
+Plugin 'davidhalter/jedi-vim'               " 'pip install jedi' installed
+Plugin 'grep.vim'
+Plugin 'honza/vim-snippets'
+Plugin 'jiangmiao/auto-pairs'
+Plugin 'junegunn/vim-easy-align'
+Plugin 'lervag/vimtex'
+Plugin 'michaeljsmith/vim-indent-object'
+Plugin 'taglist.vim'
+Plugin 'terryma/vim-multiple-cursors'
+Plugin 'tpope/vim-commentary'
+Plugin 'tpope/vim-markdown'
+Plugin 'tpope/vim-repeat'
+Plugin 'tpope/vim-surround'
+Plugin 'vim-scripts/VimIM'
 
 call vundle#end()
 
@@ -170,8 +179,13 @@ if g:isGUI
     let g:guifontsize=12
     " 提供改变字号的函数
     fun SetGuiFontSize(s)
-        exec 'set guifont=' . g:guifont . ':h' . string(a:s)
-        exec 'set guifontwide=' . g:guifontwide . ':h' . string(a:s)
+        if g:iswindows
+            exec 'set guifont=' . g:guifont . ':h' . string(a:s)
+            exec 'set guifontwide=' . g:guifontwide . ':h' . string(a:s)
+        else
+            exec 'set guifont=' . g:guifont . '\ ' . string(a:s)
+            exec 'set guifontwide=' . g:guifontwide . '\ ' . string(a:s-0.5)
+        endif
         let g:guifontsize=a:s
     endfunc
     " 默认 10.5 号字
@@ -225,10 +239,15 @@ set nobackup
 " 不要生成 swap 文件
 set noswapfile
 
+" 临时文件的位置。在 windows 下默认位置需要管理员权限。绕开
+if g:iswindows
+    let $TMP=$VIM . '\tmp'
+endif
+
 " 文本修改记录
 set undofile
 if g:iswindows
-    set undodir=C:\\Windows\\Temp
+    set undodir=$TMP
 endif
 
 " cmd line 中的命令数记录
@@ -238,7 +257,7 @@ set history=100
 set confirm
 
 " 与 windows 共享剪贴板
-set clipboard+=unnamed
+set clipboard=unnamed
 
 " 保存全局变量
 set viminfo+=!
@@ -253,6 +272,9 @@ set selectmode=mouse,key
 
 " 通过使用 :commands 命令，告诉我们文件的哪一行被改变过
 set report=0
+
+" 修正 mswin 下 visual 操作问题
+set selection=inclusive
 
 " =============================================================================
 " 操作
@@ -498,57 +520,60 @@ au BufReadPost *.notes setlocal spellcapcheck=              " 禁止大小写检
 " F5 编译和运行程序
 au Filetype java call SetMakeRunJavac()
 au Filetype cpp call SetMakeRunGpp()
-au FileType tex call SetMakeRunXeLaTeX()
+" au FileType tex call SetMakeRunXeLaTeX()
 au Filetype mp call SetMakeRunMpost()
 
-" 打开 tex 文件时自动打开相应的 pdf
-au VimEnter *tex call OpenTeXworks()
-au BufAdd   *tex call OpenTeXworks()
+" " 打开 tex 文件时自动打开相应的 pdf
+" au VimEnter *tex call OpenTeXworks()
+" au BufAdd   *tex call OpenTeXworks()
 
 " " C-] 与 C-[ 注释
 " au Filetype java,cpp,h,c call SetComments('c')
 " au Filetype tex,mp call SetComments('tex')
 " au Filetype vim,vimrc call SetComments('vim')
 
-" 使用 z<space> 在选中文本周围加上空格
-au BufReadPost * vnoremap z<space> <Esc>:call WrapTextWith(' ', ' ')<CR>
-au BufReadPost * nmap z<space> viwz<space>
-" au BufReadPost * vnoremap z<space> <Esc>`<i <Esc>`>a <Esc>
+" 下列命令皆由 vim-surround 替代
+" " 使用 z<space> 在选中文本周围加上空格
+" au BufReadPost * vnoremap z<space> <Esc>:call WrapTextWith(' ', ' ')<CR>
+" au BufReadPost * nmap z<space> viwz<space>
+" " au BufReadPost * vnoremap z<space> <Esc>`<i <Esc>`>a <Esc>
 
-" 使用 z(, z[, z{ 在选中文本周围加上括号
-au BufReadPost * vnoremap z( <Esc>:call WrapTextWith('(', ')')<CR>
-au BufReadPost * nmap z( viwz(
-au BufReadPost * vnoremap z[ <Esc>:call WrapTextWith('[', ']')<CR>
-au BufReadPost * nmap z[ viwz[
-au BufReadPost * vnoremap z{ <Esc>:call WrapTextWith('{', '}')<CR>
-au BufReadPost * nmap z{ viwz{
-" au BufReadPost * vnoremap z( <Esc>`<i <Esc>r(`>a <Esc>r)<Esc>
+" " 使用 z(, z[, z{ 在选中文本周围加上括号
+" au BufReadPost * vnoremap z( <Esc>:call WrapTextWith('(', ')')<CR>
+" au BufReadPost * nmap z( viwz(
+" au BufReadPost * vnoremap z[ <Esc>:call WrapTextWith('[', ']')<CR>
+" au BufReadPost * nmap z[ viwz[
+" au BufReadPost * vnoremap z{ <Esc>:call WrapTextWith('{', '}')<CR>
+" au BufReadPost * nmap z{ viwz{
+" " au BufReadPost * vnoremap z( <Esc>`<i <Esc>r(`>a <Esc>r)<Esc>
 
-" 使用 z", z', z` 在选中文本周围加上引号
-au BufReadPost * vnoremap z" <Esc>:call WrapTextWith('"', '"')<CR>
-au BufReadPost * nmap z" viwz"
-au BufReadPost * vnoremap z' <Esc>:call WrapTextWith("'", "'")<CR>
-au BufReadPost * nmap z' viwz'
-au BufReadPost * vnoremap z` <Esc>:call WrapTextWith('`', '`')<CR>
-au BufReadPost * nmap z` viwz`
+" " 使用 z", z', z` 在选中文本周围加上引号
+" au BufReadPost * vnoremap z" <Esc>:call WrapTextWith('"', '"')<CR>
+" au BufReadPost * nmap z" viwz"
+" au BufReadPost * vnoremap z' <Esc>:call WrapTextWith("'", "'")<CR>
+" au BufReadPost * nmap z' viwz'
+" au BufReadPost * vnoremap z` <Esc>:call WrapTextWith('`', '`')<CR>
+" au BufReadPost * nmap z` viwz`
 
-" 使用 zm 将选中文本包围在一对 $ 中 (LaTeX math mode)
-au BufReadPost *.tex vnoremap zm <Esc>:call WrapTextWith('$', '$')<CR>
-au BufReadPost *.tex nmap zm viwzm
-" au BufReadPost *.tex,*.notes vnoremap zm <Esc>`<i$<Esc>`>a$<Esc>
+" " 使用 zm 将选中文本包围在一对 $ 中 (LaTeX math mode)
+" au BufReadPost *.tex vnoremap zm <Esc>:call WrapTextWith('$', '$')<CR>
+" au BufReadPost *.tex nmap zm viwzm
+" " au BufReadPost *.tex,*.notes vnoremap zm <Esc>`<i$<Esc>`>a$<Esc>
 
-" 使用 ze 强调文本
-au BufReadPost *.notes vnoremap ze <Esc>:call WrapTextWith('\|', '\|')<CR>
-au BufReadPost *.{md,mdown,mkd,mkdn,markdown,mdwn,mk}
-            \ vnoremap ze <Esc>:call WrapTextWith('*', '*')<CR>
+" " 使用 ze 强调文本
+" au BufReadPost *.notes vnoremap ze <Esc>:call WrapTextWith('\|', '\|')<CR>
+" au BufReadPost *.{md,mdown,mkd,mkdn,markdown,mdwn,mk}
+"             \ vnoremap ze <Esc>:call WrapTextWith('*', '*')<CR>
 " au BufReadPost *.notes vnoremap ze <Esc>`<i\|<Esc>`>a\|<Esc>
 " au BufReadPost *.markdown vnoremap ze <Esc>`<i*<Esc>`>a*<Esc>
-au BufReadPost *.notes,*.{md,mdown,mkd,mkdn,markdown,mdwn,mk}
-            \ nmap ze viwze
+" au BufReadPost *.notes,*.{md,mdown,mkd,mkdn,markdown,mdwn,mk}
+"             \ nmap ze viwze
 
 " 显示行号
 au FileType xml,html,c,S,cs,java,perl,shell,bash,cpp,python,vim,php,ruby,tex,mp
 			\ setlocal number
+au FileType xml,html,c,S,cs,java,perl,shell,bash,cpp,python,vim,php,ruby,tex,mp
+			\ setlocal relativenumber
 
 " 制作标签
 if g:iswindows
@@ -575,15 +600,8 @@ au FileType markdown setlocal tw=0
 "             \ let w:m2=matchadd('Underlined', '\%>' . 79 . 'v.\+', -1)
 
 " 识别 LaTeX 嵌入文本
-au FileType tex let &l:include = '^[^%]*\(\\input\>\|\\include\>\|\\includegraphics\(\[.\{-}\]\)\?\)'
-au FileType tex setlocal suffixesadd=.tex
-
-" closetag 插件
-" if:iswindows
-"     au Filetype html,xml,xsl source $vim/vimfiles/scripts/closetag.vim
-" else
-"     au Filetype html,xml,xsl source ~/.vim/scripts/closetag.vim
-" endif
+" au FileType tex let &l:include = '^[^%]*\(\\input\>\|\\include\>\|\\includegraphics\(\[.\{-}\]\)\?\)'
+" au FileType tex setlocal suffixesadd=.tex
 
 au FileType markdown setlocal conceallevel=0
 
@@ -635,34 +653,34 @@ endfunc
 
 " ------------------------------------------------------------
 
-" XeLaTeX 的编译与运行
-func! SetMakeRunXeLaTeX()
+" " XeLaTeX 的编译与运行
+" func! SetMakeRunXeLaTeX()
+" "     if g:iswindows
+" "         exec 'silent !if exist %<.pdf (start texworks %<.pdf)'
+" "     else
+" "         exec 'silent !if [ -e %<.pdf ]; then start texworks %<.pdf; fi'
+" "     endif
+" 	nmap <buffer> <F5> :call CompileXeLaTeX()<CR>
+" 	nmap <buffer> <c-F5> :call CompileRunXeLaTeX()<CR>
+" 	nmap <buffer> <c-CR> :call TeXclean()<CR>:silent !%<.pdf ^&<CR>
+" endfunc
+" func! OpenTeXworks()
 "     if g:iswindows
-"         exec 'silent !if exist %<.pdf (start texworks %<.pdf)'
+"         exec 'silent !if exist <afile><.pdf (start <afile><.pdf)'
 "     else
-"         exec 'silent !if [ -e %<.pdf ]; then start texworks %<.pdf; fi'
+"         exec 'silent !if [ -e <afile><.pdf ]; then start <afile><.pdf; fi'
 "     endif
-	nmap <buffer> <F5> :call CompileXeLaTeX()<CR>
-	nmap <buffer> <c-F5> :call CompileRunXeLaTeX()<CR>
-	nmap <buffer> <c-CR> :call TeXclean()<CR>:silent !%<.pdf ^&<CR>
-endfunc
-func! OpenTeXworks()
-    if g:iswindows
-        exec 'silent !if exist <afile><.pdf (start <afile><.pdf)'
-    else
-        exec 'silent !if [ -e <afile><.pdf ]; then start <afile><.pdf; fi'
-    endif
-endfunc
-func! CompileXeLaTeX()
-	exec "!xelatex %"
-endfunc
-func! CompileRunXeLaTeX()
-	exec "w"
-	exec "silent !xelatex -quiet %"
-	exec "silent !xelatex -quiet %"
-	call TeXclean()
-	exec "silent !%:r.pdf ^&"
-endfunc
+" endfunc
+" func! CompileXeLaTeX()
+" 	exec "!xelatex %"
+" endfunc
+" func! CompileRunXeLaTeX()
+" 	exec "w"
+" 	exec "silent !xelatex -quiet %"
+" 	exec "silent !xelatex -quiet %"
+" 	call TeXclean()
+" 	exec "silent !%:r.pdf ^&"
+" endfunc
 
 " ------------------------------------------------------------
 
@@ -727,9 +745,9 @@ endfunc
 " ------------------------------------------------------------
 " 包围选中的文本
 
-func! WrapTextWith(left, right)
-    exe "norm `<i \<Esc>r".a:left."`>a \<Esc>r".a:right
-endfunc
+" func! WrapTextWith(left, right)
+"     exe "norm `<i \<ESC>r".a:left."`>la \<ESC>r".a:right
+" endfunc
 
 " ------------------------------------------------------------
 " 将文件 <EOL> 改为 UNIX 格式
@@ -929,16 +947,13 @@ let Tlist_Sort_Type = "name"
 " 如果 taglist 窗口是最后一个窗口，则退出 vim
 let Tlist_Exist_OnlyWindow = 1
 
-" 不要关闭其他文件的tags
-let Tlist_File_Fold_Auto_Close = 0
-
 " 不要显示折叠树
 let Tlist_Enable_Fold_Column = 1
 
 " 让当前不被编辑的文件的方法列表自动折叠起来
-let Tlist_File_Fold_Auto_Close = 1
+let Tlist_File_Fold_Auto_Close = 0
 
-let Tlist_Show_One_File = 1
+let Tlist_Show_One_File = 0
 
 nmap <Leader>tl :TlistToggle<CR>
 
@@ -1117,12 +1132,22 @@ function! VIMIM_before()
     endif
 endfunction
 
+" 禁止 ctrl + 下划线切换 VimIM
+noremap <c-_> <c-_>
 " 使用 ctrl-space 打开 / 关闭 VimIM
 inoremap <c-space> <space><ESC>:call VIMIM_before()<cr>s<C-R>=g:Vimim_chinese()<cr>
 nnoremap <c-space> :call VIMIM_before()<cr>a<C-R>=g:Vimim_chinese()<cr><ESC>
 
 " 使用文中标点
 let g:Vimim_punctuation = 3
+
+" -----------------------------------------------------------------------------
+" closetag - 一键关闭 HTML 标签
+" -----------------------------------------------------------------------------
+
+" set up mappings for tag closing
+inoremap <c-_> <C-R>=GetCloseTag()<CR>
+nnoremap <c-_> a<C-R>=GetCloseTag()<CR><ESC>
 
 " -----------------------------------------------------------------------------
 " auto-pairs
@@ -1155,11 +1180,11 @@ imap <Leader>sr <M-e>
 " <leader>cu 取消选中区域(行)的注释，选中区域(行)内至少有一个 /* */
 " <leader>ca 在/*...*/与//这两种注释方式中切换（其它语言可能不一样了）
 " <leader>cA 行尾注释
-let NERDSpaceDelims = 1                     "在左注释符之后，右注释符之前留有空格
-nmap c] <Leader>cc
-vmap c] <Leader>cc
-nmap c[ <Leader>cu
-vmap c[ <Leader>cu
+" let NERDSpaceDelims = 1                     "在左注释符之后，右注释符之前留有空格
+" nmap c] <Leader>cc
+" vmap c] <Leader>cc
+" nmap c[ <Leader>cu
+" vmap c[ <Leader>cu
 
 " -----------------------------------------------------------------------------
 "  < nerdtree 插件配置 >
@@ -1168,12 +1193,6 @@ vmap c[ <Leader>cu
 
 " 常规模式下输入 F2 调用插件
 " nmap <F2> :NERDTreeToggle<CR>
-
-" -----------------------------------------------------------------------------
-"  < surround 插件配置 >
-" -----------------------------------------------------------------------------
-" 快速给单词/句子两边增加符号（包括html标签），缺点是不能用"."来重复命令
-" 不过 repeat 插件可以解决这个问题，详细帮助见 :h surround.txt
 
 " -----------------------------------------------------------------------------
 " ultisnips
@@ -1209,10 +1228,75 @@ let g:markdown_fenced_languages = ['html', 'python', 'bash=sh']
 " ------------------------------------------------------------
 " 在 LaTeX 中引用时给出 label 列表
 
-if has('autocmd')
-    au BufReadPost *.tex source $vim/vimfiles/ftplugin/reftex.vim
-    au FileType tex source $vim/vimfiles/ftplugin/reftex.vim
+" if has('autocmd')
+"     au BufReadPost *.tex source $vim/vimfiles/ftplugin/reftex.vim
+"     au FileType tex source $vim/vimfiles/ftplugin/reftex.vim
+" endif
+
+" ------------------------------------------------------------
+" vimtex
+" ------------------------------------------------------------
+
+" use latexmk to compile LaTeX docs, require perl installed on machine
+
+let g:tex_flavor                          = 'latex'
+let g:tex_indent_items                    = 0
+let g:Tex_DefaultTargetFormat             = 'pdf'
+let g:Tex_CompileRule_pdf                 = 'xelatex -src-specials -synctex=1 -interaction=nonstopmode $*'
+let g:Tex_FormatDependency_pdf            = 'pdf'
+let g:vimtex_view_method                  = 'general'
+let g:vimtex_enabled                      = 1
+let g:vimtex_complete_img_use_tail        = 1
+if g:iswindows
+    " use SumatraPDF to view PDF, SumatraPDF required
+    let g:vimtex_view_general_viewer          = 'SumatraPDF'
+    let g:vimtex_view_general_options         = '-reuse-instance -forward-search @tex @line @pdf'
+    let g:vimtex_view_general_options_latexmk = '-reuse-instance'
+else
+    let g:vimtex_view_general_viewer          = 'xdg-open'
 endif
+
+" list of modifiers of pairs / delimiters to toggle
+let g:vimtex_delim_toggle_mod_list = [
+            \ ['\bigl', '\bigr'],
+            \ ['\Bigl', '\Bigr'],
+            \ ['\biggl', '\biggr'],
+            \ ['\Biggl', '\Biggr'],
+            \]
+            " \ ['\left', '\right'],
+
+" make neocomplete support citation / label ref / ... completions
+if !exists('g:neocomplete#sources#omni#input_patterns')
+    let g:neocomplete#sources#omni#input_patterns = {}
+endif
+let g:neocomplete#sources#omni#input_patterns.tex =
+            \ '\v\\%('
+            \ . '\a*%(ref|cite)\a*%(\s*\[[^]]*\])?\s*\{[^{}]*'
+            \ . '|includegraphics%(\s*\[[^]]*\])?\s*\{[^{}]*'
+            \ . '|%(include|input)\s*\{[^{}]*'
+            \ . ')'
+
+" ------------------------------------------------------------
+" LaTeX-Box
+" ------------------------------------------------------------
+
+" use latexmk to compile LaTeX docs, require perl installed on machine
+
+let g:LatexBox_latexmk_options = "-pdflatex='xelatex -synctex=1'"
+let g:LatexBox_latexmk_async   = 0
+let g:LatexBox_latexmk_options = "-pdflatex=xelatex"
+let g:LatexBox_latexmk_async   = 0
+let g:LatexBox_latexmk_async   = 1
+
+" ------------------------------------------------------------
+" vim-easy-align
+" ------------------------------------------------------------
+
+" Start interactive EasyAlign in visual mode (e.g. vipga)
+xmap ga <Plug>(EasyAlign)
+
+" Start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap ga <Plug>(EasyAlign)
 
 " =============================================================================
 " 编码配置

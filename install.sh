@@ -19,6 +19,7 @@ case `(uname -s)` in
     CYGWIN*|MINGW32*|MSYS*)
         echo 'Windows system detected, copying "_vimrc"...'
         cp -i ${DIR}/_vimrc $1/../_vimrc
+        mkdir -p ${VIM}/tmp
         ;;
     *)
         echo 'System not recognized, Exiting...'
