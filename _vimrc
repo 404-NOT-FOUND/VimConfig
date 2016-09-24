@@ -98,6 +98,7 @@ Plugin 'VundleVim/Vundle.vim'
 
 " 以下为要安装或更新的插件
 
+" Plugin 'Align'
 " Plugin 'Lokaltog/vim-powerline'
 " Plugin 'Mark--Karkat'
 " Plugin 'Shougo/neocomplcache.vim'
@@ -127,7 +128,6 @@ Plugin 'VundleVim/Vundle.vim'
 " Plugin 'tpope/vim-surround'
 " Plugin 'vim-javacompleteex'
 " Plugin 'wesleyche/SrcExpl'
-Plugin 'Align'
 Plugin 'OmniCppComplete'
 Plugin 'Shougo/neocomplete'
 Plugin 'SirVer/ultisnips'
@@ -138,6 +138,7 @@ Plugin 'davidhalter/jedi-vim'               " 'pip install jedi' installed
 Plugin 'grep.vim'
 Plugin 'honza/vim-snippets'
 Plugin 'jiangmiao/auto-pairs'
+Plugin 'junegunn/vim-easy-align'
 Plugin 'michaeljsmith/vim-indent-object'
 Plugin 'taglist.vim'
 Plugin 'terryma/vim-multiple-cursors'
@@ -1233,6 +1234,16 @@ if has('autocmd')
     au BufReadPost *.tex source $vim/vimfiles/ftplugin/reftex.vim
     au FileType tex source $vim/vimfiles/ftplugin/reftex.vim
 endif
+
+" ------------------------------------------------------------
+" vim-easy-align
+" ------------------------------------------------------------
+
+" Start interactive EasyAlign in visual mode (e.g. vipga)
+xmap ga <Plug>(EasyAlign)
+
+" Start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap ga <Plug>(EasyAlign)
 
 " =============================================================================
 " 编码配置
