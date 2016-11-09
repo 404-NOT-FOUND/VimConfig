@@ -632,8 +632,6 @@ au FileType markdown setlocal tw=0
 " au FileType tex let &l:include = '^[^%]*\(\\input\>\|\\include\>\|\\includegraphics\(\[.\{-}\]\)\?\)'
 " au FileType tex setlocal suffixesadd=.tex
 
-au FileType markdown setlocal conceallevel=0
-
 " markdown preview (需要 CHROME 并装有 markdown preview plus 插件)
 au BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn}
             \ map <Leader>p :silent ! start chrome --new-window "%:p"<CR>
@@ -1297,7 +1295,8 @@ let g:UltiSnipsSnippetDirectories=["UltiSnips", "mysnippets"]
 " vim-markdown
 " ------------------------------------------------------------
 
-let g:markdown_fenced_languages = ['html', 'python', 'bash=sh']
+let g:markdown_fenced_languages = ['html', 'python', 'bash=sh', 'sql', 'java', 'c', 'ocaml']
+let g:markdown_syntax_conceal = 0
 
 " ------------------------------------------------------------
 " reftex
