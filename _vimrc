@@ -1327,6 +1327,23 @@ xmap ga <Plug>(EasyAlign)
 " Start interactive EasyAlign for a motion/text object (e.g. gaip)
 nmap ga <Plug>(EasyAlign)
 
+" ------------------------------------------------------------
+" surround
+" ------------------------------------------------------------
+
+let g:surround_{char2nr("q")} = "'\r'"
+let g:surround_{char2nr("Q")} = '"\r"'
+if has("autocmd")
+    au Filetype tex let g:surround_{char2nr("q")} = "`\r'"
+    au Filetype tex let g:surround_{char2nr("Q")} = "``\r''"
+    au Filetype tex let g:surround_{char2nr("f")} = "\\\1command: \1{\r}"
+    au Filetype tex,markdown let g:surround_{char2nr("m")} = "$\r$"
+    au Filetype tex,markdown let g:surround_{char2nr("M")} = "\\[\n\t\r\n\\]"
+
+    au Filetype markdown let g:surround_{char2nr("c")} 
+                \ = "```\1language: \1 \n\r\n```"
+endif
+
 " =============================================================================
 " 编码配置
 " =============================================================================
