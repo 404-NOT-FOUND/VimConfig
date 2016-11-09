@@ -107,14 +107,15 @@ Plugin 'VundleVim/Vundle.vim'
 " Plugin 'Valloric/YouCompleteMe'
 " Plugin 'Yggdroot/indentLine'
 " Plugin 'ZoomWin'
+" Plugin 'a.vim'
 " Plugin 'artur-shaik/vim-javacomplete2'
 " Plugin 'bufexplorer.zip'
 " Plugin 'cSyntaxAfter'
 " Plugin 'ccvext.vim'
 " Plugin 'ctrlpvim/ctrlp.vim'
-" Plugin 'ervandew/supertab'                "有时与 snipmate 插件冲突
-" Plugin 'exvim/ex-minibufexpl'                "exvim插件之一。修复BUG
-" Plugin 'fholgado/minibufexpl.vim'         "好像与 Vundle 插件有一些冲突
+" Plugin 'ervandew/supertab'         " 有时与 snipmate 插件冲突
+" Plugin 'exvim/ex-minibufexpl'      " exvim插件之一。修复BUG
+" Plugin 'fholgado/minibufexpl.vim'  " 好像与 Vundle 插件有一些冲突
 " Plugin 'javacomplete'
 " Plugin 'jiangmiao/auto-pairs'
 " Plugin 'majutsushi/tagbar'
@@ -136,7 +137,7 @@ Plugin 'a.vim'
 Plugin 'christoomey/vim-sort-motion'
 Plugin 'closetag.vim'
 Plugin 'cohama/lexima.vim'           " auto pair closer
-Plugin 'davidhalter/jedi-vim'               " 'pip install jedi' installed
+Plugin 'davidhalter/jedi-vim'        " python autocomplete. 'pip install jedi' required
 Plugin 'grep.vim'
 Plugin 'honza/vim-snippets'
 Plugin 'junegunn/vim-easy-align'
@@ -288,14 +289,14 @@ set nocompatible
 let g:mapleader = ","
 
 " 保存
-nnoremap <C-S> :update<CR>
-inoremap <C-S> <Esc>:update<CR>
+nnoremap <C-s> :update<CR>
+inoremap <C-s> <Esc>:update<CR>
 
 " 使用 ctrl-y 重做 (redo)
-noremap <C-Y> <C-R>
+noremap <C-y> <C-r>
 
 " 在命令行下使用 ctrl-v 粘贴
-cmap <C-V> <C-R>+
+cmap <C-v> <C-r>+
 
 " 删除所有行尾多余的空白（空格或 tab ）
 nmap <F12>   :let g:winview = winsaveview()<CR>
@@ -309,9 +310,9 @@ nmap <F11> :nohls<CR>
 
 " ctrl-c 计算器
 if has('python')
-    imap <silent> <C-C> <C-R>=pyeval(input('Calculate: '))<CR>
+    imap <silent> <C-c> <C-r>=pyeval(input('Calculate: '))<CR>
 else
-    imap <silent> <C-C> <C-R>=string(eval(input("Calculate: ")))<CR>
+    imap <silent> <C-c> <C-r>=string(eval(input("Calculate: ")))<CR>
 endif
 
 " 时间戳
@@ -350,12 +351,12 @@ onoremap <silent> gpI :call NextIndent(1, 0, 1, 1)<CR>
 onoremap <silent> gnI :call NextIndent(1, 1, 1, 1)<CR>
 
 " 使用方向键以在被折叠的行间移动
-nnoremap <up> gk
-vnoremap <up> gk
-inoremap <up> <c-o>gk
-nnoremap <down> gj
-vnoremap <down> gj
-inoremap <down> <c-o>gj
+nnoremap <Up> gk
+vnoremap <Up> gk
+inoremap <Up> <C-o>gk
+nnoremap <Down> gj
+vnoremap <Down> gj
+inoremap <Down> <C-o>gj
 
 " 使回退键（backspace）正常跨行
 set backspace=indent,eol,start
@@ -364,29 +365,27 @@ set backspace=indent,eol,start
 " set whichwrap+=<,>,h,l
 
 " 允许 ctrl-q 进入块选模式 (visual block mode)
-noremap <C-Q> <C-V>
-
-" 用空格键来开关折叠
-set foldmethod=manual
-nnoremap <space> @=((foldclosed(line('.')) < 0) ? 'zc':'zo')<CR>:echo<CR>
+noremap <C-q> <C-v>
 
 " 窗口控制
-" 使用 <leader>. 和 <leader>m 前后切换 Buffer
-nmap <silent> <leader>. :bnext<CR>:buffers<CR>
-nmap <silent> <leader>m :bprevious<CR>:buffers<CR>
+" " 使用 <Leader>. 和 <Leader>m 前后切换 Buffer
+nmap <silent> <Leader>. :bnext<CR>:buffers<CR>
+nmap <silent> <Leader>m :bprevious<CR>:buffers<CR>
+nmap gb :ls<CR>:buffer 
+
 " 使用 ctrl+j,k,h,l 切换分割的视窗
-nnoremap <c-j> <c-w>j
-nnoremap <c-k> <c-w>k
-nnoremap <c-h> <c-w>h
-nnoremap <c-l> <c-w>l
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-h> <C-w>h
+nnoremap <C-l> <C-w>l
 
 " 标签控制
 " 使用 ctrl+n 和 ctrl+x 打开/关闭标签
-" nnoremap <c-n> :tabnew<CR>:e
-" nnoremap <c-x> :tabc<CR>
+" nnoremap <C-n> :tabnew<CR>:e
+" nnoremap <C-x> :tabc<CR>
 " 使用 ctrl+Tab 切换标签
-nnoremap <c-TAB> :tabnext<CR>
-nnoremap <c-s-TAB> :tabprevious<CR>
+nnoremap <C-Tab> :tabnext<CR>
+nnoremap <C-S-Tab> :tabprevious<CR>
 
 " =============================================================================
 " 搜索和匹配
@@ -534,10 +533,10 @@ au Filetype mp call SetMakeRunMpost()
 " au Filetype vim,vimrc call SetComments('vim')
 
 " 下列命令皆由 vim-surround 替代
-" " 使用 z<space> 在选中文本周围加上空格
-" au BufReadPost * vnoremap z<space> <Esc>:call WrapTextWith(' ', ' ')<CR>
-" au BufReadPost * nmap z<space> viwz<space>
-" " au BufReadPost * vnoremap z<space> <Esc>`<i <Esc>`>a <Esc>
+" " 使用 z<Space> 在选中文本周围加上空格
+" au BufReadPost * vnoremap z<Space> <Esc>:call WrapTextWith(' ', ' ')<CR>
+" au BufReadPost * nmap z<Space> viwz<Space>
+" " au BufReadPost * vnoremap z<Space> <Esc>`<i <Esc>`>a <Esc>
 
 " " 使用 z(, z[, z{ 在选中文本周围加上括号
 " au BufReadPost * vnoremap z( <Esc>:call WrapTextWith('(', ')')<CR>
@@ -633,8 +632,8 @@ endfunc
 " MetaPost 的编译与运行
 func! SetMakeRunMpost()
 	nmap <buffer> <F5> :call CompileMpost()<CR>
-	nmap <buffer> <c-s-F5> :call CompileRunMpost()<CR>
-	nmap <buffer> <c-CR> :call RunMpost()<CR>
+	nmap <buffer> <C-S-F5> :call CompileRunMpost()<CR>
+	nmap <buffer> <C-CR> :call RunMpost()<CR>
 "                 \ :texworks 'silent !%<-' .
 "                 \ input('Open figure number: ') . '.pdf'<CR>
 endfunc
@@ -662,8 +661,8 @@ endfunc
 " "         exec 'silent !if [ -e %<.pdf ]; then start texworks %<.pdf; fi'
 " "     endif
 " 	nmap <buffer> <F5> :call CompileXeLaTeX()<CR>
-" 	nmap <buffer> <c-F5> :call CompileRunXeLaTeX()<CR>
-" 	nmap <buffer> <c-CR> :call TeXclean()<CR>:silent !%<.pdf ^&<CR>
+" 	nmap <buffer> <C-F5> :call CompileRunXeLaTeX()<CR>
+" 	nmap <buffer> <C-CR> :call TeXclean()<CR>:silent !%<.pdf ^&<CR>
 " endfunc
 " func! OpenTeXworks()
 "     if g:iswindows
@@ -689,7 +688,7 @@ endfunc
 func! SetMakeRunJavac()
 	:set makeprg=javac\ %
 	nmap <buffer> <F5> :call MakeRunJava()<CR>
-	nmap <buffer> <c-CR> :!java %<<CR>
+	nmap <buffer> <C-CR> :!java %<<CR>
 endfunc
 func! MakeRunJava()
 	exec "w"
@@ -707,7 +706,7 @@ endfunc
 func! SetMakeRunGpp()
 	:set makeprg=g++\ %:h/*cpp\ -o\ %<.exe
 	nmap <buffer> <F5> :call MakeRunGpp()<CR>
-	nmap <buffer> <c-CR> :!%<.exe<CR>
+	nmap <buffer> <C-CR> :!%<.exe<CR>
 endfunc
 func! MakeRunGpp()
 	exec "w"
@@ -725,12 +724,12 @@ endfunc
 " func! SetComments(char)
 " 	if a:char == 'c'
 " 		map c] :s+^\(\s*[^ \t]\)+// \1+ge<CR>
-" 					\/<UP><UP><CR><c-o>
+" 					\/<Up><Up><CR><C-o>
 " 					\:nohls<CR>
 " 					\:echo "comments added"<CR>
 "
 " 		map c[ :s+^\(\s*\)// +\1+ge<CR>
-" 					\/<UP><UP><CR><c-o>
+" 					\/<Up><Up><CR><C-o>
 " 					\:nohls<CR>
 " 					\:echo "comments removed"<CR>
 "
@@ -747,7 +746,7 @@ endfunc
 " 包围选中的文本
 
 " func! WrapTextWith(left, right)
-"     exe "norm `<i \<ESC>r".a:left."`>la \<ESC>r".a:right
+"     exe "norm `<i \<Esc>r".a:left."`>la \<Esc>r".a:right
 " endfunc
 
 " ------------------------------------------------------------
@@ -793,14 +792,14 @@ endfunc
 " 自动补全括号
 " func! CompleteBrackets()
 " 	inoremap <buffer> ( ()<Left>
-" 	inoremap <silent> <buffer> ) <c-r>=ClosePair(')')<CR>
+" 	inoremap <silent> <buffer> ) <C-r>=ClosePair(')')<CR>
 " 	inoremap <buffer> { {}<Left>
-" 	inoremap <silent> <buffer> } <c-r>=ClosePair('}')<CR>
+" 	inoremap <silent> <buffer> } <C-r>=ClosePair('}')<CR>
 " 	inoremap <buffer> [ []<Left>
-" 	inoremap <silent> <buffer> ] <c-r>=ClosePair(']')<CR>
+" 	inoremap <silent> <buffer> ] <C-r>=ClosePair(']')<CR>
 " 	"inoremap <buffer> " ""<Left>
 " 	"inoremap <buffer> ' ''<Left>
-" 	inoremap <buffer> <CR> <c-r>=MultilineBrackets()<CR>
+" 	inoremap <buffer> <CR> <C-r>=MultilineBrackets()<CR>
 " endfunc
 " "实现括号的自动配对后防止重复输入
 " function! ClosePair(char)
@@ -816,7 +815,7 @@ endfunc
 " 	if    ( getline('.')[col('.') - 2] == '(' && getline('.')[col('.')-1] == ')' )
 " 	 \ || ( getline('.')[col('.') - 2] == '[' && getline('.')[col('.')-1] == ']' )
 " 	 \ || ( getline('.')[col('.') - 2] == '{' && getline('.')[col('.')-1] == '}' )
-" 		return "\r\<ESC>\<s-o>"
+" 		return "\r\<Esc>\<S-o>"
 " 	else
 " 		return "\r"
 " endfunc
@@ -831,10 +830,10 @@ function MyQuickGrep()
 
     if (pattern == '')
 		echohl WarningMsg | echo 'Please enter a search pattern' | echohl None
-        exe "normal \<ESC>"
+        exe "normal \<Esc>"
     elseif (filename == '')
         "echohl WarningMsg | echo 'Please enter filename(s)' | echohl None
-        "exe "normal \<ESC>"
+        "exe "normal \<Esc>"
         let filename = '*'
     endif
     try
@@ -1024,7 +1023,7 @@ let g:jedi#smart_auto_mappings = 0
 " NeoComplete
 " -----------------------------------------------------------------------------
 " 关键字补全、文件路径补全、tag 补全等等
-" 在弹出补全列表后用 <c-p> 或 <c-n> 进行上下选择效果比较好
+" 在弹出补全列表后用 <C-p> 或 <C-n> 进行上下选择效果比较好
 " 需要 lua
 
 " let g:acp_enableAtStartup = 0                       " 禁止内置自动补全
@@ -1136,8 +1135,8 @@ endfunction
 " 禁止 ctrl + 下划线切换 VimIM
 noremap <c-_> <c-_>
 " 使用 ctrl-space 打开 / 关闭 VimIM
-inoremap <c-space> <space><ESC>:call VIMIM_before()<cr>s<C-R>=g:Vimim_chinese()<cr>
-nnoremap <c-space> :call VIMIM_before()<cr>a<C-R>=g:Vimim_chinese()<cr><ESC>
+inoremap <C-Space> <Space><Esc>:call VIMIM_before()<CR>s<C-r>=g:Vimim_chinese()<CR>
+nnoremap <C-Space> :call VIMIM_before()<CR>a<C-r>=g:Vimim_chinese()<CR><Esc>
 
 " 使用文中标点
 let g:Vimim_punctuation = 3
@@ -1147,8 +1146,8 @@ let g:Vimim_punctuation = 3
 " -----------------------------------------------------------------------------
 
 " set up mappings for tag closing
-inoremap <c-_> <C-R>=GetCloseTag()<CR>
-nnoremap <c-_> a<C-R>=GetCloseTag()<CR><ESC>
+inoremap <C-_> <C-r>=GetCloseTag()<CR>
+nnoremap <C-_> a<C-r>=GetCloseTag()<CR><Esc>
 
 " -----------------------------------------------------------------------------
 " auto-pairs
@@ -1175,12 +1174,12 @@ imap <Leader>sr <M-e>
 " NerdCommenter
 " -----------------------------------------------------------------------------
 " 以下为插件默认快捷键，其中的说明是以C/C++为例的，其它语言类似
-" <leader>ci 以每行一个 /* */ 注释选中行(选中区域所在行)，再输入则取消注释
-" <leader>cm 以一个 /* */ 注释选中行(选中区域所在行)，再输入则称重复注释
-" <leader>cc 以每行一个 /* */ 注释选中行或区域，再输入则称重复注释
-" <leader>cu 取消选中区域(行)的注释，选中区域(行)内至少有一个 /* */
-" <leader>ca 在/*...*/与//这两种注释方式中切换（其它语言可能不一样了）
-" <leader>cA 行尾注释
+" <Leader>ci 以每行一个 /* */ 注释选中行(选中区域所在行)，再输入则取消注释
+" <Leader>cm 以一个 /* */ 注释选中行(选中区域所在行)，再输入则称重复注释
+" <Leader>cc 以每行一个 /* */ 注释选中行或区域，再输入则称重复注释
+" <Leader>cu 取消选中区域(行)的注释，选中区域(行)内至少有一个 /* */
+" <Leader>ca 在/*...*/与//这两种注释方式中切换（其它语言可能不一样了）
+" <Leader>cA 行尾注释
 " let NERDSpaceDelims = 1                     "在左注释符之后，右注释符之前留有空格
 " nmap c] <Leader>cc
 " vmap c] <Leader>cc
