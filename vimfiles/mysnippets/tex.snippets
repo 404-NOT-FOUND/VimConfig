@@ -331,9 +331,9 @@ snippet g- "bar{}" w
 endsnippet
 
 # this works, but adds more work to users
-# ^{$1}$0
+# ^${1/(.)$|(.*)/(?2:{)/}${1}${1/(.)$|(.*)/(?2:})/} $0
 snippet ^ "superscript" i
-^${1/(.)$|(.*)/(?2:{)/}${1}${1/(.)$|(.*)/(?2:})/} $0
+^{$1}$0
 endsnippet
 
 snippet _ "subscript" i
