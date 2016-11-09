@@ -1228,6 +1228,14 @@ endtry
 " -----------------------------------------------------------------------------
 " HTML/CSS 代码快速编写神器
 
+" make emmet only work in html and css files
+let g:user_emmet_install_global = 0
+if has('autocmd')
+    au FileType html,css EmmetInstall
+endif
+
+let g:user_emmet_leader_key='<C-e>'
+
 " -----------------------------------------------------------------------------
 " NerdCommenter
 " -----------------------------------------------------------------------------
