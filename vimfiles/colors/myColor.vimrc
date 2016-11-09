@@ -17,6 +17,7 @@ func! UseSolarizedDarkColor()
     let g:solarized_italic=0          " 不使用斜体
     set background=dark               " 用暗版 solarized
     colo solarized
+    doautocmd syntax
 endfunc
 
 " 当 Vim 在后台时改变配色。重新回到 Vim 时还原
