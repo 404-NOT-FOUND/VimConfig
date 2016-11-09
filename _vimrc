@@ -1253,6 +1253,16 @@ let g:user_emmet_leader_key='<C-e>'
 " vmap c[ <Leader>cu
 
 " -----------------------------------------------------------------------------
+" commentary
+" -----------------------------------------------------------------------------
+
+" map cm <Plug>Commentary
+" "map cml <Plug>CommentaryLine
+" map cic <Plug>ChangeCommentary
+" map cac <Plug>ChangeCommentary
+" map cmu <Plug>Commentary<Plug>Commentary " uncomment a block of comments
+
+" -----------------------------------------------------------------------------
 "  < nerdtree 插件配置 >
 " -----------------------------------------------------------------------------
 " 有目录村结构的文件浏览插件
