@@ -345,7 +345,7 @@ else
 endif
 
 " 时间戳
-imap ,time <c-r>=strftime("20%y-%m-%d")<cr>
+imap <Leader>time <c-r>=strftime("20%y-%m-%d")<cr>
 
 " 将大写 Y 改成从光标位置复制到行尾以与大写 D 对应
 nnoremap Y y$
