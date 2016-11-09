@@ -98,6 +98,7 @@ Plugin 'VundleVim/Vundle.vim'
 
 " 以下为要安装或更新的插件
 
+let g:use_VimIM = 0
 " Plugin 'Align'
 " Plugin 'LaTeX-Box-Team/LaTeX-Box'
 " Plugin 'Lokaltog/vim-powerline'
@@ -129,6 +130,9 @@ Plugin 'VundleVim/Vundle.vim'
 " Plugin 'std_c.zip'
 " Plugin 'tomtom/tcomment_vim'
 " Plugin 'vim-javacompleteex'
+if g:use_VimIM
+    Plugin 'vim-scripts/VimIM'
+endif
 " Plugin 'wesleyche/SrcExpl'
 Plugin 'OmniCppComplete'
 Plugin 'Shougo/neocomplete'
@@ -149,7 +153,6 @@ Plugin 'tpope/vim-commentary'
 Plugin 'tpope/vim-markdown'
 Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-surround'
-Plugin 'vim-scripts/VimIM'
 
 call vundle#end()
 
@@ -277,6 +280,16 @@ set report=0
 
 " 修正 mswin 下 visual 操作问题
 set selection=inclusive
+
+" chinese input
+" 需要编译时打开 +xim, +multi_byte_ime 或 global-ime 特性版本的 Vim
+set noimcmdline
+set imsearch=0
+set iminsert=0
+if has("autocmd")
+    au InsertLeave * set iminsert=0 | set imsearch=0
+    au CursorMoved * set iminsert=0 | set imsearch=0
+endif
 
 " =============================================================================
 " 操作
@@ -1132,11 +1145,11 @@ function! VIMIM_before()
     endif
 endfunction
 
-" 禁止 ctrl + 下划线切换 VimIM
-noremap <c-_> <c-_>
-" 使用 ctrl-space 打开 / 关闭 VimIM
-inoremap <C-Space> <Space><Esc>:call VIMIM_before()<CR>s<C-r>=g:Vimim_chinese()<CR>
-nnoremap <C-Space> :call VIMIM_before()<CR>a<C-r>=g:Vimim_chinese()<CR><Esc>
+if g:use_VimIM
+    " 使用 ctrl-space 打开 / 关闭 VimIM
+    inoremap <C-Space> <Space><Esc>:call VIMIM_before()<CR>s<C-r>=g:Vimim_chinese()<CR>
+    nnoremap <C-Space> :call VIMIM_before()<CR>a<C-r>=g:Vimim_chinese()<CR><Esc>
+endif
 
 " 使用文中标点
 let g:Vimim_punctuation = 3
