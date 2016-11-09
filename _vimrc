@@ -137,7 +137,7 @@ endif
 Plugin 'OmniCppComplete'
 Plugin 'Shougo/neocomplete'
 Plugin 'SirVer/ultisnips'
-Plugin 'a.vim'
+Plugin 'bkad/CamelCaseMotion'
 Plugin 'christoomey/vim-sort-motion'
 Plugin 'closetag.vim'
 Plugin 'cohama/lexima.vim'           " auto pair closer
@@ -1373,6 +1373,29 @@ xmap ga <Plug>(EasyAlign)
 
 " Start interactive EasyAlign for a motion/text object (e.g. gaip)
 nmap ga <Plug>(EasyAlign)
+
+" ------------------------------------------------------------
+" CamelCaseMotion
+" ------------------------------------------------------------
+
+" jump among words IN CAMEL CASE OR SNAKE STYLE NAMES
+" e.g., [C]amelCase ----> Camel[C]ase
+map <silent> <Leader>w <Plug>CamelCaseMotion_w
+map <silent> <Leader>b <Plug>CamelCaseMotion_b
+map <silent> <Leader>e <Plug>CamelCaseMotion_e
+map <silent> <Leader>ge <Plug>CamelCaseMotion_ge
+sunmap <Leader>w
+sunmap <Leader>b
+sunmap <Leader>e
+sunmap <Leader>ge
+
+" CamelCase text objects
+omap <silent> <Leader>iw <Plug>CamelCaseMotion_ie
+xmap <silent> <Leader>iw <Plug>CamelCaseMotion_ie
+omap <silent> <Leader>ib <Plug>CamelCaseMotion_ib
+xmap <silent> <Leader>ib <Plug>CamelCaseMotion_ib
+" omap <silent> <Leader>ie <Plug>CamelCaseMotion_ie
+" xmap <silent> <Leader>ie <Plug>CamelCaseMotion_ie
 
 " ------------------------------------------------------------
 " surround
