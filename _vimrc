@@ -1188,6 +1188,35 @@ let g:AutoPairsFlyMode = 0
 " 在语句块之前输入要包围的符号，按 <leader>sr 将语句块包围
 imap <Leader>sr <M-e>
 
+" 将输入闭括号自动跳过下一个紧接的闭括号的功能限制在当前行内
+let g:AutoPairsMultilineClose = 0
+
+" -----------------------------------------------------------------------------
+" lexima
+" -----------------------------------------------------------------------------
+
+imap <C-h> <BS>
+cmap <C-h> <BS>
+
+try
+    call lexima#add_rule({
+                \  'char': '<CR>', 'at': '{\%#}',
+                \  'input' : '%<CR>', 'input_after': '<CR>',
+                \  'filetype' : 'tex',
+                \ })
+    call lexima#add_rule({
+                \  'char': '<CR>', 'at': '\[\%#]',
+                \  'input' : '%<CR>', 'input_after': '<CR>',
+                \  'filetype' : 'tex',
+                \ })
+    call lexima#add_rule({
+                \  'char': '``',
+                \  'input_after': "''",
+                \  'filetype' : 'tex',
+                \ })
+catch
+endtry
+
 " -----------------------------------------------------------------------------
 " ctrlp
 " -----------------------------------------------------------------------------
