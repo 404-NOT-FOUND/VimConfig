@@ -1315,13 +1315,14 @@ let g:markdown_syntax_conceal = 0
 " use latexmk to compile LaTeX docs, require perl installed on machine
 
 let g:tex_flavor                          = 'latex'
-let g:tex_indent_items                    = 0
+let g:tex_indent_items                    = 1
 let g:Tex_DefaultTargetFormat             = 'pdf'
-let g:Tex_CompileRule_pdf                 = 'xelatex -src-specials -synctex=1 -interaction=nonstopmode $*'
+let g:Tex_CompileRule_pdf                 = '-xelatex -shell-escape -src-specials -synctex=1 -interaction=nonstopmode'
 let g:Tex_FormatDependency_pdf            = 'pdf'
 let g:vimtex_view_method                  = 'general'
 let g:vimtex_enabled                      = 1
 let g:vimtex_complete_img_use_tail        = 1
+let g:vimtex_latexmk_options              = g:Tex_CompileRule_pdf
 if g:iswindows
     " use SumatraPDF to view PDF, SumatraPDF required
     let g:vimtex_view_general_viewer          = 'SumatraPDF'
@@ -1357,11 +1358,11 @@ let g:neocomplete#sources#omni#input_patterns.tex =
 
 " use latexmk to compile LaTeX docs, require perl installed on machine
 
-let g:LatexBox_latexmk_options = "-pdflatex='xelatex -synctex=1'"
-let g:LatexBox_latexmk_async   = 0
-let g:LatexBox_latexmk_options = "-pdflatex=xelatex"
-let g:LatexBox_latexmk_async   = 0
-let g:LatexBox_latexmk_async   = 1
+" let g:LatexBox_latexmk_options = "-pdflatex='xelatex -synctex=1'"
+" let g:LatexBox_latexmk_async   = 0
+" let g:LatexBox_latexmk_options = "-pdflatex=xelatex"
+" let g:LatexBox_latexmk_async   = 0
+" let g:LatexBox_latexmk_async   = 1
 
 " ------------------------------------------------------------
 " vim-easy-align
