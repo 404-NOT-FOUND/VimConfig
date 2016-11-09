@@ -531,6 +531,9 @@ au BufReadPost *.txt setlocal tabstop=8
 au BufReadPost *.txt setlocal shiftwidth=8
 " au BufReadPost *.txt setlocal smarttab
 
+" 注释风格
+au BufReadPost *.sql set commentstring=--\ %s
+
 " 自动创建折叠
 " au BufReadPost *.h,*.c,*.cpp set foldexpr=FoldBrace(0)
 " au BufReadPost *java set foldexpr=FoldBrace(1)
