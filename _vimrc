@@ -229,6 +229,11 @@ set bufhidden=hide
 " 字符间插入的像素行数目
 set linespace=0
 
+" 显示行号
+set number
+" 显示相对当前行的行号
+set relativenumber
+
 " =============================================================================
 " 核心设置
 " =============================================================================
@@ -582,11 +587,11 @@ au Filetype mp call SetMakeRunMpost()
 " au BufReadPost *.notes,*.{md,mdown,mkd,mkdn,markdown,mdwn,mk}
 "             \ nmap ze viwze
 
-" 显示行号
-au FileType xml,html,c,S,cs,java,perl,shell,bash,cpp,python,vim,php,ruby,tex,mp
-			\ setlocal number
-au FileType xml,html,c,S,cs,java,perl,shell,bash,cpp,python,vim,php,ruby,tex,mp
-			\ setlocal relativenumber
+" " 根据文件格式显示行号
+" au FileType xml,html,c,S,cs,java,perl,shell,bash,cpp,python,vim,php,ruby,tex,mp
+" 			\ setlocal number
+" au FileType xml,html,c,S,cs,java,perl,shell,bash,cpp,python,vim,php,ruby,tex,mp
+" 			\ setlocal relativenumber
 
 " 制作标签
 if g:iswindows
