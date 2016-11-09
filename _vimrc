@@ -303,15 +303,26 @@ endif
 " 不要使用 vi 的键盘模式，而是 vim 的
 set nocompatible
 
+" 在 cmd window 里使用 ESC 退出
+" autocmd CmdWinEnter * inoremap <buffer><Esc> <C-o>:q<CR><Esc>
+
 " 设置 leader 健
-let g:mapleader = ","
+let g:mapleader = "\<Space>"
 
 " 保存
-nnoremap <C-s> :update<CR>
-inoremap <C-s> <Esc>:update<CR>
+" nnoremap <C-s> :update<CR>
+" inoremap <C-s> <Esc>:update<CR>
+nnoremap <Leader>s :update<CR>
+
+" 使用 jk 退出到命令模式（同 Esc）
+inoremap kj <Esc>
+
+" 打开/关闭拼写检查
+" (change option spell)
+nmap cos :set spell!<CR>
 
 " 使用 ctrl-y 重做 (redo)
-noremap <C-y> <C-r>
+" noremap <C-y> <C-r>
 
 " 在命令行下使用 ctrl-v 粘贴
 cmap <C-v> <C-r>+
@@ -383,12 +394,12 @@ set backspace=indent,eol,start
 " set whichwrap+=<,>,h,l
 
 " 允许 ctrl-q 进入块选模式 (visual block mode)
-noremap <C-q> <C-v>
+" noremap <C-q> <C-v>
 
 " 窗口控制
 " " 使用 <Leader>. 和 <Leader>m 前后切换 Buffer
-nmap <silent> <Leader>. :bnext<CR>:buffers<CR>
-nmap <silent> <Leader>m :bprevious<CR>:buffers<CR>
+" nmap <silent> <Leader>. :bnext<CR>:buffers<CR>
+" nmap <silent> <Leader>m :bprevious<CR>:buffers<CR>
 nmap gb :ls<CR>:buffer 
 
 " 使用 ctrl+j,k,h,l 切换分割的视窗
