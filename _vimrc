@@ -116,6 +116,7 @@ Plugin 'VundleVim/Vundle.vim'
 " Plugin 'exvim/ex-minibufexpl'                "exvim插件之一。修复BUG
 " Plugin 'fholgado/minibufexpl.vim'         "好像与 Vundle 插件有一些冲突
 " Plugin 'javacomplete'
+" Plugin 'jiangmiao/auto-pairs'
 " Plugin 'majutsushi/tagbar'
 " Plugin 'mattn/emmet-vim'
 " Plugin 'msanders/snipmate.vim'
@@ -134,10 +135,10 @@ Plugin 'SirVer/ultisnips'
 Plugin 'a.vim'
 Plugin 'christoomey/vim-sort-motion'
 Plugin 'closetag.vim'
+Plugin 'cohama/lexima.vim'           " auto pair closer
 Plugin 'davidhalter/jedi-vim'               " 'pip install jedi' installed
 Plugin 'grep.vim'
 Plugin 'honza/vim-snippets'
-Plugin 'jiangmiao/auto-pairs'
 Plugin 'junegunn/vim-easy-align'
 Plugin 'lervag/vimtex'
 Plugin 'michaeljsmith/vim-indent-object'
