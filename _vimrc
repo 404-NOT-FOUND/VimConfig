@@ -99,6 +99,10 @@ Plugin 'VundleVim/Vundle.vim'
 " 以下为要安装或更新的插件
 
 let g:use_VimIM = 0
+if g:use_VimIM
+    Plugin 'vim-scripts/VimIM'
+endif
+
 " Plugin 'Align'
 " Plugin 'LaTeX-Box-Team/LaTeX-Box'
 " Plugin 'Lokaltog/vim-powerline'
@@ -120,7 +124,6 @@ let g:use_VimIM = 0
 " Plugin 'javacomplete'
 " Plugin 'jiangmiao/auto-pairs'
 " Plugin 'majutsushi/tagbar'
-" Plugin 'mattn/emmet-vim'
 " Plugin 'msanders/snipmate.vim'
 " Plugin 'repeat.vim'
 " Plugin 'scrooloose/nerdcommenter'
@@ -130,11 +133,9 @@ let g:use_VimIM = 0
 " Plugin 'std_c.zip'
 " Plugin 'tomtom/tcomment_vim'
 " Plugin 'vim-javacompleteex'
-if g:use_VimIM
-    Plugin 'vim-scripts/VimIM'
-endif
 " Plugin 'wesleyche/SrcExpl'
 Plugin 'OmniCppComplete'
+Plugin 'justinmk/vim-sneak'
 Plugin 'Shougo/neocomplete'
 Plugin 'SirVer/ultisnips'
 Plugin 'bkad/CamelCaseMotion'
@@ -146,6 +147,7 @@ Plugin 'grep.vim'
 Plugin 'honza/vim-snippets'
 Plugin 'junegunn/vim-easy-align'
 Plugin 'lervag/vimtex'
+Plugin 'mattn/emmet-vim'
 Plugin 'michaeljsmith/vim-indent-object'
 Plugin 'taglist.vim'
 Plugin 'terryma/vim-multiple-cursors'
@@ -345,7 +347,7 @@ else
 endif
 
 " 时间戳
-imap <Leader>time <c-r>=strftime("20%y-%m-%d")<cr>
+" imap <Leader>time <c-r>=strftime("20%y-%m-%d")<cr>
 
 " 将大写 Y 改成从光标位置复制到行尾以与大写 D 对应
 nnoremap Y y$
@@ -400,7 +402,7 @@ set backspace=indent,eol,start
 " " 使用 <Leader>. 和 <Leader>m 前后切换 Buffer
 " nmap <silent> <Leader>. :bnext<CR>:buffers<CR>
 " nmap <silent> <Leader>m :bprevious<CR>:buffers<CR>
-nmap gb :ls<CR>:buffer 
+nmap gb :ls<CR>:buffer
 
 " 使用 ctrl+j,k,h,l 切换分割的视窗
 nnoremap <C-j> <C-w>j
@@ -1187,7 +1189,7 @@ nnoremap <C-_> a<C-r>=GetCloseTag()<CR><Esc>
 let g:AutoPairsFlyMode = 0
 
 " 在语句块之前输入要包围的符号，按 <leader>sr 将语句块包围
-imap <Leader>sr <M-e>
+" imap <Leader>sr <M-e>
 
 " 将输入闭括号自动跳过下一个紧接的闭括号的功能限制在当前行内
 let g:AutoPairsMultilineClose = 0
@@ -1413,9 +1415,15 @@ if has("autocmd")
     au Filetype tex,markdown let g:surround_{char2nr("m")} = "$\r$"
     au Filetype tex,markdown let g:surround_{char2nr("M")} = "\\[\n\t\r\n\\]"
 
-    au Filetype markdown let g:surround_{char2nr("c")} 
+    au Filetype markdown let g:surround_{char2nr("c")}
                 \ = "```\1language: \1 \n\r\n```"
 endif
+
+" ------------------------------------------------------------
+" sneak
+" ------------------------------------------------------------
+
+" let g:sneak#label = 1
 
 " =============================================================================
 " 编码配置
