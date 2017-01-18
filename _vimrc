@@ -1421,6 +1421,14 @@ if has("autocmd")
     " code
     au Filetype markdown let g:surround_{char2nr("c")}
                 \ = "```\1language: \1 \n\r\n```"
+
+    " emph
+    au Filetype markdown let g:surround_{char2nr("e")}
+                \ = "*\r*"
+    au Filetype markdown let g:surround_{char2nr("E")}
+                \ = "**\r**"
+    au Filetype notes let g:surround_{char2nr("e")}
+                \ = "\|\r\|"
 endif
 
 " ------------------------------------------------------------
