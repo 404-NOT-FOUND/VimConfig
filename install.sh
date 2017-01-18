@@ -13,7 +13,7 @@ escaped_target="$(echo "${1}" | sed 's/\\\|\[\|\]\$\|\&\|\^\|\//\\&/g')"
 case `(uname -s)` in
     Darwin|Linux)
         echo 'Mac OS or Linux system detected, copying ".vimrc"...'
-        cp -i ${DIR}/_vimrc ~/.vim/.vimrc
+        cp -i ${DIR}/_vimrc $1/../.vimrc
         ;;
 
     CYGWIN*|MINGW32*|MSYS*)
