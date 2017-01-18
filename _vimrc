@@ -333,6 +333,8 @@ cmap <C-v> <C-r>+
 nmap <F12>   :let g:winview = winsaveview()<CR>
             \:%s+\s\+$++e<CR>
             \:nohls<CR>
+            \:call histdel('search', -1)<CR>
+            \/<UP><CR> " delete search hist and recover last search
             \:call winrestview(g:winview)<CR>
             \:echo 'Trialing spaces cleared'<CR>
 
