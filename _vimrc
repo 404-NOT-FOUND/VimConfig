@@ -1408,8 +1408,9 @@ xmap <silent> <Leader>ib <Plug>CamelCaseMotion_ib
 " surround
 " ------------------------------------------------------------
 
+" quotes
 let g:surround_{char2nr("q")} = "'\r'"
-let g:surround_{char2nr("Q")} = '"\r"'
+let g:surround_{char2nr("Q")} = "\"\r\""
 if has("autocmd")
     au Filetype tex let g:surround_{char2nr("q")} = "`\r'"
     au Filetype tex let g:surround_{char2nr("Q")} = "``\r''"
@@ -1417,6 +1418,7 @@ if has("autocmd")
     au Filetype tex,markdown let g:surround_{char2nr("m")} = "$\r$"
     au Filetype tex,markdown let g:surround_{char2nr("M")} = "\\[\n\t\r\n\\]"
 
+    " code
     au Filetype markdown let g:surround_{char2nr("c")}
                 \ = "```\1language: \1 \n\r\n```"
 endif
