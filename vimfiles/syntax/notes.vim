@@ -35,21 +35,26 @@ syn match myIgnore contained '>$' conceal
 
 syn match Normal /'/
 
-syn match Normal "%.*"
-syn match Comment "^%.*" contains=TODO,String,Error
+syn match Comment "\(^\|[^\\]\)%.*" contains=TODO,String,Error
 
 syn match TODO "TODO" contained
 
-"syn match String '>\(\n\(\t\| \{4}\| \{8}\).*\)\+' contains=DanglingCode
-"syn match DanglingCode '^\(\t\| \{4}\| \{8}\).*' contains=myIgnore
-
-syn region String	matchgroup=myIgnore start=" >$" start="^>$" end="^[^ \t]"me=e-1 end="<<<" concealends
+syn region String	matchgroup=myIgnore
+            \ start=" >$" start="^>$"
+            \ end="^[^ \t]"me=e-1 end="<<<" concealends
 syn region String	matchgroup=myIgnore start="|" end="|" concealends
-syn region String	matchgroup=myIgnore start="`" end="`" concealends
 
 " math zones
-syn region Special	start="\$" end="\$" concealends
-syn region Special	start="\\\[" end="\\\]" concealends
+syn region Special	start="\(^\|[^\\]\)\$"ms=e
+            \ end="\(^\|[^\\\$]\)\$"
+syn match Special '\$\$'
+syn region Special	start="\\\[" end="\\\]"
+
+" special chars
+syn match Normal '\\\$' conceal cchar=$
+syn match Normal '\\%' conceal cchar=%
+syn match Normal '\\{' conceal cchar={
+syn match Normal '\\}' conceal cchar=}
 
 hi clear Conceal
 

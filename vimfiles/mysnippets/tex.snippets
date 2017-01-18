@@ -1,0 +1,400 @@
+priority -40
+
+# environments
+# -----------------------------------------------------------------------------
+
+snippet "b(egin)?" "begin{} / end{}" br
+\begin{${1:something}}
+	${2:${VISUAL}}
+\end{$1}
+$0
+endsnippet
+
+# tables and figures
+
+snippet table "Table environment" b
+\begin{table}[${1:htpb}]
+	\centering
+	\caption{${2:caption}}
+	\label{tab:${3:label}}
+	\begin{${4:t}${4/(t)$|(a)$|(.*)/(?1:abular)(?2:rray)/}}{${5:c}}
+	${6:${VISUAL}}
+	\end{$4${4/(t)$|(a)$|(.*)/(?1:abular)(?2:rray)/}}
+\end{table}
+$0
+endsnippet
+
+snippet fig "Figure environment" b
+\begin{figure}[${2:htpb}]
+	\centering
+	\includegraphics[width=${3:0.8}\linewidth]{${4:${VISUAL:name.ext}}}
+	\caption{$5}
+	\label{fig:${4/(\w+)\.\w+/$1/}}
+\end{figure}
+$0
+endsnippet
+
+# lists
+
+snippet enum "Enumerate" b
+\begin{compactenum}
+	\item ${1:${VISUAL}}
+\end{compactenum}
+$0
+endsnippet
+
+snippet item "Itemize" b
+\begin{compactitem}
+	\item ${1:${VISUAL}}
+\end{compactitem}
+$0
+endsnippet
+
+snippet desc "Description" b
+\begin{compactdesc}
+	\item[$1] ${2:${VISUAL}}
+\end{compactdesc}
+$0
+endsnippet
+
+snippet itm "individual item" b
+\item$0
+endsnippet
+
+# math
+
+snippet def "definitions" b
+\begin{definition}[${1}]
+	\label{def:${2:${1/\\\w+\{(.*?)\}|\\(.)|(\w+)|([^\w\\]+)/(?4:_:\L$1$2$3\E)/ga}}}
+	${3:${VISUAL}}
+\end{definition}
+$0
+endsnippet
+
+snippet ppt "property" b
+\begin{property}[${1}]
+	\label{ppt:${2:${1/\\\w+\{(.*?)\}|\\(.)|(\w+)|([^\w\\]+)/(?4:_:\L$1$2$3\E)/ga}}}
+	${3:${VISUAL}}
+\end{property}
+$0
+endsnippet
+
+snippet thm "theorems" b
+\begin{theorem}[${1}]
+	\label{thm:${2:${1/\\\w+\{(.*?)\}|\\(.)|(\w+)|([^\w\\]+)/(?4:_:\L$1$2$3\E)/ga}}}
+	${3:${VISUAL}}
+\end{theorem}
+$0
+endsnippet
+
+
+# usefull commands
+# -----------------------------------------------------------------------------
+
+snippet pac "Package" b
+\usepackage[${1:options}]{${2:package}}$0
+endsnippet
+
+snippet "\\h(space)?" "\hspace" r
+\hspace{$1}$0
+endsnippet
+
+# here the last character of the selected text is stripped because VISUAL seems
+# to be selecting one additional character at the end than it should be; if this
+# is not the case, change
+# `!p snip.rv = snip.v.text[:-1]`
+# to
+# ${VISUAL}
+
+snippet ref "use \autoref for reference"
+\autoref{${1:${VISUAL}}}$0
+endsnippet
+
+snippet bf "boldface text" w
+\textbf{${1:${VISUAL}}$0
+endsnippet
+
+snippet it "italian text" w
+\textit{${1:${VISUAL}}}$0
+endsnippet
+
+snippet sf "sans serif text" w
+\textsf{${1:${VISUAL}}}$0
+endsnippet
+
+snippet sc "small caps text" w
+\textsc{${1:${VISUAL}}}$0
+endsnippet
+
+snippet rm "roman text" w
+\\${1:m}${1/(m)$|(t)$|(.*)/(?1:ath)(?2:ext)/}rm{${2:${VISUAL}}}$0
+endsnippet
+
+snippet txt "text in math modes" w
+\text{${1:${VISUAL}}}$0
+endsnippet
+
+snippet em "emphasis" w
+\emph{${1:${VISUAL}}}$0
+endsnippet
+
+
+# math
+# -----------------------------------------------------------------------------
+
+snippet $ "inline math mode, used with `ma`" w
+$
+${1:${VISUAL}}
+$0
+endsnippet
+
+snippet ma "inline math mode" w
+$${1:${VISUAL}}$$0
+endsnippet
+
+snippet \ "display math mode" w
+\[
+	${1:${VISUAL}}
+\]$0
+endsnippet
+
+# greek letters
+
+snippet ga "alpha" w
+\alpha
+endsnippet
+
+snippet gb "beta" w
+\beta
+endsnippet
+
+snippet gc "chi" w
+\chi
+endsnippet
+
+snippet gd "delta" w
+\delta
+endsnippet
+
+snippet ge "varepsilon" w
+\varepsilon
+endsnippet
+
+snippet gf "varphi" w
+\varphi
+endsnippet
+
+snippet gg "gamma" w
+\gamma
+endsnippet
+
+snippet gh "eta" w
+\eta
+endsnippet
+
+snippet gk "kappa" w
+\kappa
+endsnippet
+
+snippet gl "lambda" w
+\lambda
+endsnippet
+
+snippet gm "mu" w
+\mu
+endsnippet
+
+snippet gn "nu" w
+\nu
+endsnippet
+
+snippet go "omega" w
+\omega
+endsnippet
+
+snippet gp "pi" w
+\pi
+endsnippet
+
+snippet gq "theta" w
+\theta
+endsnippet
+
+snippet gr "rho" w
+\rho
+endsnippet
+
+snippet gs "sigma" w
+\sigma
+endsnippet
+
+snippet gt "tau" w
+\tau
+endsnippet
+
+snippet gu "upsilon" w
+\upsilon
+endsnippet
+
+snippet gv "vee" w
+\vee
+endsnippet
+
+snippet gw "wedge" w
+\wedge
+endsnippet
+
+snippet gz "zeta" w
+\zeta
+endsnippet
+
+snippet gD "Delta" w
+\Delta
+endsnippet
+
+snippet gF "Phi" w
+\Phi
+endsnippet
+
+snippet gG "Gamma" w
+\Gamma
+endsnippet
+
+snippet gL "Lambda" w
+\Lambda
+endsnippet
+
+snippet gN "nabla" w
+\nabla
+endsnippet
+
+snippet gO "Omega" w
+\Omega
+endsnippet
+
+snippet gQ "Theta" w
+\Theta
+endsnippet
+
+snippet gR "varrho" w
+\varrho
+endsnippet
+
+snippet gU "Upsilon" w
+\Upsilon
+endsnippet
+
+snippet gX "Xi" w
+\Xi
+endsnippet
+
+snippet gY "Psi" w
+\Psi
+endsnippet
+
+# symbols
+
+snippet g0 "emptyset" w
+\emptyset
+endsnippet
+
+snippet g6 "partial" w
+\partial
+endsnippet
+
+snippet g8 "infty" w
+\infty
+endsnippet
+
+snippet g@ "circ" w
+\circ
+endsnippet
+
+snippet g= "equiv" w
+\equiv
+endsnippet
+
+snippet g: "dots" w
+\dots
+endsnippet
+
+snippet g~ "tilde{}" w
+\tilde{$1}$0
+endsnippet
+
+snippet g^ "hat{}" w
+\hat{$1}$0
+endsnippet
+
+snippet g- "bar{}" w
+\bar{$1}$0
+endsnippet
+
+# this works, but adds more work to users
+# ^${1/(.)$|(.*)/(?2:{)/}${1}${1/(.)$|(.*)/(?2:})/} $0
+snippet ^ "superscript" i
+^{$1}$0
+endsnippet
+
+snippet _ "subscript" i
+_{$1}$0
+endsnippet
+
+snippet int "integrals" w
+\int_{$1}^{$2} $3 \dd $4 $0
+endsnippet
+
+snippet sum "summations" w
+\sum_{$1}^{$2} $0
+endsnippet
+
+snippet lim "limit" w
+\lim_{${1} \to ${2:\infty}} $0
+endsnippet
+
+snippet lp "Long parenthesis"
+\\${1:big}( ${2:${VISUAL}} \\${3:$1})$0
+endsnippet
+
+snippet g. "centered dot" w
+\cdot
+endsnippet
+
+snippet g* "times" w
+\times
+endsnippet
+
+snippet g/ "frac" w
+\frac{$1}{$2}$0
+endsnippet
+
+snippet g2 "squre root" w
+\sqrt{${1:${VISUAL}}}$0
+endsnippet
+
+snippet gcal "mathcal" w
+\mathcal{$1}$0
+endsnippet
+
+snippet gbb "mathbb" w
+\mathbb{$1}$0
+endsnippet
+
+# environments
+
+snippet al "align"
+\begin{align}
+	${1:${VISUAL}} \\\\
+\end{align}
+$0
+endsnippet
+
+snippet alnn "align without number"
+\begin{align*}
+	${1:${VISUAL}} \\\\
+\end{align*}
+$0
+endsnippet
+
+# vim:ft=snippets:
+

@@ -25,11 +25,11 @@ function! s:TexInsertTabWrapper()
         let aux = strpart(short, 0, strlen(short)-3)."aux"
         if filereadable(aux)
             let tmp = tempname()
-            execute "below split ".tmp
-            execute "0read ".aux
-            g!/^\\newlabel{/delete
+            execute "silent !cp ".aux." ".tmp
+            execute "vertical 20 split ".tmp
+            g!/\\newlabel{/delete
             g/^\\newlabel{tocindent/delete
-            g/./normal 3f{lyt}0Pf}D0f\cf{       
+            g/\\newlabel/s+\v\\newlabel\{(.{-})}.*+\1+ge
             execute "write! ".tmp
 
             noremap <buffer> <LeftRelease> <LeftRelease>:call <SID>RefInsertion("aux")<CR>a
@@ -38,7 +38,7 @@ function! s:TexInsertTabWrapper()
             return "\<Esc>"
         else
             let tmp = tempname()
-            vertical 15split
+            vertical 20 split
             execute "write! ".tmp
             execute "edit ".tmp
             g!/\\label{/delete
