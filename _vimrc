@@ -402,7 +402,7 @@ set backspace=indent,eol,start
 " " 使用 <Leader>. 和 <Leader>m 前后切换 Buffer
 " nmap <silent> <Leader>. :bnext<CR>:buffers<CR>
 " nmap <silent> <Leader>m :bprevious<CR>:buffers<CR>
-nmap gb :ls<CR>:buffer
+nmap gb :ls<CR>:buffer<space>
 
 " 使用 ctrl+j,k,h,l 切换分割的视窗
 nnoremap <C-j> <C-w>j
