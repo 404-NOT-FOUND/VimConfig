@@ -333,9 +333,9 @@ cmap <C-v> <C-r>+
 " 删除所有行尾多余的空白（空格或 tab ）
 nmap <F12>   :let g:winview = winsaveview()<CR>
             \:%s+\s\+$++e<CR>
-            \:nohls<CR>
             \:call histdel('search', -1)<CR>
-            \/<UP><CR> " delete search hist and recover last search
+            \/<UP><CR>
+            \:nohls<CR>
             \:call winrestview(g:winview)<CR>
             \:echo 'Trialing spaces cleared'<CR>
 
