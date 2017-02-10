@@ -1388,28 +1388,28 @@ nmap ga <Plug>(EasyAlign)
 
 " jump among words IN CAMEL CASE OR SNAKE STYLE NAMES
 " e.g., [C]amelCase ----> Camel[C]ase
-nnoremap <silent> <Leader>w <Plug>CamelCaseMotion_w
-nnoremap <silent> <Leader>b <Plug>CamelCaseMotion_b
-nnoremap <silent> <Leader>e <Plug>CamelCaseMotion_e
-nnoremap <silent> <Leader>ge <Plug>CamelCaseMotion_ge
-onoremap <silent> <Leader>w <Plug>CamelCaseMotion_w
-onoremap <silent> <Leader>b <Plug>CamelCaseMotion_b
-onoremap <silent> <Leader>e <Plug>CamelCaseMotion_e
-onoremap <silent> <Leader>ge <Plug>CamelCaseMotion_ge
-xnoremap <silent> <Leader>w <Plug>CamelCaseMotion_w
-xnoremap <silent> <Leader>b <Plug>CamelCaseMotion_b
-xnoremap <silent> <Leader>e <Plug>CamelCaseMotion_e
-xnoremap <silent> <Leader>ge <Plug>CamelCaseMotion_ge
+nmap <silent> <Leader>w <Plug>CamelCaseMotion_w
+nmap <silent> <Leader>b <Plug>CamelCaseMotion_b
+nmap <silent> <Leader>e <Plug>CamelCaseMotion_e
+nmap <silent> <Leader>ge <Plug>CamelCaseMotion_ge
+omap <silent> <Leader>w <Plug>CamelCaseMotion_w
+omap <silent> <Leader>b <Plug>CamelCaseMotion_b
+omap <silent> <Leader>e <Plug>CamelCaseMotion_e
+omap <silent> <Leader>ge <Plug>CamelCaseMotion_ge
+xmap <silent> <Leader>w <Plug>CamelCaseMotion_w
+xmap <silent> <Leader>b <Plug>CamelCaseMotion_b
+xmap <silent> <Leader>e <Plug>CamelCaseMotion_e
+xmap <silent> <Leader>ge <Plug>CamelCaseMotion_ge
 
 " CamelCase text objects
-onoremap <silent> i<Leader>w <Plug>CamelCaseMotion_ie
-xnoremap <silent> i<Leader>w <Plug>CamelCaseMotion_ie
-onoremap <silent> i<Leader>b <Plug>CamelCaseMotion_ib
-xnoremap <silent> i<Leader>b <Plug>CamelCaseMotion_ib
-onoremap <silent> a<Leader>w <Plug>CamelCaseMotion_ie
-xnoremap <silent> a<Leader>w <Plug>CamelCaseMotion_ie
-onoremap <silent> a<Leader>b <Plug>CamelCaseMotion_ib
-xnoremap <silent> a<Leader>b <Plug>CamelCaseMotion_ib
+omap <silent> i<Leader>w <Plug>CamelCaseMotion_ie
+xmap <silent> i<Leader>w <Plug>CamelCaseMotion_ie
+omap <silent> i<Leader>b <Plug>CamelCaseMotion_ib
+xmap <silent> i<Leader>b <Plug>CamelCaseMotion_ib
+omap <silent> a<Leader>w <Plug>CamelCaseMotion_ie
+xmap <silent> a<Leader>w <Plug>CamelCaseMotion_ie
+omap <silent> a<Leader>b <Plug>CamelCaseMotion_ib
+xmap <silent> a<Leader>b <Plug>CamelCaseMotion_ib
 
 " ------------------------------------------------------------
 " surround
