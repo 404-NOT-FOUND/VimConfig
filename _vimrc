@@ -425,6 +425,11 @@ nnoremap <C-l> <C-w>l
 nnoremap <C-Tab> :tabnext<CR>
 nnoremap <C-S-Tab> :tabprevious<CR>
 
+" 该命令可以关闭 help 窗口
+command Helpclose h | q
+cabbrev helpclose Helpclose
+cabbrev hcl Helpclose
+
 " =============================================================================
 " 搜索和匹配
 " =============================================================================
