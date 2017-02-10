@@ -1308,6 +1308,9 @@ let g:UltiSnipsEditSplit="vertical"
 " 当前路径是 $vimfiles
 let g:UltiSnipsSnippetDirectories=["UltiSnips", "mysnippets"]
 
+" set quoting style in python.snippets provided by vim-snippets
+let g:ultisnips_python_quoting_style="single"
+
 " ------------------------------------------------------------
 " vim-markdown
 " ------------------------------------------------------------
