@@ -282,7 +282,8 @@ set mouse=a
 set selection=exclusive
 set selectmode=mouse,key
 
-" 通过使用 :commands 命令，告诉我们文件的哪一行被改变过
+" 每次命令行命令后告诉我们共更改了文件多少行内容
+" 如 :s 之后会得到如 "3 substitutions on 1 line" 的提示
 set report=0
 
 " 修正 mswin 下 visual 操作问题
