@@ -1247,7 +1247,7 @@ endtry
 " make emmet only work in html and css files
 let g:user_emmet_install_global = 0
 if has('autocmd')
-    au FileType html,css EmmetInstall
+    au FileType html,haml,css,sass,scss EmmetInstall
 endif
 
 let g:user_emmet_leader_key='<C-e>'
