@@ -135,7 +135,6 @@ endif
 " Plugin 'vim-javacompleteex'
 " Plugin 'wesleyche/SrcExpl'
 Plugin 'OmniCppComplete'
-Plugin 'justinmk/vim-sneak'
 Plugin 'Shougo/neocomplete'
 Plugin 'SirVer/ultisnips'
 Plugin 'bkad/CamelCaseMotion'
@@ -146,6 +145,7 @@ Plugin 'davidhalter/jedi-vim'        " python autocomplete. 'pip install jedi' r
 Plugin 'grep.vim'
 Plugin 'honza/vim-snippets'
 Plugin 'junegunn/vim-easy-align'
+Plugin 'justinmk/vim-sneak'
 Plugin 'lervag/vimtex'
 Plugin 'mattn/emmet-vim'
 Plugin 'michaeljsmith/vim-indent-object'
@@ -557,7 +557,8 @@ au BufReadPost *.sql set commentstring=--\ %s
 set foldenable
 
 " 拼写检查 spell check
-au BufReadPost *.tex,*.notes setlocal spell
+au FileType tex,notes,markdown setlocal spell
+au FileType tex,notes,markdown syntax spell toplevel
 au BufReadPost *.notes setlocal spellcapcheck=              " 禁止大小写检查
 
 " 自动补全括号
