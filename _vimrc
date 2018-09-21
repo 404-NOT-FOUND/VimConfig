@@ -19,6 +19,10 @@ else
     let g:isGUI = 0
 endif
 
+if g:islinux
+  let $vimfiles="~/.vim"
+endif
+
 " =============================================================================
 " 软件默认配置
 " =============================================================================
@@ -66,11 +70,7 @@ endif
 " =============================================================================
 " 配色
 " =============================================================================
-if g:iswindows
-    source $vim/vimfiles/colors/myColor.vimrc
-else
-    source ~/.vim/colors/myColor.vimrc
-endif
+source $vimfiles/colors/myColor.vimrc
 
 " =============================================================================
 " Vundle 插件管理工具
@@ -613,13 +613,8 @@ au Filetype mp call SetMakeRunMpost()
 " 			\ setlocal relativenumber
 
 " 制作标签
-if g:iswindows
-    au FileType cpp,h setlocal tags+=$vim/vimfiles/myVim/cppTags
-    au FileType java setlocal tags+=$vim/vimfiles/myVim/javaTags
-else
-    au FileType cpp,h setlocal tags+=~/.vim/myVim/cppTags
-    au FileType java setlocal tags+=~/.vim/myVim/javaTags
-endif
+au FileType cpp,h setlocal tags+=$vimfiles/myVim/cppTags
+au FileType java setlocal tags+=$vimfiles/myVim/javaTags
 au BufReadPost *.cpp nmap <F10>
             \ :silent !ctags -R --sort=yes --c++-kinds=+p
 			\ --fields=+iaS --extra=+q --language-force=C++ .<CR>
