@@ -34,7 +34,7 @@ if (g:iswindows && g:isGUI)
     " set diffexpr=MyDiff()
     set diffexpr=
 
-    function MyDiff()
+    function! MyDiff()
         let opt = '-a --binary '
         if &diffopt =~ 'icase' | let opt = opt . '-i ' | endif
         if &diffopt =~ 'iwhite' | let opt = opt . '-b ' | endif
@@ -185,7 +185,7 @@ if g:isGUI
     let g:guifontwide='YaHei_Consolas_Hybrid'
     let g:guifontsize=12
     " 提供改变字号的函数
-    fun SetGuiFontSize(s)
+    function! SetGuiFontSize(s)
         if g:iswindows
             exec 'set guifont=' . g:guifont . ':h' . string(a:s)
             exec 'set guifontwide=' . g:guifontwide . ':h' . string(a:s)
@@ -295,8 +295,10 @@ set noimcmdline
 set imsearch=0
 set iminsert=0
 if has("autocmd")
+  augroup chinese_input
     au InsertLeave * set iminsert=0 | set imsearch=0
     au CursorMoved * set iminsert=0 | set imsearch=0
+  augroup END
 endif
 
 " =============================================================================
@@ -520,6 +522,7 @@ set iskeyword+=_,#
 
 if has("autocmd")
 
+augroup my_autoformats
 " 打开文件时定位至关闭时位置
 au BufReadPost *
             \ if line("'\"") > 0 && line("'\"") <= line("$") |
@@ -642,6 +645,7 @@ au BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn}
 au BufReadPre *.nfo call SetFileEncodings('cp437')|set ambiwidth=single
 au BufReadPost *.nfo call RestoreFileEncodings()
 
+augroup END
 endif "has("autocmd")
 
 " =============================================================================
@@ -853,7 +857,7 @@ endfunc
 " ------------------------------------------------------------
 
 " 使用 Vim[grep] 来 grep
-function MyQuickGrep()
+function! MyQuickGrep()
     let pattern = input('Search for pattern: ')
     let filename = input('Search in files: ')
     exe 'redraw'
@@ -941,15 +945,17 @@ endfunction
 " 如果输出信息为乱码的可以试一下下面的代码，如果不行就还是给它注释掉
 
 if g:iswindows
-	au QuickfixCmdPost make call QfMakeConv()
-	func! QfMakeConv()
-		let qflist = getqflist()
-		for i in qflist
-			let i.text = iconv(i.text, "cp936", "utf-8")
-		endfor
-		call setqflist(qflist)
-		exec "cw"
-	endfunc
+  augroup chinse_quick_fix
+    au QuickfixCmdPost make call QfMakeConv()
+    func! QfMakeConv()
+      let qflist = getqflist()
+      for i in qflist
+        let i.text = iconv(i.text, "cp936", "utf-8")
+      endfor
+      call setqflist(qflist)
+      exec "cw"
+    endfunc
+  augroup END
 endif
 
 " -----------------------------------------------------------------------------
@@ -1036,7 +1042,11 @@ let OmniCpp_NamespaceSearch = 1
 " let OmniCpp_MayCompleteScope = 1                " 输入 :: 后自动补全
 
 " 自动关闭补全窗口
-au CursorMovedI,InsertLeave * if pumvisible() == 0|silent! pclose|endif
+if has("autocmd")
+  augroup auto_close_completion
+    au CursorMovedI,InsertLeave * if pumvisible() == 0|silent! pclose|endif
+  augroup END
+endif
 set completeopt=menuone,menu,longest
 
 " -----------------------------------------------------------------------------
@@ -1232,7 +1242,9 @@ endtry
 " make emmet only work in html and css files
 let g:user_emmet_install_global = 0
 if has('autocmd')
+  augroup install_emmet
     au FileType html,css EmmetInstall
+  augroup END
 endif
 
 let g:user_emmet_leader_key='<C-e>'
@@ -1307,8 +1319,10 @@ let g:markdown_syntax_conceal = 0
 " 在 LaTeX 中引用时给出 label 列表
 
 " if has('autocmd')
+"   augroup ennable_reftex
 "     au BufReadPost *.tex source $vim/vimfiles/ftplugin/reftex.vim
 "     au FileType tex source $vim/vimfiles/ftplugin/reftex.vim
+"   augroup END
 " endif
 
 " ------------------------------------------------------------
@@ -1414,6 +1428,7 @@ xmap <silent> a<Leader>b <Plug>CamelCaseMotion_ib
 let g:surround_{char2nr("q")} = "'\r'"
 let g:surround_{char2nr("Q")} = "\"\r\""
 if has("autocmd")
+  augroup surround_keymaps
     au Filetype tex let g:surround_{char2nr("q")} = "`\r'"
     au Filetype tex let g:surround_{char2nr("Q")} = "``\r''"
     au Filetype tex let g:surround_{char2nr("f")} = "\\\1command: \1{\r}"
@@ -1431,6 +1446,7 @@ if has("autocmd")
                 \ = "**\r**"
     au Filetype notes let g:surround_{char2nr("e")}
                 \ = "\|\r\|"
+  augroup END
 endif
 
 " ------------------------------------------------------------
