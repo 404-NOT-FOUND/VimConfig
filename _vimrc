@@ -325,6 +325,9 @@ nnoremap <Leader>s :update<CR>
 " 使用 jk 退出到命令模式（同 Esc）
 inoremap kj <Esc>
 
+noremap gl $
+noremap gh ^
+
 " 打开/关闭拼写检查
 " (change option spell)
 nmap cos :set spell!<CR>
