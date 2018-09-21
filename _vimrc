@@ -345,7 +345,6 @@ else
   nmap crc :tabnew ~/.vimrc<CR>
 endif
 
-
 " 使用 ctrl-y 重做 (redo)
 " noremap <C-y> <C-r>
 
