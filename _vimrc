@@ -331,6 +331,12 @@ noremap gh ^
 " 打开/关闭拼写检查
 " (change option spell)
 nmap cos :set spell!<CR>
+" [change option highlightsearch]
+nmap coh :set hls!<CR>
+" (change option paste)
+nmap cop :set paste!<CR>
+" (change option wrap)
+nmap cow :set wrap!<CR>
 
 " change vimrc
 if g:iswindows
