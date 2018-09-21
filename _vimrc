@@ -278,6 +278,7 @@ set viminfo+=!
 
 " 增强模式中的命令行自动完成操作
 set wildmenu
+set wildignorecase
 
 " 可以在buffer的任何地方使用鼠标（类似office中在工作区双击鼠标定位）
 set mouse=a
