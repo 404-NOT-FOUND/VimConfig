@@ -270,8 +270,8 @@ set history=100
 " 在处理未保存或只读文件的时候，弹出确认
 set confirm
 
-" 与 windows 共享剪贴板
-set clipboard=unnamed
+" 使用系统剪贴板
+set clipboard=unnamed,unnamedplus
 
 " 保存全局变量
 set viminfo+=!
