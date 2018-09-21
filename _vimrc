@@ -118,8 +118,8 @@ endif
 " Plugin 'cSyntaxAfter'
 " Plugin 'ccvext.vim'
 " Plugin 'ctrlpvim/ctrlp.vim'
-" Plugin 'ervandew/supertab'         " 有时与 snipmate 插件冲突
-" Plugin 'exvim/ex-minibufexpl'      " exvim插件之一。修复BUG
+" Plugin 'ervandew/supertab'  " 有时与 snipmate 插件冲突
+" Plugin 'exvim/ex-minibufexpl'  " exvim插件之一。修复BUG
 " Plugin 'fholgado/minibufexpl.vim'  " 好像与 Vundle 插件有一些冲突
 " Plugin 'javacomplete'
 " Plugin 'jiangmiao/auto-pairs'
@@ -131,30 +131,34 @@ endif
 " Plugin 'scrooloose/syntastic'
 " Plugin 'shawncplus/phpcomplete.vim'
 " Plugin 'std_c.zip'
+" Plugin 'takac/vim-hardtime'  " prevents bad habbits
 " Plugin 'tomtom/tcomment_vim'
 " Plugin 'vim-javacompleteex'
 " Plugin 'wesleyche/SrcExpl'
 Plugin 'OmniCppComplete'
-Plugin 'justinmk/vim-sneak'
 Plugin 'Shougo/neocomplete'
 Plugin 'SirVer/ultisnips'
 Plugin 'bkad/CamelCaseMotion'
 Plugin 'christoomey/vim-sort-motion'
 Plugin 'closetag.vim'
-Plugin 'cohama/lexima.vim'           " auto pair closer
-Plugin 'davidhalter/jedi-vim'        " python autocomplete. 'pip install jedi' required
+Plugin 'cohama/lexima.vim'  "  auto pair closer
+Plugin 'davidhalter/jedi-vim'  "  python autocomplete. 'pip install jedi' required
 Plugin 'grep.vim'
 Plugin 'honza/vim-snippets'
 Plugin 'junegunn/vim-easy-align'
+Plugin 'justinmk/vim-sneak'
 Plugin 'lervag/vimtex'
 Plugin 'mattn/emmet-vim'
 Plugin 'michaeljsmith/vim-indent-object'
+Plugin 'romainl/vim-cool'  "  auto disable search highlight
 Plugin 'taglist.vim'
 Plugin 'terryma/vim-multiple-cursors'
 Plugin 'tpope/vim-commentary'
 Plugin 'tpope/vim-markdown'
 Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-surround'
+Plugin 'unblevable/quick-scope'  " highlight cues for `f` and `t`
+Plugin 'wellle/targets.vim'  " objects like arg, better object searching for quotes/parens
 
 call vundle#end()
 
