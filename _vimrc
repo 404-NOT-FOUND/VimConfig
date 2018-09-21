@@ -878,7 +878,7 @@ endfunc
 " 使用 Vim[grep] 来 grep
 function! MyQuickGrep()
   let pattern = input('Search for pattern: ')
-  let filename = input('Search in files: ')
+  let filename = input('Search in files: ', '%:h/**/*')
   exe 'redraw'
 
   if (pattern == '')
