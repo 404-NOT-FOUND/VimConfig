@@ -332,6 +332,14 @@ noremap gh ^
 " (change option spell)
 nmap cos :set spell!<CR>
 
+" change vimrc
+if g:iswindows
+  nmap crc :tabnew $vim/_vimrc<CR>
+else
+  nmap crc :tabnew ~/.vimrc<CR>
+endif
+
+
 " 使用 ctrl-y 重做 (redo)
 " noremap <C-y> <C-r>
 
