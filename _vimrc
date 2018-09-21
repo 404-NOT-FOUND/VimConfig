@@ -503,11 +503,11 @@ set smartindent
 " 在 (La)TeX 用 lists 的时候。item 缩进有问题。直接关掉
 let g:tex_indent_items=0
 
-" 制表符显式为 4 个空格长
-set tabstop=4
+" 制表符显式为 n 个空格长
+set tabstop=2
 
-" 统一缩进为 4 个空格长
-set shiftwidth=4
+" 统一缩进为 n 个空格长
+set shiftwidth=2
 set smarttab        " 使 softtabstop = shiftwidth
 
 " 使用空格填充制表符
