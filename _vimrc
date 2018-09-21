@@ -118,6 +118,7 @@ endif
 " Plugin 'cSyntaxAfter'
 " Plugin 'ccvext.vim'
 " Plugin 'ctrlpvim/ctrlp.vim'
+" Plugin 'dyng/ctrlsf.vim'  " global search
 " Plugin 'ervandew/supertab'  " 有时与 snipmate 插件冲突
 " Plugin 'exvim/ex-minibufexpl'  " exvim插件之一。修复BUG
 " Plugin 'fholgado/minibufexpl.vim'  " 好像与 Vundle 插件有一些冲突
@@ -125,6 +126,7 @@ endif
 " Plugin 'jiangmiao/auto-pairs'
 " Plugin 'majutsushi/tagbar'
 " Plugin 'msanders/snipmate.vim'
+" Plugin 'osyo-manga/vim-over'  " :s preview
 " Plugin 'repeat.vim'
 " Plugin 'scrooloose/nerdcommenter'
 " Plugin 'scrooloose/nerdtree'
