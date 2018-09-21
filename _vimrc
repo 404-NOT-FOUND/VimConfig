@@ -1476,6 +1476,34 @@ endif
 
 " let g:sneak#label = 1
 
+nnoremap cal cc
+
+" ------------------------------------------------------------
+" quick scope
+" ------------------------------------------------------------
+
+let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
+
+" ------------------------------------------------------------
+" hardtime
+" ------------------------------------------------------------
+
+let g:hardtime_default_on = 1
+if exists("g:list_of_normal_keys")
+  let g:list_of_normal_keys += ["e", "w", "b"]
+endif
+let g:hardtime_ignore_quickfix = 1
+let g:hardtime_maxcount = 3
+
+" ------------------------------------------------------------
+" targets
+" ------------------------------------------------------------
+
+let g:targets_quotes = '"q ''Q `'
+let g:targets_nl = 'nN'
+" Only seek if next/last targets touch current line
+let g:targets_seekRanges = 'cr cb cB lc ac Ac lr rr ll lb ar ab lB Ar aB Ab AB rb rB al Al'
+
 " =============================================================================
 " 编码配置
 " =============================================================================
