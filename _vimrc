@@ -19,6 +19,10 @@ else
     let g:isGUI = 0
 endif
 
+if g:islinux
+  let $vimfiles="~/.vim"
+endif
+
 " =============================================================================
 " 软件默认配置
 " =============================================================================
@@ -30,7 +34,7 @@ if (g:iswindows && g:isGUI)
     " set diffexpr=MyDiff()
     set diffexpr=
 
-    function MyDiff()
+    function! MyDiff()
         let opt = '-a --binary '
         if &diffopt =~ 'icase' | let opt = opt . '-i ' | endif
         if &diffopt =~ 'iwhite' | let opt = opt . '-b ' | endif
@@ -66,11 +70,7 @@ endif
 " =============================================================================
 " 配色
 " =============================================================================
-if g:iswindows
-    source $vim/vimfiles/colors/myColor.vimrc
-else
-    source ~/.vim/colors/myColor.vimrc
-endif
+source $vimfiles/colors/myColor.vimrc
 
 " =============================================================================
 " Vundle 插件管理工具
@@ -118,19 +118,22 @@ endif
 " Plugin 'cSyntaxAfter'
 " Plugin 'ccvext.vim'
 " Plugin 'ctrlpvim/ctrlp.vim'
-" Plugin 'ervandew/supertab'         " 有时与 snipmate 插件冲突
-" Plugin 'exvim/ex-minibufexpl'      " exvim插件之一。修复BUG
+" Plugin 'dyng/ctrlsf.vim'  " global search
+" Plugin 'ervandew/supertab'  " 有时与 snipmate 插件冲突
+" Plugin 'exvim/ex-minibufexpl'  " exvim插件之一。修复BUG
 " Plugin 'fholgado/minibufexpl.vim'  " 好像与 Vundle 插件有一些冲突
 " Plugin 'javacomplete'
 " Plugin 'jiangmiao/auto-pairs'
 " Plugin 'majutsushi/tagbar'
 " Plugin 'msanders/snipmate.vim'
+" Plugin 'osyo-manga/vim-over'  " :s preview
 " Plugin 'repeat.vim'
 " Plugin 'scrooloose/nerdcommenter'
 " Plugin 'scrooloose/nerdtree'
 " Plugin 'scrooloose/syntastic'
 " Plugin 'shawncplus/phpcomplete.vim'
 " Plugin 'std_c.zip'
+" Plugin 'takac/vim-hardtime'  " prevents bad habbits
 " Plugin 'tomtom/tcomment_vim'
 " Plugin 'vim-javacompleteex'
 " Plugin 'wesleyche/SrcExpl'
@@ -140,8 +143,8 @@ Plugin 'SirVer/ultisnips'
 Plugin 'bkad/CamelCaseMotion'
 Plugin 'christoomey/vim-sort-motion'
 Plugin 'closetag.vim'
-Plugin 'cohama/lexima.vim'           " auto pair closer
-Plugin 'davidhalter/jedi-vim'        " python autocomplete. 'pip install jedi' required
+Plugin 'cohama/lexima.vim'  "  auto pair closer
+Plugin 'davidhalter/jedi-vim'  "  python autocomplete. 'pip install jedi' required
 Plugin 'grep.vim'
 Plugin 'honza/vim-snippets'
 Plugin 'junegunn/vim-easy-align'
@@ -149,12 +152,15 @@ Plugin 'justinmk/vim-sneak'
 Plugin 'lervag/vimtex'
 Plugin 'mattn/emmet-vim'
 Plugin 'michaeljsmith/vim-indent-object'
+Plugin 'romainl/vim-cool'  "  auto disable search highlight
 Plugin 'taglist.vim'
 Plugin 'terryma/vim-multiple-cursors'
 Plugin 'tpope/vim-commentary'
 Plugin 'tpope/vim-markdown'
 Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-surround'
+Plugin 'unblevable/quick-scope'  " highlight cues for `f` and `t`
+Plugin 'wellle/targets.vim'  " objects like arg, better object searching for quotes/parens
 
 call vundle#end()
 
@@ -171,8 +177,8 @@ set vb t_vb=
 
 if g:isGUI
     " 设置菜单界面
-	set guioptions-=a                   " for windows
-	set guioptions=                     " 完全取消菜单界面
+    set guioptions-=a                   " for windows
+    set guioptions=                     " 完全取消菜单界面
 
     " 设置 gVim 窗口初始位置及大小
     " au GUIEnter * simalt ~x           " 窗口启动时自动最大化
@@ -185,7 +191,7 @@ if g:isGUI
     let g:guifontwide='YaHei_Consolas_Hybrid'
     let g:guifontsize=12
     " 提供改变字号的函数
-    fun SetGuiFontSize(s)
+    function! SetGuiFontSize(s)
         if g:iswindows
             exec 'set guifont=' . g:guifont . ':h' . string(a:s)
             exec 'set guifontwide=' . g:guifontwide . ':h' . string(a:s)
@@ -236,6 +242,8 @@ set number
 " 显示相对当前行的行号
 set relativenumber
 
+set hls " highlight search matches
+
 " =============================================================================
 " 核心设置
 " =============================================================================
@@ -268,14 +276,15 @@ set history=100
 " 在处理未保存或只读文件的时候，弹出确认
 set confirm
 
-" 与 windows 共享剪贴板
-set clipboard=unnamed
+" 使用系统剪贴板
+set clipboard=unnamed,unnamedplus
 
 " 保存全局变量
 set viminfo+=!
 
 " 增强模式中的命令行自动完成操作
 set wildmenu
+set wildignorecase
 
 " 在命令行中输入文件名时不区分大小写
 set fileignorecase
@@ -299,8 +308,10 @@ set noimcmdline
 set imsearch=0
 set iminsert=0
 if has("autocmd")
+  augroup chinese_input
     au InsertLeave * set iminsert=0 | set imsearch=0
     au CursorMoved * set iminsert=0 | set imsearch=0
+  augroup END
 endif
 
 " =============================================================================
@@ -324,9 +335,25 @@ nnoremap <Leader>s :update<CR>
 " 使用 jk 退出到命令模式（同 Esc）
 inoremap kj <Esc>
 
+noremap gl $
+noremap gh ^
+
 " 打开/关闭拼写检查
 " (change option spell)
 nmap cos :set spell!<CR>
+" [change option highlightsearch]
+nmap coh :set hls!<CR>
+" (change option paste)
+nmap cop :set paste!<CR>
+" (change option wrap)
+nmap cow :set wrap!<CR>
+
+" change vimrc
+if g:iswindows
+  nmap crc :tabnew $vim/_vimrc<CR>
+else
+  nmap crc :tabnew ~/.vimrc<CR>
+endif
 
 " 使用 ctrl-y 重做 (redo)
 " noremap <C-y> <C-r>
@@ -487,11 +514,11 @@ set smartindent
 " 在 (La)TeX 用 lists 的时候。item 缩进有问题。直接关掉
 let g:tex_indent_items=0
 
-" 制表符显式为 4 个空格长
-set tabstop=4
+" 制表符显式为 n 个空格长
+set tabstop=2
 
-" 统一缩进为 4 个空格长
-set shiftwidth=4
+" 统一缩进为 n 个空格长
+set shiftwidth=2
 set smarttab        " 使 softtabstop = shiftwidth
 
 " 使用空格填充制表符
@@ -529,6 +556,7 @@ set iskeyword+=_,#
 
 if has("autocmd")
 
+augroup my_autoformats
 " 打开文件时定位至关闭时位置
 au BufReadPost *
             \ if line("'\"") > 0 && line("'\"") <= line("$") |
@@ -618,21 +646,16 @@ au Filetype mp call SetMakeRunMpost()
 
 " " 根据文件格式显示行号
 " au FileType xml,html,c,S,cs,java,perl,shell,bash,cpp,python,vim,php,ruby,tex,mp
-" 			\ setlocal number
+"       \ setlocal number
 " au FileType xml,html,c,S,cs,java,perl,shell,bash,cpp,python,vim,php,ruby,tex,mp
-" 			\ setlocal relativenumber
+"       \ setlocal relativenumber
 
 " 制作标签
-if g:iswindows
-    au FileType cpp,h setlocal tags+=$vim/vimfiles/myVim/cppTags
-    au FileType java setlocal tags+=$vim/vimfiles/myVim/javaTags
-else
-    au FileType cpp,h setlocal tags+=~/.vim/myVim/cppTags
-    au FileType java setlocal tags+=~/.vim/myVim/javaTags
-endif
+au FileType cpp,h setlocal tags+=$vimfiles/myVim/cppTags
+au FileType java setlocal tags+=$vimfiles/myVim/javaTags
 au BufReadPost *.cpp nmap <F10>
             \ :silent !ctags -R --sort=yes --c++-kinds=+p
-			\ --fields=+iaS --extra=+q --language-force=C++ .<CR>
+            \ --fields=+iaS --extra=+q --language-force=C++ .<CR>
 au BufReadPost *.java nmap <F10>
             \ :silent !ctags -R --fields=+afikmsSt --extra=+q
             \ --java-kinds=+cfimlp --languages=Java .<CR>
@@ -657,6 +680,7 @@ au BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn}
 au BufReadPre *.nfo call SetFileEncodings('cp437')|set ambiwidth=single
 au BufReadPost *.nfo call RestoreFileEncodings()
 
+augroup END
 endif "has("autocmd")
 
 " =============================================================================
@@ -665,227 +689,227 @@ endif "has("autocmd")
 
 " 清理 TeX 的记录、标签文件
 func! TeXclean()
-	exec 'silent !rm
-                \ %<.mpx %<.log %<.aux %<.out %<.synctex.gz
-                \ %<.synctex.gz^(busy^) %<.toc %<.bbl %<.blg mpxerr.tex
-                \ %<.nav %<.snm mptextmp.mpx mptextmp.mp
-                \ %<.[0-9] %<.[0-9][0-9] %<.[0-9][0-9][0-9]'
+  exec 'silent !rm
+        \ %<.mpx %<.log %<.aux %<.out %<.synctex.gz
+        \ %<.synctex.gz^(busy^) %<.toc %<.bbl %<.blg mpxerr.tex
+        \ %<.nav %<.snm mptextmp.mpx mptextmp.mp
+        \ %<.[0-9] %<.[0-9][0-9] %<.[0-9][0-9][0-9]'
 endfunc
 
 " ------------------------------------------------------------
 
 " MetaPost 的编译与运行
 func! SetMakeRunMpost()
-	nmap <buffer> <F5> :call CompileMpost()<CR>
-	nmap <buffer> <C-S-F5> :call CompileRunMpost()<CR>
-	nmap <buffer> <C-CR> :call RunMpost()<CR>
-"                 \ :texworks 'silent !%<-' .
-"                 \ input('Open figure number: ') . '.pdf'<CR>
+  nmap <buffer> <F5> :call CompileMpost()<CR>
+  nmap <buffer> <C-S-F5> :call CompileRunMpost()<CR>
+  nmap <buffer> <C-CR> :call RunMpost()<CR>
+"         \ :texworks 'silent !%<-' .
+"         \ input('Open figure number: ') . '.pdf'<CR>
 endfunc
 func! CompileRunMpost()
-    call CompileMpost()
-    call RunMpost()
+  call CompileMpost()
+  call RunMpost()
 endfunc
 func! CompileMpost()
-	exec "w"
-	exec "!mpost -tex=latex %"
-	exec "!mptopdf %<.?"
-	call TeXclean()
+  exec "w"
+  exec "!mpost -tex=latex %"
+  exec "!mptopdf %<.?"
+  call TeXclean()
 endfunc
 func! RunMpost()
-	exec "silent !%<-" . input('Open figure number: ') . ".pdf"
+  exec "silent !%<-" . input('Open figure number: ') . ".pdf"
 endfunc
 
 " ------------------------------------------------------------
 
 " " XeLaTeX 的编译与运行
 " func! SetMakeRunXeLaTeX()
-" "     if g:iswindows
-" "         exec 'silent !if exist %<.pdf (start texworks %<.pdf)'
-" "     else
-" "         exec 'silent !if [ -e %<.pdf ]; then start texworks %<.pdf; fi'
-" "     endif
-" 	nmap <buffer> <F5> :call CompileXeLaTeX()<CR>
-" 	nmap <buffer> <C-F5> :call CompileRunXeLaTeX()<CR>
-" 	nmap <buffer> <C-CR> :call TeXclean()<CR>:silent !%<.pdf ^&<CR>
+" "  if g:iswindows
+" "    exec 'silent !if exist %<.pdf (start texworks %<.pdf)'
+" "  else
+" "    exec 'silent !if [ -e %<.pdf ]; then start texworks %<.pdf; fi'
+" "  endif
+"   nmap <buffer> <F5> :call CompileXeLaTeX()<CR>
+"   nmap <buffer> <C-F5> :call CompileRunXeLaTeX()<CR>
+"   nmap <buffer> <C-CR> :call TeXclean()<CR>:silent !%<.pdf ^&<CR>
 " endfunc
 " func! OpenTeXworks()
-"     if g:iswindows
-"         exec 'silent !if exist <afile><.pdf (start <afile><.pdf)'
-"     else
-"         exec 'silent !if [ -e <afile><.pdf ]; then start <afile><.pdf; fi'
-"     endif
+"   if g:iswindows
+"     exec 'silent !if exist <afile><.pdf (start <afile><.pdf)'
+"   else
+"     exec 'silent !if [ -e <afile><.pdf ]; then start <afile><.pdf; fi'
+"   endif
 " endfunc
 " func! CompileXeLaTeX()
-" 	exec "!xelatex %"
+"   exec "!xelatex %"
 " endfunc
 " func! CompileRunXeLaTeX()
-" 	exec "w"
-" 	exec "silent !xelatex -quiet %"
-" 	exec "silent !xelatex -quiet %"
-" 	call TeXclean()
-" 	exec "silent !%:r.pdf ^&"
+"   exec "w"
+"   exec "silent !xelatex -quiet %"
+"   exec "silent !xelatex -quiet %"
+"   call TeXclean()
+"   exec "silent !%:r.pdf ^&"
 " endfunc
 
 " ------------------------------------------------------------
 
 " Java 的编译与运行
 func! SetMakeRunJavac()
-	:set makeprg=javac\ %
-	nmap <buffer> <F5> :call MakeRunJava()<CR>
-	nmap <buffer> <C-CR> :!java %<<CR>
+  :set makeprg=javac\ %
+  nmap <buffer> <F5> :call MakeRunJava()<CR>
+  nmap <buffer> <C-CR> :!java %<<CR>
 endfunc
 func! MakeRunJava()
-	exec "w"
-	exec "make"
-	try
-		exec "cc"
-	catch
-		exec "!java %<"
-	endtry
+  exec "w"
+  exec "make"
+  try
+    exec "cc"
+  catch
+    exec "!java %<"
+  endtry
 endfunc
 
 " ------------------------------------------------------------
 
 " C++ 的编译与运行
 func! SetMakeRunGpp()
-	:set makeprg=g++\ %:h/*cpp\ -o\ %<.exe
-	nmap <buffer> <F5> :call MakeRunGpp()<CR>
-	nmap <buffer> <C-CR> :!%<.exe<CR>
+  :set makeprg=g++\ %:h/*cpp\ -o\ %<.exe
+  nmap <buffer> <F5> :call MakeRunGpp()<CR>
+  nmap <buffer> <C-CR> :!%<.exe<CR>
 endfunc
 func! MakeRunGpp()
-	exec "w"
-	exec "make"
-	try
-		exec "cn"
-	catch
-		exec "!%<.exe"
-	endtry
+  exec "w"
+  exec "make"
+  try
+    exec "cn"
+  catch
+    exec "!%<.exe"
+  endtry
 endfunc
 
 " ------------------------------------------------------------
 
 " 范围添加注释
 " func! SetComments(char)
-" 	if a:char == 'c'
-" 		map c] :s+^\(\s*[^ \t]\)+// \1+ge<CR>
-" 					\/<Up><Up><CR><C-o>
-" 					\:nohls<CR>
-" 					\:echo "comments added"<CR>
+"   if a:char == 'c'
+"     map c] :s+^\(\s*[^ \t]\)+// \1+ge<CR>
+"           \/<Up><Up><CR><C-o>
+"           \:nohls<CR>
+"           \:echo "comments added"<CR>
 "
-" 		map c[ :s+^\(\s*\)// +\1+ge<CR>
-" 					\/<Up><Up><CR><C-o>
-" 					\:nohls<CR>
-" 					\:echo "comments removed"<CR>
+"     map c[ :s+^\(\s*\)// +\1+ge<CR>
+"           \/<Up><Up><CR><C-o>
+"           \:nohls<CR>
+"           \:echo "comments removed"<CR>
 "
-" 	elseif a:char == 'tex'
-" 		map c] :s+^+% +ge<CR>:nohls<CR>:echo "comments added"<CR>
-" 		map c[ :s+^\(\s*\)%[ ]*+\1+ge<CR>:nohls<CR>:echo "comments removed"<CR>
-" 	elseif a:char == 'vim'
-" 		map c] :s+^+" +ge<CR>:nohls<CR>:echo "comments added"<CR>
-" 		map c[ :s+^\(\s*\)"[ ]*+\1+ge<CR>:nohls<CR>:echo "comments removed"<CR>
-" 	endif
+"   elseif a:char == 'tex'
+"     map c] :s+^+% +ge<CR>:nohls<CR>:echo "comments added"<CR>
+"     map c[ :s+^\(\s*\)%[ ]*+\1+ge<CR>:nohls<CR>:echo "comments removed"<CR>
+"   elseif a:char == 'vim'
+"     map c] :s+^+" +ge<CR>:nohls<CR>:echo "comments added"<CR>
+"     map c[ :s+^\(\s*\)"[ ]*+\1+ge<CR>:nohls<CR>:echo "comments removed"<CR>
+"   endif
 " endfunc
 
 " ------------------------------------------------------------
 " 包围选中的文本
 
 " func! WrapTextWith(left, right)
-"     exe "norm `<i \<Esc>r".a:left."`>la \<Esc>r".a:right
+"   exe "norm `<i \<Esc>r".a:left."`>la \<Esc>r".a:right
 " endfunc
 
 " ------------------------------------------------------------
 " 将文件 <EOL> 改为 UNIX 格式
 
 func! UnixEOL()
-    e ++ff=dos | setlocal ff=unix | update
-    exe "%s+\r++ge"
+  e ++ff=dos | setlocal ff=unix | update
+  exe "%s+\r++ge"
 endfunc
 
 " ------------------------------------------------------------
 
 " 自动折叠函数和大段注释
 " func! FoldBrace(int)
-" 	" functions
-" 	if getline(v:lnum) =~ ')'	" make sure it's a function
-" 		" '{' could be on the second line
-" 		if getline(v:lnum+1)[a:int] == '{'
-" 			return 1
-" 		endif
-" 		" or the same line as the definition
-" 		if getline(v:lnum) =~ '{' && !(getline(v:lnum) =~ '}')
-" 			return 1
-" 		endif
-" 	endif
-" 	" look for '}' and not '};' since a func def can't end with it
-" 	if getline(v:lnum)[a:int] == '}' && !(getline(v:lnum) =~ '};')
-" 		return '<1'
-" 	endif
-
-"	" block comments
-"	if getline(v:lnum-1) =~ '/\*' && !(getline(v:lnum) =~ '\*/')
-"								\ && !(getline(v:lnum+1) =~ '\*/')
-"		return 2
-"	endif
-"	if getline(v:lnum+1) =~ '\*/'
-"		return '<2'
-"	endif
-" 	" default
-" 	return -1
+"   " functions
+"   if getline(v:lnum) =~ ')'  " make sure it's a function
+"     " '{' could be on the second line
+"     if getline(v:lnum+1)[a:int] == '{'
+"       return 1
+"     endif
+"     " or the same line as the definition
+"     if getline(v:lnum) =~ '{' && !(getline(v:lnum) =~ '}')
+"       return 1
+"     endif
+"   endif
+"   " look for '}' and not '};' since a func def can't end with it
+"   if getline(v:lnum)[a:int] == '}' && !(getline(v:lnum) =~ '};')
+"     return '<1'
+"   endif
+"   " block comments
+"   if getline(v:lnum-1) =~ '/\*' && !(getline(v:lnum) =~ '\*/')
+"         \ && !(getline(v:lnum+1) =~ '\*/')
+"     return 2
+"   endif
+"   if getline(v:lnum+1) =~ '\*/'
+"     return '<2'
+"   endif
+"   " default
+"   return -1
 " endfunc
 
 " 自动补全括号
 " func! CompleteBrackets()
-" 	inoremap <buffer> ( ()<Left>
-" 	inoremap <silent> <buffer> ) <C-r>=ClosePair(')')<CR>
-" 	inoremap <buffer> { {}<Left>
-" 	inoremap <silent> <buffer> } <C-r>=ClosePair('}')<CR>
-" 	inoremap <buffer> [ []<Left>
-" 	inoremap <silent> <buffer> ] <C-r>=ClosePair(']')<CR>
-" 	"inoremap <buffer> " ""<Left>
-" 	"inoremap <buffer> ' ''<Left>
-" 	inoremap <buffer> <CR> <C-r>=MultilineBrackets()<CR>
+"   inoremap <buffer> ( ()<Left>
+"   inoremap <silent> <buffer> ) <C-r>=ClosePair(')')<CR>
+"   inoremap <buffer> { {}<Left>
+"   inoremap <silent> <buffer> } <C-r>=ClosePair('}')<CR>
+"   inoremap <buffer> [ []<Left>
+"   inoremap <silent> <buffer> ] <C-r>=ClosePair(']')<CR>
+"   " inoremap <buffer> " ""<Left>
+"   " inoremap <buffer> ' ''<Left>
+"   inoremap <buffer> <CR> <C-r>=MultilineBrackets()<CR>
 " endfunc
-" "实现括号的自动配对后防止重复输入
+" " 实现括号的自动配对后防止重复输入
 " function! ClosePair(char)
-"     if getline('.')[col('.') - 1] == a:char
-"         return "\<Right>"
-"     else
-"       return a:char
-"    endif
+"   if getline('.')[col('.') - 1] == a:char
+"     return "\<Right>"
+"   else
+"     return a:char
+"   endif
 " endf
 " func! MultilineBrackets()
-" 	echo getline('.')[col('.') - 2]
-" 	echo getline('.')[col('.') - 1]
-" 	if    ( getline('.')[col('.') - 2] == '(' && getline('.')[col('.')-1] == ')' )
-" 	 \ || ( getline('.')[col('.') - 2] == '[' && getline('.')[col('.')-1] == ']' )
-" 	 \ || ( getline('.')[col('.') - 2] == '{' && getline('.')[col('.')-1] == '}' )
-" 		return "\r\<Esc>\<S-o>"
-" 	else
-" 		return "\r"
+"   echo getline('.')[col('.') - 2]
+"   echo getline('.')[col('.') - 1]
+"   if    ( getline('.')[col('.') - 2] == '(' && getline('.')[col('.')-1] == ')' )
+"         \ || ( getline('.')[col('.') - 2] == '[' && getline('.')[col('.')-1] == ']' )
+"         \ || ( getline('.')[col('.') - 2] == '{' && getline('.')[col('.')-1] == '}' )
+"     return "\r\<Esc>\<S-o>"
+"   else
+"     return "\r"
+"   endif
 " endfunc
 
 " ------------------------------------------------------------
 
 " 使用 Vim[grep] 来 grep
-function MyQuickGrep()
-    let pattern = input('Search for pattern: ')
-    let filename = input('Search in files: ')
-    exe 'redraw'
+function! MyQuickGrep()
+  let pattern = input('Search for pattern: ')
+  let filename = input('Search in files: ', '%:h/**/*')
+  exe 'redraw'
 
-    if (pattern == '')
-		echohl WarningMsg | echo 'Please enter a search pattern' | echohl None
-        exe "normal \<Esc>"
-    elseif (filename == '')
-        "echohl WarningMsg | echo 'Please enter filename(s)' | echohl None
-        "exe "normal \<Esc>"
-        let filename = '*'
-    endif
-    try
-        exe 'vimgrep /' . pattern . '/j ' . filename . '|copen'
-        " j option inhibits jumping to search results
-        " open quickfix for result browsing
-    endtry
+  if (pattern == '')
+    echohl WarningMsg | echo 'Please enter a search pattern' | echohl None
+    exe "normal \<Esc>"
+  elseif (filename == '')
+    "echohl WarningMsg | echo 'Please enter filename(s)' | echohl None
+    "exe "normal \<Esc>"
+    let filename = '*'
+  endif
+  try
+    exe 'vimgrep /' . pattern . '/j ' . filename . '|copen'
+    " j option inhibits jumping to search results
+    " open quickfix for result browsing
+  endtry
 endfunction
 
 " ------------------------------------------------------------
@@ -899,25 +923,25 @@ endfunction
 " lowerlevel (bool) : Go to line with lower / same indentation level
 " skipblanks (bool) : Skip blank lines?
 func! NextIndent(exclusive, fwd, lowerlevel, skipblanks)
-    let line = line('.')
-    let column = col('.')
-    let lastline = line('$')
-    let indent = indent(line)
-    let stepvalue = a:fwd ? 1 : -1
-    while (line > 0 && line <= lastline)
-        let line = line + stepvalue
-        if ( ! a:lowerlevel && indent(line) == indent ||
-                    \ a:lowerlevel && indent(line) < indent)
-            if (! a:skipblanks || strlen(getline(line)) > 0)
-                if (a:exclusive)
-                    let line = line - stepvalue
-                endif
-                exe line
-                exe "normal " column . "|"
-                return
-            endif
+  let line = line('.')
+  let column = col('.')
+  let lastline = line('$')
+  let indent = indent(line)
+  let stepvalue = a:fwd ? 1 : -1
+  while (line > 0 && line <= lastline)
+    let line = line + stepvalue
+    if ( ! a:lowerlevel && indent(line) == indent ||
+          \ a:lowerlevel && indent(line) < indent)
+      if (! a:skipblanks || strlen(getline(line)) > 0)
+        if (a:exclusive)
+          let line = line - stepvalue
         endif
-    endwhile
+        exe line
+        exe "normal " column . "|"
+        return
+      endif
+    endif
+  endwhile
 endfunction
 
 " ------------------------------------------------------------
@@ -956,28 +980,30 @@ endfunction
 " 如果输出信息为乱码的可以试一下下面的代码，如果不行就还是给它注释掉
 
 if g:iswindows
-	au QuickfixCmdPost make call QfMakeConv()
-	func! QfMakeConv()
-		let qflist = getqflist()
-		for i in qflist
-			let i.text = iconv(i.text, "cp936", "utf-8")
-		endfor
-		call setqflist(qflist)
-		exec "cw"
-	endfunc
+  augroup chinse_quick_fix
+    au QuickfixCmdPost make call QfMakeConv()
+    func! QfMakeConv()
+      let qflist = getqflist()
+      for i in qflist
+        let i.text = iconv(i.text, "cp936", "utf-8")
+      endfor
+      call setqflist(qflist)
+      exec "cw"
+    endfunc
+  augroup END
 endif
 
 " -----------------------------------------------------------------------------
 " TagList & Ctags
 " -----------------------------------------------------------------------------
 " 对于C++代码，ctags需要额外使用以下选项：
+" 为标签添加函数原型(prototype)信息
 " --c++-kinds=+p
-"		为标签添加函数原型(prototype)信息
+" 为标签添加继承信息(inheritance)，访问控制(access)信息，
+" 函数特征(function Signature,如参数表或原型等)
 " --fields=+iaS
-"		为标签添加继承信息(inheritance)，访问控制(access)信息，
-"		函数特征(function Signature,如参数表或原型等)
+" 为类成员标签添加类标识
 " --extra=+q
-"		为类成员标签添加类标识
 set tags=tags
 
 " 配置 TagList 的 ctags 路径
@@ -1051,7 +1077,11 @@ let OmniCpp_NamespaceSearch = 1
 " let OmniCpp_MayCompleteScope = 1                " 输入 :: 后自动补全
 
 " 自动关闭补全窗口
-au CursorMovedI,InsertLeave * if pumvisible() == 0|silent! pclose|endif
+if has("autocmd")
+  augroup auto_close_completion
+    au CursorMovedI,InsertLeave * if pumvisible() == 0|silent! pclose|endif
+  augroup END
+endif
 set completeopt=menuone,menu,longest
 
 " -----------------------------------------------------------------------------
@@ -1139,14 +1169,14 @@ let g:neocomplete#force_omni_input_patterns.python =
 " 防止与 NeoComplete 的冲突
 " 先关闭 NeoComplete ，使用之后再重新打开 NeoComplete
 function! Multiple_cursors_before()
-    if exists(':NeoCompleteLock') == 2
-        exe 'NeoCompleteLock'
-    endif
+  if exists(':NeoCompleteLock') == 2
+    exe 'NeoCompleteLock'
+  endif
 endfunction
 function! Multiple_cursors_after()
-    if exists(':NeoCompleteUnlock') == 2
-        exe 'NeoCompleteUnlock'
-    endif
+  if exists(':NeoCompleteUnlock') == 2
+    exe 'NeoCompleteUnlock'
+  endif
 endfunction
 
 " -----------------------------------------------------------------------------
@@ -1164,23 +1194,23 @@ let g:Vimim_cloud = ''
 " 防止与 NeoComplete 的冲突
 let g:Vimim_chinse_mode_on = 0
 function! VIMIM_before()
-    if exists(':NeoCompleteDisable') == 2
-                \ && g:Vimim_chinse_mode_on == 0
-        exe 'NeoCompleteLock'
-        exe 'NeoCompleteDisable'
-        let g:Vimim_chinse_mode_on = 1
-    elseif exists(':NeoCompleteEnable') == 2
-                \ && g:Vimim_chinse_mode_on == 1
-        exe 'NeoCompleteUnlock'
-        exe 'NeoCompleteEnable'
-        let g:Vimim_chinse_mode_on = 0
-    endif
+  if exists(':NeoCompleteDisable') == 2
+        \ && g:Vimim_chinse_mode_on == 0
+    exe 'NeoCompleteLock'
+    exe 'NeoCompleteDisable'
+    let g:Vimim_chinse_mode_on = 1
+  elseif exists(':NeoCompleteEnable') == 2
+        \ && g:Vimim_chinse_mode_on == 1
+    exe 'NeoCompleteUnlock'
+    exe 'NeoCompleteEnable'
+    let g:Vimim_chinse_mode_on = 0
+  endif
 endfunction
 
 if g:use_VimIM
-    " 使用 ctrl-space 打开 / 关闭 VimIM
-    inoremap <C-Space> <Space><Esc>:call VIMIM_before()<CR>s<C-r>=g:Vimim_chinese()<CR>
-    nnoremap <C-Space> :call VIMIM_before()<CR>a<C-r>=g:Vimim_chinese()<CR><Esc>
+  " 使用 ctrl-space 打开 / 关闭 VimIM
+  inoremap <C-Space> <Space><Esc>:call VIMIM_before()<CR>s<C-r>=g:Vimim_chinese()<CR>
+  nnoremap <C-Space> :call VIMIM_before()<CR>a<C-r>=g:Vimim_chinese()<CR><Esc>
 endif
 
 " 使用文中标点
@@ -1215,21 +1245,21 @@ imap <C-h> <BS>
 cmap <C-h> <BS>
 
 try
-    call lexima#add_rule({
-                \  'char': '<CR>', 'at': '{\%#}',
-                \  'input' : '%<CR>', 'input_after': '<CR>',
-                \  'filetype' : 'tex',
-                \ })
-    call lexima#add_rule({
-                \  'char': '<CR>', 'at': '\[\%#]',
-                \  'input' : '%<CR>', 'input_after': '<CR>',
-                \  'filetype' : 'tex',
-                \ })
-    call lexima#add_rule({
-                \  'char': '``',
-                \  'input_after': "''",
-                \  'filetype' : 'tex',
-                \ })
+  call lexima#add_rule({
+        \  'char': '<CR>', 'at': '{\%#}',
+        \  'input' : '%<CR>', 'input_after': '<CR>',
+        \  'filetype' : 'tex',
+        \ })
+  call lexima#add_rule({
+        \  'char': '<CR>', 'at': '\[\%#]',
+        \  'input' : '%<CR>', 'input_after': '<CR>',
+        \  'filetype' : 'tex',
+        \ })
+  call lexima#add_rule({
+        \  'char': '``',
+        \  'input_after': "''",
+        \  'filetype' : 'tex',
+        \ })
 catch
 endtry
 
@@ -1239,6 +1269,8 @@ endtry
 " 一个全路径模糊文件，缓冲区的检索插件
 " 常规模式下输入：ctrl-p 调用插件
 
+set wildignore+=*\\tmp\\*,*/tmp/*,*.so,*.swp,*.zip,*.exe
+
 " -----------------------------------------------------------------------------
 " emmet-vim
 " -----------------------------------------------------------------------------
@@ -1247,7 +1279,9 @@ endtry
 " make emmet only work in html and css files
 let g:user_emmet_install_global = 0
 if has('autocmd')
+  augroup install_emmet
     au FileType html,haml,css,sass,scss EmmetInstall
+  augroup END
 endif
 
 let g:user_emmet_leader_key='<C-e>'
@@ -1325,8 +1359,10 @@ let g:markdown_syntax_conceal = 0
 " 在 LaTeX 中引用时给出 label 列表
 
 " if has('autocmd')
+"   augroup ennable_reftex
 "     au BufReadPost *.tex source $vim/vimfiles/ftplugin/reftex.vim
 "     au FileType tex source $vim/vimfiles/ftplugin/reftex.vim
+"   augroup END
 " endif
 
 " ------------------------------------------------------------
@@ -1345,33 +1381,33 @@ let g:vimtex_enabled                      = 1
 let g:vimtex_complete_img_use_tail        = 1
 let g:vimtex_latexmk_options              = g:Tex_CompileRule_pdf
 if g:iswindows
-    " use SumatraPDF to view PDF, SumatraPDF required
-    let g:vimtex_view_general_viewer          = 'SumatraPDF'
-    let g:vimtex_view_general_options         = '-reuse-instance -forward-search @tex @line @pdf'
-    let g:vimtex_view_general_options_latexmk = '-reuse-instance'
+  " use SumatraPDF to view PDF, SumatraPDF required
+  let g:vimtex_view_general_viewer          = 'SumatraPDF'
+  let g:vimtex_view_general_options         = '-reuse-instance -forward-search @tex @line @pdf'
+  let g:vimtex_view_general_options_latexmk = '-reuse-instance'
 else
-    let g:vimtex_view_general_viewer          = 'xdg-open'
+  let g:vimtex_view_general_viewer          = 'xdg-open'
 endif
 
 " list of modifiers of pairs / delimiters to toggle
 let g:vimtex_delim_toggle_mod_list = [
-            \ ['\bigl', '\bigr'],
-            \ ['\Bigl', '\Bigr'],
-            \ ['\biggl', '\biggr'],
-            \ ['\Biggl', '\Biggr'],
-            \]
-            " \ ['\left', '\right'],
+      \ ['\bigl', '\bigr'],
+      \ ['\Bigl', '\Bigr'],
+      \ ['\biggl', '\biggr'],
+      \ ['\Biggl', '\Biggr'],
+      \]
+"       \ ['\left', '\right'],
 
 " make neocomplete support citation / label ref / ... completions
 if !exists('g:neocomplete#sources#omni#input_patterns')
     let g:neocomplete#sources#omni#input_patterns = {}
 endif
 let g:neocomplete#sources#omni#input_patterns.tex =
-            \ '\v\\%('
-            \ . '\a*%(ref|cite)\a*%(\s*\[[^]]*\])?\s*\{[^{}]*'
-            \ . '|includegraphics%(\s*\[[^]]*\])?\s*\{[^{}]*'
-            \ . '|%(include|input)\s*\{[^{}]*'
-            \ . ')'
+      \ '\v\\%('
+      \ . '\a*%(ref|cite)\a*%(\s*\[[^]]*\])?\s*\{[^{}]*'
+      \ . '|includegraphics%(\s*\[[^]]*\])?\s*\{[^{}]*'
+      \ . '|%(include|input)\s*\{[^{}]*'
+      \ . ')'
 
 " ------------------------------------------------------------
 " LaTeX-Box
@@ -1432,6 +1468,7 @@ xmap <silent> a<Leader>b <Plug>CamelCaseMotion_ib
 let g:surround_{char2nr("q")} = "'\r'"
 let g:surround_{char2nr("Q")} = "\"\r\""
 if has("autocmd")
+  augroup surround_keymaps
     au Filetype tex let g:surround_{char2nr("q")} = "`\r'"
     au Filetype tex let g:surround_{char2nr("Q")} = "``\r''"
     au Filetype tex let g:surround_{char2nr("f")} = "\\\1command: \1{\r}"
@@ -1440,15 +1477,16 @@ if has("autocmd")
 
     " code
     au Filetype markdown let g:surround_{char2nr("c")}
-                \ = "```\1language: \1 \n\r\n```"
+          \ = "```\1language: \1 \n\r\n```"
 
     " emph
     au Filetype markdown let g:surround_{char2nr("e")}
-                \ = "*\r*"
+          \ = "*\r*"
     au Filetype markdown let g:surround_{char2nr("E")}
-                \ = "**\r**"
+          \ = "**\r**"
     au Filetype notes let g:surround_{char2nr("e")}
-                \ = "\|\r\|"
+          \ = "\|\r\|"
+  augroup END
 endif
 
 " ------------------------------------------------------------
@@ -1456,6 +1494,42 @@ endif
 " ------------------------------------------------------------
 
 " let g:sneak#label = 1
+
+" preserve `;` and `,` for `f` and `t` motions (so that we can
+" work with other f-enhancement plugins)
+" NOTE the below mappings are essentially DISABLING them because
+" `<S-;>` is actually `:` ;)
+" also, `s<CR>` and `S<CR>` does the sneak `;` and `,` already
+map <S-;> <Plug>Sneak_;
+map <S-,> <Plug>Sneak_,
+
+nnoremap cal cc
+
+" ------------------------------------------------------------
+" quick scope
+" ------------------------------------------------------------
+
+let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
+
+" ------------------------------------------------------------
+" hardtime
+" ------------------------------------------------------------
+
+let g:hardtime_default_on = 1
+if exists("g:list_of_normal_keys")
+  let g:list_of_normal_keys += ["e", "w", "b"]
+endif
+let g:hardtime_ignore_quickfix = 1
+let g:hardtime_maxcount = 3
+
+" ------------------------------------------------------------
+" targets
+" ------------------------------------------------------------
+
+let g:targets_quotes = '"q ''Q `'
+let g:targets_nl = 'nN'
+" Only seek if next/last targets touch current line
+let g:targets_seekRanges = 'cr cb cB lc ac Ac lr rr ll lb ar ab lB Ar aB Ab AB rb rB al Al'
 
 " =============================================================================
 " 编码配置
