@@ -10,22 +10,25 @@ fi
 
 escaped_target="$(echo "${1}" | sed 's/\\\|\[\|\]\$\|\&\|\^\|\//\\&/g')"
 
+SOURCE_CMD="source vimfiles/_vimrc"
 case `(uname -s)` in
     Darwin|Linux)
-        echo 'Mac OS or Linux system detected, copying ".vimrc"...'
-        cp -i ${DIR}/_vimrc $1/../.vimrc
+        echo 'Mac OS or Linux system detected.'
+        vimrc_path="~/.vim/.vimrc"
         ;;
 
     CYGWIN*|MINGW32*|MSYS*)
-        echo 'Windows system detected, copying "_vimrc"...'
-        cp -i ${DIR}/_vimrc $1/../_vimrc
-        mkdir -p $1/../tmp
+        echo 'Windows system detected'
+        vimrc_path="$1/../_vimrc"
+        mkdir -p "$1/../tmp"
         ;;
     *)
         echo 'System not recognized, Exiting...'
         exit 1
         ;;
 esac
+echo 'Sourcing _vimrc...'
+grep -F "$SOURCE_CMD" $vimrc_path 2> /dev/null || echo "$SOURCE_CMD" >> $vimrc_path
 printf "Done\n"
 
 # if a target file is already there and is DIFFERENT than source file, ask for
@@ -54,7 +57,7 @@ then
 fi
 
 echo 'Installing plugins...'
-gvim -c "PluginInstall" || echo 'Plugin installation failed because "gvim" command was
+vim -c "PluginInstall" || echo 'Plugin installation failed because "vim" command was
 not found. You may run ":PluginInstall" in gvim to manually install your
 plugins'
 printf "Done\n"
