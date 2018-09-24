@@ -14,7 +14,7 @@ SOURCE_CMD="source vimfiles/_vimrc"
 case `(uname -s)` in
     Darwin|Linux)
         echo 'Mac OS or Linux system detected.'
-        vimrc_path="~/.vim/.vimrc"
+        vimrc_path="~/.vimrc"
         ;;
 
     CYGWIN*|MINGW32*|MSYS*)
