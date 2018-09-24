@@ -14,7 +14,7 @@ SOURCE_CMD="source vimfiles/_vimrc"
 case `(uname -s)` in
     Darwin|Linux)
         echo 'Mac OS or Linux system detected.'
-        vimrc_path="~/.vimrc"
+        vimrc_path=~/.vimrc
         ;;
 
     CYGWIN*|MINGW32*|MSYS*)
@@ -28,7 +28,7 @@ case `(uname -s)` in
         ;;
 esac
 echo 'Sourcing _vimrc...'
-grep -F "$SOURCE_CMD" $vimrc_path 2> /dev/null || echo "$SOURCE_CMD" >> $vimrc_path
+grep -F "$SOURCE_CMD" "$vimrc_path" 2> /dev/null || echo "$SOURCE_CMD" >> "$vimrc_path"
 printf "Done\n"
 
 # if a target file is already there and is DIFFERENT than source file, ask for
