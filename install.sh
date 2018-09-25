@@ -10,7 +10,7 @@ fi
 
 escaped_target="$(echo "${1}" | sed 's/\\\|\[\|\]\$\|\&\|\^\|\//\\&/g')"
 
-SOURCE_CMD="source vimfiles/_vimrc"
+SOURCE_CMD="source $1/_vimrc"
 case `(uname -s)` in
     Darwin|Linux)
         echo 'Mac OS or Linux system detected.'
