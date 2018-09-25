@@ -253,8 +253,6 @@ set autochdir
 
 " 不要备份文件
 set nobackup
-" set nowb
-" set noundofile
 
 " 不要生成 swap 文件
 set noswapfile
@@ -262,13 +260,13 @@ set noswapfile
 " 临时文件的位置。在 windows 下默认位置需要管理员权限。绕开
 if g:iswindows
     let $TMP=$VIM . '\tmp'
+else
+    let $TMP='/tmp/'
 endif
 
 " 文本修改记录
 set undofile
-if g:iswindows
-    set undodir=$TMP
-endif
+set undodir=$TMP
 
 " cmd line 中的命令数记录
 set history=100
