@@ -8,9 +8,11 @@ then
     exit 1
 fi
 
-escaped_target="$(echo "${1}" | sed 's/\\\|\[\|\]\$\|\&\|\^\|\//\\&/g')"
+vimfiles_path=$1
+escaped_target="$(echo "$vimfiles_path" | sed 's/\\\|\[\|\]\$\|\&\|\^\|\//\\&/g')"
 
-SOURCE_CMD="source $1/_vimrc"
+vimfiles_path_with_tilde="$(echo "$1" | sed 's:^/home/[^/]\+/:~/:')"
+SOURCE_CMD="source $vimfiles_path_with_tilde/_vimrc"
 case `(uname -s)` in
     Darwin|Linux)
         echo 'Mac OS or Linux system detected.'
@@ -19,8 +21,8 @@ case `(uname -s)` in
         ;;
     CYGWIN*|MINGW32*|MSYS*)
         echo 'Windows system detected'
-        vimrc_path="$1/../_vimrc"
-        mkdir -p "$1/../tmp"
+        vimrc_path="$vimfiles_path/../_vimrc"
+        mkdir -p "$vimfiles_path/../tmp"
         ;;
     *)
         echo 'System not recognized, Exiting...'
@@ -52,10 +54,10 @@ for f in ${DIR}/vimfiles/**; do
 done
 printf "Done\n"
 
-if [ ! -d $1/bundle/Vundle.vim ]
+if [ ! -d $vimfiles_path/bundle/Vundle.vim ]
 then
     echo 'Installing Vundle...'
-    git clone https://github.com/VundleVim/Vundle.vim.git $1/bundle/Vundle.vim
+    git clone https://github.com/VundleVim/Vundle.vim.git $vimfiles_path/bundle/Vundle.vim
     printf "Done\n"
 fi
 
@@ -65,10 +67,10 @@ not found. You may run ":PluginInstall" in gvim to manually install your
 plugins'
 printf "Done\n"
 
-if [ -d $1/bundle/VimIM/plugin ]; then
-    if [ ! -e $1/bundle/VimIM/plugin/vimim.wubi.txt ]; then
+if [ -d $vimfiles_path/bundle/VimIM/plugin ]; then
+    if [ ! -e $vimfiles_path/bundle/VimIM/plugin/vimim.wubi.txt ]; then
         echo 'VimIM detected, copying word dictionary...'
-        cp ${DIR}/vimim.wubi.txt $1/bundle/VimIM/plugin/
+        cp ${DIR}/vimim.wubi.txt $vimfiles_path/bundle/VimIM/plugin/
         printf "Done\n"
     fi
 fi
