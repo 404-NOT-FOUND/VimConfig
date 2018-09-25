@@ -34,7 +34,11 @@ grep -F "$SOURCE_CMD" "$vimrc_path" 2> /dev/null || echo "$SOURCE_CMD" >> "$vimr
 # permission to overwrite
 # if a target file is missing, copy the file
 echo 'Copying files to vimfiles...'
-for f in ${DIR}/vimfiles/**/*; do
+shopt -s globstar
+for f in ${DIR}/vimfiles/**; do
+    if [[ ! -f "$f" ]]; then
+        continue
+    fi
     to_f="$(echo "${f}" | sed 's/^\/.*vimfiles/'${escaped_target}'/')"
     mkdir -p "$( dirname "${to_f}" )"
     if [ -e ${to_f} ]; then
