@@ -122,7 +122,7 @@ Plugin 'bkad/CamelCaseMotion'
 " Plugin 'cSyntaxAfter'
 " Plugin 'ccvext.vim'
 Plugin 'christoomey/vim-sort-motion'
-" Plugin 'christoomey/vim-tmux-navigator'
+" Plugin 'christoomey/vim-tmux-navigator' | let g:has_vim_nav = 1
 Plugin 'closetag.vim'
 Plugin 'cohama/lexima.vim'  " auto pair closer
 Plugin 'ctrlpvim/ctrlp.vim' | let g:has_ctrlp = 1
@@ -442,10 +442,12 @@ else
 endif
 
 " 使用 ctrl+j,k,h,l 切换分割的视窗
-nnoremap <C-j> <C-w>j
-nnoremap <C-k> <C-w>k
-nnoremap <C-h> <C-w>h
-nnoremap <C-l> <C-w>l
+if !exists("g:has_vim_nav")
+  nnoremap <C-j> <C-w>j
+  nnoremap <C-k> <C-w>k
+  nnoremap <C-h> <C-w>h
+  nnoremap <C-l> <C-w>l
+endif
 
 " 标签控制
 " 使用 ctrl+n 和 ctrl+x 打开/关闭标签
