@@ -143,7 +143,7 @@ Plugin 'michaeljsmith/vim-indent-object'
 " Plugin 'msanders/snipmate.vim'
 " Plugin 'osyo-manga/vim-over'  " :s preview
 " Plugin 'repeat.vim'
-Plugin 'romainl/vim-cool'  "  auto disable search highlight
+Plugin 'romainl/vim-cool'  " auto disable search highlight
 " Plugin 'scrooloose/nerdcommenter'
 " Plugin 'scrooloose/nerdtree'
 " Plugin 'scrooloose/syntastic'
@@ -161,6 +161,7 @@ Plugin 'unblevable/quick-scope'  " highlight cues for `f` and `t`
 " Plugin 'vim-javacompleteex'
 Plugin 'wellle/targets.vim'  " objects like arg, better object searching for quotes/parens
 " Plugin 'wesleyche/SrcExpl'
+" Plugin 'yangmillstheory/vim-snipe'  " tagged choice for `f` and `t`
 
 call vundle#end()
 
