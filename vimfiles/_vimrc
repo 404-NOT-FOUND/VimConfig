@@ -124,7 +124,7 @@ Plugin 'bkad/CamelCaseMotion'
 Plugin 'christoomey/vim-sort-motion'
 " Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'closetag.vim'
-Plugin 'cohama/lexima.vim'  "  auto pair closer
+Plugin 'cohama/lexima.vim'  " auto pair closer
 " Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'davidhalter/jedi-vim'  "  python autocomplete. 'pip install jedi' required
 " Plugin 'dyng/ctrlsf.vim'  " global search
