@@ -1578,4 +1578,3 @@ set spelllang+=cjk
 " %:t	不带路径的文件名.例如../path/test.c就会为test.c
 " %:r	无扩展名的文件名.例如../path/test就会成为test
 " %:e	扩展名
-
