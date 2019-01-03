@@ -1538,6 +1538,12 @@ let g:targets_nl = 'nN'
 " Only seek if next/last targets touch current line
 let g:targets_seekRanges = 'cr cb cB lc ac Ac lr rr ll lb ar ab lB Ar aB Ab AB rb rB al Al'
 
+" ------------------------------------------------------------
+" snipe
+" ------------------------------------------------------------
+
+map <Leader>f <Plug>(snipe-f)
+
 " =============================================================================
 " 编码配置
 " =============================================================================
