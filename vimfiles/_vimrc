@@ -139,7 +139,7 @@ Plugin 'junegunn/vim-easy-align'
 Plugin 'justinmk/vim-sneak'
 Plugin 'lervag/vimtex'
 " Plugin 'majutsushi/tagbar'
-Plugin 'mattn/emmet-vim'
+Plugin 'mattn/emmet-vim' | let g:has_emmet = 1
 Plugin 'michaeljsmith/vim-indent-object'
 " Plugin 'msanders/snipmate.vim'
 " Plugin 'osyo-manga/vim-over'  " :s preview
@@ -1280,17 +1280,19 @@ set wildignore+=*\\tmp\\*,*/tmp/*,*.so,*.swp,*.zip,*.exe
 " emmet-vim
 " -----------------------------------------------------------------------------
 " HTML/CSS 代码快速编写神器
+if exists("g:has_emmet")
 
-" make emmet only work in html and css files
-let g:user_emmet_install_global = 0
-if has('autocmd')
-  augroup install_emmet
-    au FileType html,haml,css,sass,scss EmmetInstall
-  augroup END
+  " make emmet only work in html and css files
+  let g:user_emmet_install_global = 0
+  if has('autocmd')
+    augroup install_emmet
+      au FileType html,haml,css,sass,scss EmmetInstall
+    augroup END
+  endif
+
+  let g:user_emmet_leader_key='<C-e>'
+
 endif
-
-let g:user_emmet_leader_key='<C-e>'
-
 " -----------------------------------------------------------------------------
 " NerdCommenter
 " -----------------------------------------------------------------------------
