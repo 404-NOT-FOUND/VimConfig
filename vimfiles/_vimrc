@@ -125,7 +125,7 @@ Plugin 'christoomey/vim-sort-motion'
 " Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'closetag.vim'
 Plugin 'cohama/lexima.vim'  " auto pair closer
-" Plugin 'ctrlpvim/ctrlp.vim'
+Plugin 'ctrlpvim/ctrlp.vim' | let g:has_ctrlp = 1
 Plugin 'davidhalter/jedi-vim'  "  python autocomplete. 'pip install jedi' required
 " Plugin 'dyng/ctrlsf.vim'  " global search
 " Plugin 'ervandew/supertab'  " 有时与 snipmate 插件冲突
@@ -435,7 +435,11 @@ set backspace=indent,eol,start
 " " 使用 <Leader>. 和 <Leader>m 前后切换 Buffer
 " nmap <silent> <Leader>. :bnext<CR>:buffers<CR>
 " nmap <silent> <Leader>m :bprevious<CR>:buffers<CR>
-nmap gb :ls<CR>:buffer<space>
+if exists("g:has_ctrlp")
+  nmap gb :CtrlPBuffer<CR>
+else
+  nmap gb :ls<CR>:buffer<space>
+endif
 
 " 使用 ctrl+j,k,h,l 切换分割的视窗
 nnoremap <C-j> <C-w>j
