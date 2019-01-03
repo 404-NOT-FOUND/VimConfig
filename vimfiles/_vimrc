@@ -122,6 +122,7 @@ Plugin 'bkad/CamelCaseMotion'
 " Plugin 'cSyntaxAfter'
 " Plugin 'ccvext.vim'
 Plugin 'christoomey/vim-sort-motion'
+" Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'closetag.vim'
 Plugin 'cohama/lexima.vim'  "  auto pair closer
 " Plugin 'ctrlpvim/ctrlp.vim'
